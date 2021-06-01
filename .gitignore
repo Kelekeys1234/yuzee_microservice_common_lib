@@ -48,3 +48,13 @@ Thumbs.db
 *.mov
 *.wmv
 
+target/
+.settings/
+.project
+/.classpath
+HELP.md
+.mvn
+mvnw
+mvnw.cmd
+.factorypath
+.springBeans
