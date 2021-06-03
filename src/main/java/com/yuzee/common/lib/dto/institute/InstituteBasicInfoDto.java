@@ -34,4 +34,6 @@ public class InstituteBasicInfoDto {
 	@JsonProperty("city_name")
 	private String cityName;
 
+	@JsonProperty("created_by")
+	private String createdBy;
 }
