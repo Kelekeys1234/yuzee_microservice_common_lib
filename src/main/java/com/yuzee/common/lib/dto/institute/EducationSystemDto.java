@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,4 +45,11 @@ public class EducationSystemDto {
 
 	@JsonProperty("grades")
 	private List<GradeDto> gradeDtos;
+	
+	@JsonProperty(value = "level_id",access = Access.WRITE_ONLY)
+	@NotBlank(message = "level_id should not be blank")
+	private String levelId;
+	
+	@JsonProperty("level")
+	private LevelDto level;
 }

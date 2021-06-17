@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyContactDetailsDto {
-	
-	@JsonProperty("contact_detail_id")
-	private String contactDetailId;
+public class CompanyContactDetailDto {
 
-	@NotBlank(message = "key should not be null / blank")
-	@JsonProperty("key")
-	private String key;
-	
+	@JsonProperty("contact_detail_id")
+	private String id;
+
+	@NotBlank(message = "contact_type should not be null / blank")
+	@JsonProperty("contact_type")
+	private String contactType;
+
 	@NotBlank(message = "value should not be null / blank")
 	@JsonProperty("value")
 	private String value;

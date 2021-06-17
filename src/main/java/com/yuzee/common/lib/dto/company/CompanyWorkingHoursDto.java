@@ -16,25 +16,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyWorkingHoursDto {
-	
+
 	@JsonProperty("working_hour_id")
-	private String workingHourId;
-	
+	private String id;
+
 	@NotBlank(message = "day_of_week should not be null / blank")
 	@JsonProperty("day_of_week")
-	private String dayOfWeek;
-	
+	private String weekDay;
+
 	@NotNull(message = "day_of_week should not be null / blank")
 	@JsonProperty("is_off_day")
 	public Boolean isOffDay;
-	
-	@NotBlank(message = "open_at should not be null / blank")
+
 	@JsonProperty("open_at")
 	@JsonFormat(pattern = "hh:mm a")
-	private Date openAt;
-	
-	@NotBlank(message = "close_at should not be null / blank")
+	private Date openingAt;
+
 	@JsonProperty("close_at")
 	@JsonFormat(pattern = "hh:mm a")
-	private Date closeAt;
+	private Date closingAt;
 }

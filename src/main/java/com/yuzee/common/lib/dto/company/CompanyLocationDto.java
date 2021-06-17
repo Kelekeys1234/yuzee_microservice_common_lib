@@ -1,9 +1,5 @@
 package com.yuzee.common.lib.dto.company;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -64,14 +60,9 @@ public class CompanyLocationDto {
 	@JsonProperty("is_primary")
 	private Boolean isPrimary;
 	
-	@JsonProperty("contact_details")
-	@Valid
-	private List<CompanyContactDetailsDto> listOfCompanyContactDetailsDto = new ArrayList<>();
+	@JsonProperty("is_Admin")
+	private Boolean isAdmin;
 	
-	@JsonProperty("contact_working_hours")
-	@Valid
-	private List<CompanyWorkingHoursDto> listOfCompanyWorkingHoursDto = new ArrayList<>();
-
 	public CompanyLocationDto(String companyLocationId,
 			@NotBlank(message = "campus_name should not be null/blank") String campusName,
 			@NotBlank(message = "city_name should not be null/blank") String cityName,
@@ -81,7 +72,7 @@ public class CompanyLocationDto {
 			@NotBlank(message = "address should not be null/blank") String address,
 			@NotNull(message = "longitude should not be null") Double latitude,
 			@NotNull(message = "longitude should not be null") Double longitude, Boolean isPrimary,
-			String privacyLevel) {
+			String privacyLevel,Boolean isAdmin) {
 		super();
 		this.companyLocationId = companyLocationId;
 		this.campusName = campusName;
@@ -94,5 +85,6 @@ public class CompanyLocationDto {
 		this.longitude = longitude;
 		this.isPrimary = isPrimary;
 		this.privacyLevel = privacyLevel;
+		this.isAdmin = isAdmin;
 	}
 }

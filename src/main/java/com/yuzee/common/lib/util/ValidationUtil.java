@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.util.ObjectUtils;
 
+import com.yuzee.common.lib.enumeration.ContactTypeEnum;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EntitySubTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
@@ -146,5 +147,14 @@ public class ValidationUtil {
 					+ Arrays.toString(Utils.getEnumNames(TransactionTypeEnum.class)));
 		}
 	}
-	
+
+	public static void validateContactType(String contactType) {
+		if (!EnumUtils.isValidEnum(ContactTypeEnum.class, contactType)) {
+			log.error("contact_type must be in one of the following {}",
+					Arrays.toString(Utils.getEnumNames(ContactTypeEnum.class)));
+			throw new ValidationException("contact_type must be in one of the following: "
+					+ Arrays.toString(Utils.getEnumNames(ContactTypeEnum.class)));
+		}
+	}
+
 }

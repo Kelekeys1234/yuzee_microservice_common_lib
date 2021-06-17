@@ -17,7 +17,8 @@ public enum FavoriteEntityTypeEnum {
 	JOBS("Jobs"),
 	ARTICLE("Article"),
 	APPLICATION("Application"),
-	CLASS("Class");
+	CLASS("Class"),
+	PROCEDURE("Procedures");
 	
 	@Getter private String displayName;
 	

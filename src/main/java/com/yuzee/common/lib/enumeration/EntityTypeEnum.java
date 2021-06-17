@@ -53,5 +53,9 @@ public enum EntityTypeEnum {
 	
 	APPLICATION,
 	
-	CLASS;
+	SUBSCRIPTION_PACKAGE,
+	
+	CLASS,
+	
+	PROCEDURE;
 }

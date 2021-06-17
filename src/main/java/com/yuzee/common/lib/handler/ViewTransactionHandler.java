@@ -101,7 +101,7 @@ public class ViewTransactionHandler {
 		return responseEntity.getBody().getData();
 	}
 
-	public List<UserMyCourseDto> getUserMyCourseByEntityIdAndTransactionType(String userId, String entityType,
+	public List<UserMyCourseDto> getUserMyCourseByEntityTypeAndTransactionType(String userId, String entityType,
 			String transactionType) {
 		ResponseEntity<GenericWrapperDto<List<UserMyCourseDto>>> responseEntity = null;
 		Map<String, String> params = new HashMap<>();
@@ -302,5 +302,38 @@ public class ViewTransactionHandler {
 			throw new InvokeException(MSG_ERROR_INVOKING);
 		}
 		return transactionCountDtoResponse.getBody().getData().isTransactionExists();
+	}
+	
+	public List<UserMyCourseDto> getUserFavouriteEntity(String userID, EntityTypeEnum entitiyType) {
+		Map<String, String> params = new HashMap<>();
+		ResponseEntity<GenericWrapperDto<List<UserMyCourseDto>>> result = null;
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.VIEW_TRANSACTION_URL).append(GET_USER_FAVOURITE_COURSE);
+
+			params.put(ENTITY_TYPE, entitiyType.name());
+			params.put(TRANSACTION_TYPE, TransactionTypeEnum.FAVORITE.name());
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.add(USER_ID, userID);
+			HttpEntity<String> body = new HttpEntity<>(httpHeaders);
+			result = restTemplate.exchange(path.toString(), HttpMethod.GET, body,
+					new ParameterizedTypeReference<GenericWrapperDto<List<UserMyCourseDto>>>() {
+					}, params);
+			if (result.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE_EXCEPTION,
+						result.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ result.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw e;
+		} 
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return result.getBody().getData();
 	}
 }

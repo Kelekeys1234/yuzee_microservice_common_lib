@@ -19,7 +19,7 @@ import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.common.CountryDto;
 import com.yuzee.common.lib.dto.common.CurrencyRateDto;
-import com.yuzee.common.lib.dto.common.Skill;
+import com.yuzee.common.lib.dto.common.SkillDto;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.exception.NotFoundException;
 
@@ -150,15 +150,15 @@ public class CommonHandler {
 		return responseEntity.getBody().getData();
 	}
 	
-	public List<Skill> getSkillByNames(Set<String> skillName) {
-		ResponseEntity<GenericWrapperDto<List<Skill>>> responseEntity = null;
+	public List<SkillDto> getSkillByNames(Set<String> skillName) {
+		ResponseEntity<GenericWrapperDto<List<SkillDto>>> responseEntity = null;
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.COMMON_URL).append(GET_SKILLS_BY_NAME);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			builder.queryParam("skill_names", skillName);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
-					new ParameterizedTypeReference<GenericWrapperDto<List<Skill>>>() {
+			responseEntity = restTemplate.exchange(builder.build(false).toUriString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<List<SkillDto>>>() {
 					});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE

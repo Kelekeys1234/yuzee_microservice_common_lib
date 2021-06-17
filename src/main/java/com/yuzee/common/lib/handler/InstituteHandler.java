@@ -1,6 +1,8 @@
 package com.yuzee.common.lib.handler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -8,6 +10,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +37,8 @@ public class InstituteHandler {
 	private static final String GET_INSTITUTE_BY_ID = "/public/basic/info";
 	private static final String GET_SCHOLARSHIP_BY_ID = "/scholarship/multiple/id";
 	private static final String GET_INSTITUTE_BY_MULTIPLE_ID = "/institute/multiple/id";
-
+	private static final String GET_IS_CAREER_TEST_COMPLETED= "/career-test-result/is-completed";
+	private static final String USER_ID = "userId";
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -143,5 +147,38 @@ public class InstituteHandler {
 			throw new InvokeException(MSG_ERROR_INVOKING);
 		}
 		return responseEntity.getBody().getData();
+	}
+	
+	public boolean checkIfCareerTestCompleted(String userId) {
+		ResponseEntity<GenericWrapperDto<Boolean>> response = null;
+		try {
+			Map<String, String> params = new HashMap<>();
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(USER_ID, userId);
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_IS_CAREER_TEST_COMPLETED);
+
+			response = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<Boolean>>() {},params);
+			if (response.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_INVOKING,
+						response.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_INVOKING
+						+ response.getStatusCode().value());
+			}
+
+		} catch (InvokeException e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw e;
+		} 
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return response.getBody().getData();
 	}
 }
