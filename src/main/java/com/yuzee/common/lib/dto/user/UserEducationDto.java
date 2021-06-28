@@ -48,19 +48,20 @@ public class UserEducationDto {
 	@JsonProperty("state")
 	private String state;
 
+	@NotBlank(message = "postal_code is required")
+	@JsonProperty("postal_code")
+	private String postalCode;
+	
 	@NotBlank(message = "country is required")
 	@JsonProperty("country")
 	public String country;
 
-	@NotBlank(message = "system is required")
 	@JsonProperty("system")
 	public String system;
 
-	@NotBlank(message = "course_name is required")
 	@JsonProperty("course_name")
 	public String courseName;
 
-	@NotNull(message = "cgpa is required")
 	@JsonProperty("cgpa")
 	public double cgpa;
 
@@ -73,15 +74,12 @@ public class UserEducationDto {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 
-	@NotBlank(message = "study_mode is required")
 	@JsonProperty("study_mode")
 	private String studyMode;
 
-	@NotBlank(message = "description is required")
 	@JsonProperty("description")
 	private String description;
 
-	@NotBlank(message = "course_language is required")
 	@JsonProperty("course_language")
 	private String courseLanguage;
 

@@ -33,7 +33,6 @@ public class UserWorkExperienceDto {
 	@JsonProperty("job_title")
 	private String jobTitle;
 	
-	@NotBlank(message = "job_type is required")
 	@JsonProperty("job_type")
 	private String jobType;
 	
@@ -53,7 +52,10 @@ public class UserWorkExperienceDto {
 	@JsonProperty("country")
 	private String country;
 	
-	@NotBlank(message = "job_description is required")
+	@NotBlank(message = "postal_code is required")
+	@JsonProperty("postal_code")
+	private String postalCode;
+	
 	@JsonProperty("job_description")
 	private String jobDescription;
 	
