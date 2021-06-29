@@ -59,6 +59,8 @@ public enum EntityTypeEnum {
 	
 	PROCEDURE,
 
+	CAREER,
+	
 	CAREER_TEST_JOB_SKILL,
 
 	CAREER_TEST_WORKING_STYLE,
@@ -69,5 +71,9 @@ public enum EntityTypeEnum {
 
 	CAREER_TEST_JOB,
 
-	CAREER_TEST_CAREER;
+	CAREER_TEST_CAREER,
+	
+	INTERNSHIP,
+	
+	STAFF_INTERVIEW;
 }

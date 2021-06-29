@@ -162,16 +162,23 @@ public class UserHandler {
 		}
 		return user;
 	}
-
-	public List<UserInitialInfoDto> getUserByIds(final List<String> userIds) throws InvokeException {
+	public List<UserInitialInfoDto> getUserByIds(final List<String> userIds) throws InvokeException{
+		return getUserByIds(null, userIds);
+	}
+	
+	public List<UserInitialInfoDto> getUserByIds(String userId, final List<String> userIds) throws InvokeException {
 		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> response = null;
 		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(USER_ID, userId);
+		    headers.setContentType(MediaType.APPLICATION_JSON);
+		    HttpEntity<String> entity = new HttpEntity<>("",headers);
 			StringBuilder path = new StringBuilder();
 			path.append(GET_USER_INITITAL_INFO_URL);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> builder.queryParam("userIds", e));
 			
-			response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
 			if (response.getStatusCode().value() != 200) {
 				throw new InvokeException (ERROR_FROM_USER_SERVICE_MEG + response.getStatusCode().value() );
 			}

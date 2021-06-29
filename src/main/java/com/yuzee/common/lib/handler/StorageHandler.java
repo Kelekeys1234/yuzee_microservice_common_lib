@@ -37,7 +37,6 @@ import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 import com.yuzee.common.lib.enumeration.EntitySubTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
-import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.exception.NotFoundException;
 

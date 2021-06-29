@@ -55,6 +55,9 @@ public class UserInitialInfoDto implements Serializable{
 	@JsonProperty("already_followed")
 	private boolean alreadyFollowed;
 	
+	@JsonProperty("already_connected")
+	private boolean alreadyConnected;
+	
 	@JsonProperty("readable_id")
 	private String readableId;
 	

@@ -44,15 +44,16 @@ public class InstituteHandler {
 	
 	private static final String MSG_ERROR_CODE = "Error response recieved from Institute service with error code ";
 	private static final String MSG_ERROR_INVOKING = "Error invoking Institute service";
-
-	public InstituteBasicInfoDto getInstituteById(String instituteId){
+	public InstituteBasicInfoDto getInstituteById(String instituteId) {
+		return getInstituteById(instituteId, false);
+	}
+	public InstituteBasicInfoDto getInstituteById(String instituteId, boolean includeDetail){
 		ResponseEntity<GenericWrapperDto<InstituteBasicInfoDto>> responseEntity = null;
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_INSTITUTE_BY_ID).append("/").append(instituteId);
-
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			
+			uriBuilder.queryParam("includeDetail", includeDetail);
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Type", "application/json");
 			HttpEntity<String> request = new HttpEntity<>(headers);

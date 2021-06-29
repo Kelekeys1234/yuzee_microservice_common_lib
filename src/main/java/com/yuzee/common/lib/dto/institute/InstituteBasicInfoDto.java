@@ -34,6 +34,27 @@ public class InstituteBasicInfoDto {
 	@JsonProperty("city_name")
 	private String cityName;
 
+	@JsonProperty("state_name")
+	private String stateName;
+	
+	@JsonProperty("address")
+	private String address;
+
 	@JsonProperty("created_by")
 	private String createdBy;
+	
+	@JsonProperty("world_ranking")
+	private Integer worldRanking;
+
+	@JsonProperty("domestic_ranking")
+	private Integer domesticRanking;
+	
+	@JsonProperty("total_courses")
+	private Integer totalCourses;
+	
+	@JsonProperty("stars")
+	private Double stars;
+	
+	@JsonProperty("reviews_count")
+	private Long reviewsCount;
 }

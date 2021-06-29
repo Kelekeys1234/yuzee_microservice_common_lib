@@ -40,6 +40,8 @@ public class ConnectionHandler {
 
 	private static final String FOLLOW = "/follow";
 
+	private static final String FOLLOWING_USERS = "/api/v1/follow/following";
+
 	private static final String CONNECTION_EXIST = "/exist";
 
 	private static final String FOLLOWERS_COUNT = "/count";
@@ -54,6 +56,8 @@ public class ConnectionHandler {
 	private static final String CONNECTION_COUNT = "/api/v1/connection/{followingId}/status/{status}/count";
 	
 	private static final String CONNECTION_EXISTS = "/api/v1/follow/exist/{followingId}";
+	
+	private static final String CONNECTED_WITH_USERS = "/api/v1/connection/connected";
 	
 	private static final String FOLLOW_ENTITY = "/api/v1/follow/followerType/{followerType}/followerId/{followerId}/followingType/{followingType}/followingId/{followingId}";
 	
@@ -377,5 +381,61 @@ public class ConnectionHandler {
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody();
+	}
+	
+	public List<UserInitialInfoDto> getIfConnectedWithUsers(String userId, List<String> userIds ) {
+		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> responseEntity = null;
+		
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(USERID,userId);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_BASE_PATH).append(CONNECTED_WITH_USERS);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			userIds.stream().forEach(e -> uriBuilder.queryParam("userIds", e));
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return responseEntity.getBody().getData();
+	}
+
+	public List<UserInitialInfoDto> getIfFollowingUsers(String userId, List<String> userIds ) {
+		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> responseEntity = null;
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(USERID,userId);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOWING_USERS);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			userIds.stream().forEach(e -> uriBuilder.queryParam("userIds", e));
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return responseEntity.getBody().getData();
 	}
 }

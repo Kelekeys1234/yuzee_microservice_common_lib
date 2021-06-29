@@ -67,4 +67,12 @@ public class CompanyDto {
 	
 	@JsonProperty("cover_photo_url")
 	private String coverPhotoUrl;
+	
+	@JsonProperty("is_admin")
+	private Boolean isAdmin;
+
+	@NotNull(message = "privacy_level can not be null / empty")
+	@JsonProperty("privacy_level")
+	private String privacyLevel;
+	
 }
