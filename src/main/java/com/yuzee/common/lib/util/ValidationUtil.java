@@ -12,9 +12,9 @@ import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
 import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
+import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
 import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
 import com.yuzee.common.lib.enumeration.StudentCategoryEnum;
-import com.yuzee.common.lib.enumeration.StudentTypeEnum;
 import com.yuzee.common.lib.enumeration.TransactionTypeEnum;
 import com.yuzee.common.lib.enumeration.VerifiedEnum;
 import com.yuzee.common.lib.exception.ValidationException;
@@ -113,9 +113,9 @@ public class ValidationUtil {
 		}
 	}
 
-	public static void validateStudentType(String studentType) throws ValidationException {
-		if (!EnumUtils.isValidEnumIgnoreCase(StudentTypeEnum.class, studentType)) {
-			String studentTypes = Arrays.toString(Utils.getEnumNames(StudentTypeEnum.class));
+	public static void validateNetworkCategory(String studentType) throws ValidationException {
+		if (!EnumUtils.isValidEnumIgnoreCase(NetworkCategoryEnum.class, studentType)) {
+			String studentTypes = Arrays.toString(Utils.getEnumNames(NetworkCategoryEnum.class));
 			log.info("student_type must be in one of the following: ", studentTypes);
 			throw new ValidationException("student_type must be in one of the following: " + studentTypes);
 		}
