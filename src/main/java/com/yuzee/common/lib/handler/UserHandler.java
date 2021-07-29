@@ -49,6 +49,7 @@ public class UserHandler {
 	private static final String ERROR_FROM_USER_SERVICE_MEG = "Error response recieved from user service with error code ";
 	private static final String USER_DEVICE_CONNECTION_URL = IConstant.USER_CONNECTION_URL + "/api/v1/user/device/info";
 	private static final String GET_USER_DEVICE_INFO = IConstant.USER_CONNECTION_URL +"/api/v1/user/device/basic/{userId}";
+	private static final String GET_NETWORK_CATEGORY_OF_USER = IConstant.USER_CONNECTION_URL + "/api/v1/user/network-category/entityType/{entityType}/entityId/{entityId}";
 
 	public UserEducationDto updateUserEducationByEducationId(String educationId,
 			UserEducationDto userEducationRequestDto) throws InvokeException {
@@ -236,6 +237,38 @@ public class UserHandler {
 			} else {
 				throw new InvokeException("Error invoking identity service");
 			}	
+		}
+		return responseEntity.getBody().getData();
+	}
+	
+	public String getNetworkCategoryOfUser(String userId, String entityType, String entityId) {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
+		Map<String, String> params = new HashMap<>();
+		params.put("entityType", entityType);
+		params.put("entityId", entityId);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("userId", userId);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(GET_NETWORK_CATEGORY_OF_USER);
+
+			HttpEntity<String> entity = new HttpEntity<>(null, headers);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+
+			responseEntity = restTemplate.exchange(uriBuilder.buildAndExpand(params).toUriString(), HttpMethod.GET,
+					entity, new ParameterizedTypeReference<GenericWrapperDto<String>>() {}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(ERROR_FROM_USER_SERVICE_MEG + responseEntity.getStatusCode().value());
+				throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG + responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(ERROR_FROM_USER_SERVICE_MEG, e);
+			throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG);
 		}
 		return responseEntity.getBody().getData();
 	}

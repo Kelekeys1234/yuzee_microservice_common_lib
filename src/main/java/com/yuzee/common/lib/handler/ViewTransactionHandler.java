@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
+import com.yuzee.common.lib.dto.transaction.FavoriteTransactionDto;
 import com.yuzee.common.lib.dto.transaction.TransactionCountDto;
 import com.yuzee.common.lib.dto.transaction.TransactionExistsDto;
 import com.yuzee.common.lib.dto.transaction.UserMyCourseDto;
@@ -304,9 +305,9 @@ public class ViewTransactionHandler {
 		return transactionCountDtoResponse.getBody().getData().isTransactionExists();
 	}
 	
-	public List<UserMyCourseDto> getUserFavouriteEntity(String userID, EntityTypeEnum entitiyType) {
+	public List<FavoriteTransactionDto> getUserFavouriteEntity(String userID, EntityTypeEnum entitiyType) {
 		Map<String, String> params = new HashMap<>();
-		ResponseEntity<GenericWrapperDto<List<UserMyCourseDto>>> result = null;
+		ResponseEntity<GenericWrapperDto<List<FavoriteTransactionDto>>> result = null;
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.VIEW_TRANSACTION_URL).append(GET_USER_FAVOURITE_COURSE);
@@ -318,19 +319,16 @@ public class ViewTransactionHandler {
 			httpHeaders.add(USER_ID, userID);
 			HttpEntity<String> body = new HttpEntity<>(httpHeaders);
 			result = restTemplate.exchange(path.toString(), HttpMethod.GET, body,
-					new ParameterizedTypeReference<GenericWrapperDto<List<UserMyCourseDto>>>() {
+					new ParameterizedTypeReference<GenericWrapperDto<List<FavoriteTransactionDto>>>() {
 					}, params);
 			if (result.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE_EXCEPTION,
-						result.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ result.getStatusCode().value());
+				log.error(MSG_ERROR_CODE_EXCEPTION, result.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			log.error(MSG_ERROR_INVOKING, e);
 			throw e;
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error(MSG_ERROR_INVOKING, e);
 			throw new InvokeException(MSG_ERROR_INVOKING);
 		}

@@ -104,6 +104,12 @@
 			<optional>true</optional>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.yuzee.local</groupId>
+			<artifactId>yuzee-localization-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

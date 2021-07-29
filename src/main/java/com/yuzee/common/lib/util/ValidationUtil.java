@@ -10,6 +10,7 @@ import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EntitySubTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
+import com.yuzee.common.lib.enumeration.ExperienceEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
 import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
@@ -156,5 +157,13 @@ public class ValidationUtil {
 					+ Arrays.toString(Utils.getEnumNames(ContactTypeEnum.class)));
 		}
 	}
-
+	
+	public static void validateExperienceEntityType(String entityType) {
+		if (!EnumUtils.isValidEnum(EntityTypeEnum.class, entityType)) {
+			log.error("entityType must be in one of the following {}",
+					Arrays.toString(Utils.getEnumNames(ExperienceEntityTypeEnum.class)));
+			throw new ValidationException("entityType must be in one of the following: "
+					+ Arrays.toString(Utils.getEnumNames(ExperienceEntityTypeEnum.class)));
+		}
+	}
 }

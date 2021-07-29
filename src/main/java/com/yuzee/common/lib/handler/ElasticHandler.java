@@ -7,14 +7,19 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
+import com.yuzee.common.lib.dto.GenericWrapperDto;
+import com.yuzee.common.lib.dto.PaginationResponseDto;
+import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchBulkWrapperDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
 import com.yuzee.common.lib.dto.elastic.NetworkElasticDto;
@@ -42,6 +47,8 @@ public class ElasticHandler {
 	
 	private static final String MSG_ERROR_INVOKING_ELASTIC = "Error invoking elastic service";
 	private static final String MSG_ERROR_CODE = "Error response recieved from elastic service with error code ";
+	
+	private static final String GET_COURSE_BASIC_INFO_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/course/basic_info";
 	
 	public void syncNetworkWithElastic (NetworkElasticDto networkElasticDto){
 		try {
@@ -263,6 +270,32 @@ public class ElasticHandler {
 			
 		}).collect(Collectors.toList());
 		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+	}
+	
+	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(String instituteId, List<String> facultyName,List<String> levelName,int pageNumber ,int pageSize){
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoDtoResponse = null;
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(GET_COURSE_BASIC_INFO_FILTER_URL)
+			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
+			
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			uriBuilder.queryParam("institute_id", instituteId);
+			levelName.stream().forEach(e -> uriBuilder.queryParam("level_name", e));
+			facultyName.stream().forEach(e -> uriBuilder.queryParam("faculty_names", e));
+			courseDtoDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
+			if (courseDtoDtoResponse.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + courseDtoDtoResponse.getStatusCode().value() );
+				throw new InvokeException(MSG_ERROR_CODE + courseDtoDtoResponse.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_ELASTIC,e);
+			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
+		}
+		return courseDtoDtoResponse.getBody().getData();
 	}
 
 }

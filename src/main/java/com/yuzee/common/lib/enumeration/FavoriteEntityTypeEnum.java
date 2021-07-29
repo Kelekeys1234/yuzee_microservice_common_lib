@@ -22,7 +22,8 @@ public enum FavoriteEntityTypeEnum {
 	CAREER("Career"),
 	COMPANY("Company"),
 	INTERNSHIP("Internship"),
-	STAFF_INTERVIEW("Staff Interview");
+	STAFF_INTERVIEW("Staff Interview"),
+	INSTITUTE_CLASS("Institute class");
 	
 	@Getter private String displayName;
 	

@@ -52,5 +52,8 @@ public class CultureTypeDto{
 	
 	@JsonProperty("is_admin")
 	private Boolean isAdmin;
+	
+	@JsonProperty("has_sub_culture")
+	private Boolean hasSubCulture;
 
 }
