@@ -28,6 +28,7 @@ import com.yuzee.common.lib.dto.authorization.ResourcePermissionDto;
 import com.yuzee.common.lib.dto.authorization.RoleBasedPolicyDto;
 import com.yuzee.common.lib.dto.authorization.RoleDto;
 import com.yuzee.common.lib.dto.authorization.ScopeDto;
+import com.yuzee.common.lib.dto.user.UserAccessToken;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.exception.NotFoundException;
 
@@ -302,17 +303,16 @@ public class AuthorizationHandler {
 		return responseEntity.getBody().getData();
 	}
 	
-	public AccessTokenResponse createToken(String username, String password ) {
+
+	public AccessTokenResponse createToken(UserAccessToken userAccessToken) {
 		ResponseEntity<GenericWrapperDto<AccessTokenResponse>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			HttpEntity<UserAccessToken> entity = new HttpEntity<>(userAccessToken,headers);
 			StringBuilder path = new StringBuilder();
 			path.append(CREATE_TOKEN_API);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			builder.queryParam(USERNAME, username);
-			builder.queryParam(PASSWORD, password);
 			
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<AccessTokenResponse>>() {

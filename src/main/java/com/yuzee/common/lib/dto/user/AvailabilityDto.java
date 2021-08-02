@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class AvailabilityDto {
+	
 	@JsonProperty("day_of_week")
 	private String dayOfWeek;
 	

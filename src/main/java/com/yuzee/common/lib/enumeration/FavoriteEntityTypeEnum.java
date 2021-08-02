@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum FavoriteEntityTypeEnum {
+
 	ALL("All"),
 	MEDIA("Post"),
 	STORAGE("Videos"),
@@ -23,7 +24,8 @@ public enum FavoriteEntityTypeEnum {
 	COMPANY("Company"),
 	INTERNSHIP("Internship"),
 	STAFF_INTERVIEW("Staff Interview"),
-	INSTITUTE_CLASS("Institute class");
+	INSTITUTE_CLASS("Institute class"),
+	JOB_APPLICANT("Job applicant");
 	
 	@Getter private String displayName;
 	

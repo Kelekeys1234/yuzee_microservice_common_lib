@@ -49,6 +49,9 @@ public class CourseDto {
 	@JsonProperty("institute_name")
 	private String instituteName;
 	
+	@JsonProperty("procedure_id")
+	private String procedureId;
+	
 	@JsonProperty("course_delivery_modes")
 	private List<CourseDeliveryModesDto> courseAdditionalInfo;
 }

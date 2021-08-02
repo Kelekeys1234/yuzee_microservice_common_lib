@@ -25,6 +25,8 @@ import com.yuzee.common.lib.dto.user.UserDeviceInfoWrapperDto;
 import com.yuzee.common.lib.dto.user.UserEducationDto;
 import com.yuzee.common.lib.dto.user.UserIdList;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
+import com.yuzee.common.lib.dto.user.UserSkillDto;
+import com.yuzee.common.lib.dto.user.UserWorkAvailabilityDto;
 import com.yuzee.common.lib.dto.user.UserWorkExperienceDto;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.exception.NotFoundException;
@@ -49,6 +51,9 @@ public class UserHandler {
 	private static final String ERROR_FROM_USER_SERVICE_MEG = "Error response recieved from user service with error code ";
 	private static final String USER_DEVICE_CONNECTION_URL = IConstant.USER_CONNECTION_URL + "/api/v1/user/device/info";
 	private static final String GET_USER_DEVICE_INFO = IConstant.USER_CONNECTION_URL +"/api/v1/user/device/basic/{userId}";
+
+	private static final String GET_USER_WORK_AVAILABILITY = IConstant.USER_CONNECTION_URL + "/api/v1/user/workavailability";
+	private static final String GET_USER_SKILLS = IConstant.USER_CONNECTION_URL + "/api/v1/user/skill";
 	private static final String GET_NETWORK_CATEGORY_OF_USER = IConstant.USER_CONNECTION_URL + "/api/v1/user/network-category/entityType/{entityType}/entityId/{entityId}";
 
 	public UserEducationDto updateUserEducationByEducationId(String educationId,
@@ -218,6 +223,7 @@ public class UserHandler {
 		}
 		return response.getBody().getData();
 	}
+
 	public List<UserDeviceInfoDto> getUserDeviceInfoByUserId(String userId) throws InvokeException {
 		ResponseEntity<UserDeviceInfoWrapperDto> responseEntity = null;
 		Map<String, String> params = new HashMap<String, String>();
@@ -241,6 +247,56 @@ public class UserHandler {
 		return responseEntity.getBody().getData();
 	}
 	
+	public UserWorkAvailabilityDto getUserWorkAvailabilityByUserID(String userId) {
+		ResponseEntity<GenericWrapperDto<UserWorkAvailabilityDto>> userWorkAvailability = null;
+
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add(USER_ID, userId);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    try {
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+	    	StringBuilder path = new StringBuilder();
+			path.append(GET_USER_WORK_AVAILABILITY);
+			userWorkAvailability = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<UserWorkAvailabilityDto>>() {});
+			if (userWorkAvailability.getStatusCode().value() != 200) {
+				throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG + userWorkAvailability.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(IDENTITY_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		}
+		catch (Exception e) {
+			throw new InvokeException(IDENTITY_INVOKE_EXCEPTION_MSG,e);
+		}
+		return userWorkAvailability.getBody().getData();
+	}
+	
+	public UserSkillDto getUserSkillsUserID(String userId) {
+		ResponseEntity<GenericWrapperDto<UserSkillDto>> userSkillDto = null;
+
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add(USER_ID, userId);
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    try {
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+	    	StringBuilder path = new StringBuilder();
+			path.append(GET_USER_SKILLS);
+			userSkillDto = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<UserSkillDto>>() {});
+			if (userSkillDto.getStatusCode().value() != 200) {
+				throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG + userSkillDto.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(IDENTITY_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		}
+		catch (Exception e) {
+			throw new InvokeException(IDENTITY_INVOKE_EXCEPTION_MSG,e);
+		}
+		return userSkillDto.getBody().getData();
+	}
+
 	public String getNetworkCategoryOfUser(String userId, String entityType, String entityId) {
 		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
 		Map<String, String> params = new HashMap<>();

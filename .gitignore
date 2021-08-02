@@ -58,3 +58,4 @@ mvnw
 mvnw.cmd
 .factorypath
 .springBeans
+/bin/

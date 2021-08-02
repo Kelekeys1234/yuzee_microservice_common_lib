@@ -28,7 +28,7 @@ public class UserWorkAvailabilityDto {
 	
 	@NotBlank(message = "work_type is required")
 	@JsonProperty("preferred_work_type")
-	private String preferredWorkType;
+	private List<String> preferredWorkTypesList;
 	
 	@DecimalMin(value = "0.0", message = "distance is required") 
 	@JsonProperty("distance")

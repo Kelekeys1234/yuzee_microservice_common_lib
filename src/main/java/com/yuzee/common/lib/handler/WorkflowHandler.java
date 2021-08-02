@@ -1,9 +1,9 @@
 package com.yuzee.common.lib.handler;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,11 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
-import com.yuzee.common.lib.dto.user.UserEducationDto;
-import com.yuzee.common.lib.dto.workflow.ProcedureStepDto;
+import com.yuzee.common.lib.dto.PaginationResponseDto;
+import com.yuzee.common.lib.dto.application_workflow.ProcedureStepDto;
+import com.yuzee.common.lib.dto.application_workflow.TaskDto;
+import com.yuzee.common.lib.enumeration.TaskNameEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +38,20 @@ public class WorkflowHandler {
 	
 	private static final String WORKFLOW_INVOKE_EXCEPTION_MSG = "Error invoking workflow service {}";
 	
-	private static final String CREATE_DEPLOYMENT_URL = IConstant.WORKFLOW_CONNECTION_URL + "/deployment";
+	private static final String CREATE_DEPLOYMENT = IConstant.WORKFLOW_CONNECTION_URL + "/deployment";
 	
-	private static final String RUN_DEPLOYMENT_URL = IConstant.WORKFLOW_CONNECTION_URL + "/deployment/{id}/run";
+	private static final String RUN_DEPLOYMENT = IConstant.WORKFLOW_CONNECTION_URL +"/deployment" ;
 	
+	private static final String URL_SEPARATOR = "/";
 	
+	private static final String RUN = "/run";
+	
+	private static final String GET_PENDING_TASK = IConstant.WORKFLOW_CONNECTION_URL + "/task";
+	
+	private static final String GET_COMPLETE_TASK = IConstant.WORKFLOW_CONNECTION_URL + "/history/task/completed";
+	
+	private static final String COMPLTED_TASK = IConstant.WORKFLOW_CONNECTION_URL +"/task/complete" ;
+
 
 	
 	public String createDeployment(List<ProcedureStepDto> procedureStepDtoList) throws InvokeException {
@@ -50,7 +62,7 @@ public class WorkflowHandler {
 	    try {
 	    	HttpEntity<List<ProcedureStepDto>> entity = new HttpEntity<>(procedureStepDtoList, headers);
 	    	StringBuilder path = new StringBuilder();
-			path.append(CREATE_DEPLOYMENT_URL);
+			path.append(CREATE_DEPLOYMENT);
 			createDeployement = restTemplate.exchange(path.toString(), HttpMethod.POST, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<String>>() {});
 			if (createDeployement.getStatusCode().value() != 200) {
@@ -66,22 +78,21 @@ public class WorkflowHandler {
 		return createDeployement.getBody().getData();
 	}
 	
-	public String runDeployment(String id, String isReviewed) throws InvokeException {
-		ResponseEntity<GenericWrapperDto<String>> runDeployement = null;
-
+	public String runDeployment(String deployementKey, Map<String, Object> userApplicationMap) {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    Map<String, String> params = new HashMap<>();
-	    params.put("id", id);
-	    params.put("isReviewed", isReviewed);
-	    try {
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
-	    	StringBuilder path = new StringBuilder();
-	    	path.append(RUN_DEPLOYMENT_URL);
-	    	runDeployement = restTemplate.exchange(path.toString(), HttpMethod.POST, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<String>>() {},params);
-			if (runDeployement.getStatusCode().value() != 200) {
-				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + runDeployement.getStatusCode().value() );
+		try {
+			HttpEntity<Map<String, Object>> entity = new HttpEntity<>(userApplicationMap,headers);
+			StringBuilder path = new StringBuilder();
+			path.append(RUN_DEPLOYMENT).append(URL_SEPARATOR).append(deployementKey).append(RUN);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<String>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + responseEntity.getStatusCode().value() );
 			}
 		} catch (InvokeException e) {
 			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
@@ -90,7 +101,96 @@ public class WorkflowHandler {
 		catch (Exception e) {
 			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG,e);
 		}
-		return runDeployement.getBody().getData();
+		return responseEntity.getBody().getData();
+	}
+	
+	public PaginationResponseDto<List<TaskDto>> getPendingTask(int pageNumber, int pageSize, String userApplicationId, String instituteId, TaskNameEnum taskNameEnum) {
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<TaskDto>>>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			StringBuilder path = new StringBuilder();
+			path.append(GET_PENDING_TASK)
+			.append(URL_SEPARATOR).append("pageNumber")
+			.append(URL_SEPARATOR).append(pageNumber)
+			.append(URL_SEPARATOR).append("pageSize")
+			.append(URL_SEPARATOR).append(pageSize);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			if(!ObjectUtils.isEmpty(taskNameEnum)) {			
+				builder.queryParam("task_name", taskNameEnum.name());
+			}
+			builder.queryParam("institute_id", instituteId);
+			builder.queryParam("user_application_id", userApplicationId);
+			
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<TaskDto>>>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + responseEntity.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		}
+		catch (Exception e) {
+			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG,e);
+		}
+		return responseEntity.getBody().getData();
+	}
+
+	public List<TaskDto> getCompletedTask(String userApplicationId) {
+		ResponseEntity<GenericWrapperDto<List<TaskDto>>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			StringBuilder path = new StringBuilder();
+			path.append(GET_COMPLETE_TASK);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			builder.queryParam("user_application_id", userApplicationId);
+			
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<TaskDto>>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + responseEntity.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		}
+		catch (Exception e) {
+			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG,e);
+		}
+		return responseEntity.getBody().getData();
+	}
+	
+	public String completeTask(String taskId, Map<String, Object> userApplicationMap) {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			HttpEntity<Map<String, Object>> entity = new HttpEntity<>(userApplicationMap,headers);
+			StringBuilder path = new StringBuilder();
+			path.append(COMPLTED_TASK);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			builder.queryParam("task_id", taskId);
+
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.PUT, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<String>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + responseEntity.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		}
+		catch (Exception e) {
+			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG,e);
+		}
+		return responseEntity.getBody().getData();
 	}
 	
 }

@@ -63,4 +63,10 @@ public class UserInitialInfoDto implements Serializable{
 	
 	@JsonProperty("roles")
 	private List<RoleDto> roles;
+	
+	@JsonProperty( "latitude")
+	private Double latitude;
+	
+	@JsonProperty( "longitude")
+	private Double longitude;
 }

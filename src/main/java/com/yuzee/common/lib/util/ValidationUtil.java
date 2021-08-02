@@ -16,6 +16,7 @@ import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
 import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
 import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
 import com.yuzee.common.lib.enumeration.StudentCategoryEnum;
+import com.yuzee.common.lib.enumeration.TaskNameEnum;
 import com.yuzee.common.lib.enumeration.TransactionTypeEnum;
 import com.yuzee.common.lib.enumeration.VerifiedEnum;
 import com.yuzee.common.lib.exception.ValidationException;
@@ -30,6 +31,8 @@ public class ValidationUtil {
 	private static final String LANGUAGE_PROFICIENCY_TYPE_VALIDATION_MESSAGE="language_proficiency must be in one of the following: ";
 	private static final String EXAMPLE_VIDEO_CATEGORY_TYPE_VALIDATION_MESSAGE="example_video_category_type must be in one of the following: ";
 	private static final String VERIFICATION_ENUM_VALIDATION_MESSAGE = "verification value must be in one of the following: ";
+
+	private static final String TASK_NAME_VALIDATION_MESSAGE = "task_name must be in one of the following: ";
 
 	private ValidationUtil() {
 
@@ -157,13 +160,23 @@ public class ValidationUtil {
 					+ Arrays.toString(Utils.getEnumNames(ContactTypeEnum.class)));
 		}
 	}
-	
+
 	public static void validateExperienceEntityType(String entityType) {
 		if (!EnumUtils.isValidEnum(EntityTypeEnum.class, entityType)) {
 			log.error("entityType must be in one of the following {}",
 					Arrays.toString(Utils.getEnumNames(ExperienceEntityTypeEnum.class)));
 			throw new ValidationException("entityType must be in one of the following: "
 					+ Arrays.toString(Utils.getEnumNames(ExperienceEntityTypeEnum.class)));
+		}
+	}
+	
+
+	public static void validateTaskName(String taskName) {
+		if (!EnumUtils.isValidEnum(TaskNameEnum.class, taskName)) {
+			log.error(TASK_NAME_VALIDATION_MESSAGE +
+				Arrays.toString(Utils.getEnumNames(TaskNameEnum.class)));
+			throw new ValidationException(TASK_NAME_VALIDATION_MESSAGE +
+				Arrays.toString(Utils.getEnumNames(TaskNameEnum.class)));
 		}
 	}
 }
