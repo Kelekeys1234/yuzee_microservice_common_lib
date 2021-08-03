@@ -3,6 +3,7 @@ package com.yuzee.common.lib.handler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -57,6 +58,8 @@ public class ViewTransactionHandler {
 
 	private static final String GET_USER_FAVOURITE_COURSE = "/user/entityType/{entityType}/transactionType/{transactionType}";
 	
+	private static final String GET_USER_FAVOURITE_ENTITY_BY_ENTITY_IDS = "/api/v1/favorite/{entityType}/multiple";
+	
 	private static final String FAVORITE_ENTITY_TYPE_EXIST = "/api/v1/favorite/{entityType}/exists";
 
 	private static final String VIEW_TRANSACTION_COUNT = "/api/v1/transaction/user/entityType/{entityType}/transactionType/{transactionType}/count";
@@ -65,8 +68,8 @@ public class ViewTransactionHandler {
 	private static final String MSG_ERROR_CODE = "Error response recieved from view transaction service with error code ";
 	private static final String MSG_ERROR_CODE_EXCEPTION = "Error response recieved from view transaction service with error code {}";
 	
-	public List<String> getUserViewEntityIds(final List<String> entityIds, final String userId,
-			final EntityTypeEnum type) {
+	public List<String> getUserTransactionForEntityIds(final List<String> entityIds, final String userId,
+			final EntityTypeEnum type, final TransactionTypeEnum transactionTypeEnum) {
 		ResponseEntity<GenericWrapperDto<List<String>>> responseEntity = null;
 		Map<String, String> params = new HashMap<>();
 		try {
@@ -74,7 +77,7 @@ public class ViewTransactionHandler {
 			path.append(IConstant.VIEW_TRANSACTION_URL).append(GET_USER_VIEW_COURSE_MULTIPLE);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			uriBuilder.queryParam(ENTITY_TYPE, type.name());
-			uriBuilder.queryParam(TRANSACTION_TYPE, TransactionTypeEnum.VIEW.name());
+			uriBuilder.queryParam(TRANSACTION_TYPE, transactionTypeEnum.name());
 			entityIds.stream().forEach(e -> uriBuilder.queryParam("entityIds", e));
 
 			HttpHeaders header = new HttpHeaders();
@@ -321,6 +324,39 @@ public class ViewTransactionHandler {
 			result = restTemplate.exchange(path.toString(), HttpMethod.GET, body,
 					new ParameterizedTypeReference<GenericWrapperDto<List<FavoriteTransactionDto>>>() {
 					}, params);
+			if (result.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE_EXCEPTION, result.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return result.getBody().getData();
+	}
+	
+	public List<FavoriteTransactionDto> getUserFavouriteEntityByEntityIds(String userId, EntityTypeEnum entitiyType, Set<String> entityIds) {
+		Map<String, String> params = new HashMap<>();
+		ResponseEntity<GenericWrapperDto<List<FavoriteTransactionDto>>> result = null;
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.VIEW_TRANSACTIONS_BASE_PATH).append(GET_USER_FAVOURITE_ENTITY_BY_ENTITY_IDS);
+			params.put(ENTITY_TYPE, entitiyType.name());
+			
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			
+			uriBuilder.queryParam(TRANSACTION_TYPE, TransactionTypeEnum.FAVORITE.name());
+			entityIds.stream().forEach(e -> uriBuilder.queryParam("entityIds", e));
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.add(USER_ID, userId);
+			HttpEntity<String> body = new HttpEntity<>(httpHeaders);
+			result = restTemplate.exchange(uriBuilder.buildAndExpand(params).toUri(), HttpMethod.GET, body,
+					new ParameterizedTypeReference<GenericWrapperDto<List<FavoriteTransactionDto>>>() {
+					});
 			if (result.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE_EXCEPTION, result.getStatusCode().value());
 				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
