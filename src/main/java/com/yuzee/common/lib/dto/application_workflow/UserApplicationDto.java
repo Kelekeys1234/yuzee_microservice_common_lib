@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -83,6 +84,10 @@ public class UserApplicationDto implements Serializable {
 	@NotNull(message = "{user_application.preffered_careers.is_required}") 
 	@JsonProperty("preffered_careers")
 	private List <UserApplicationPrefferedCareerIdsListDto> careersIds;
+	
+	@NotBlank(message = "{offer.student_type.is_required}") 
+	@JsonProperty("student_type")
+	private String studentType;
 	
 	@JsonProperty("status")
 	private String status;

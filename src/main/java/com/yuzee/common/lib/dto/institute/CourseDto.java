@@ -2,11 +2,13 @@ package com.yuzee.common.lib.dto.institute;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 public class CourseDto {
@@ -49,8 +51,11 @@ public class CourseDto {
 	@JsonProperty("institute_name")
 	private String instituteName;
 	
-	@JsonProperty("procedure_id")
-	private String procedureId;
+	@JsonProperty("international_student_procedure_id")
+	private String internationalStudentProcedureId;
+	
+	@JsonProperty("domestic_student_procedure_id")
+	private String domesticStudentProcedureId;
 	
 	@JsonProperty("course_delivery_modes")
 	private List<CourseDeliveryModesDto> courseAdditionalInfo;

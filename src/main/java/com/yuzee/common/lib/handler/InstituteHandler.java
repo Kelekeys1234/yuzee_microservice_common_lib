@@ -41,6 +41,7 @@ public class InstituteHandler {
 	private static final String GET_SCHOLARSHIP_BY_ID = "/scholarship/multiple/id";
 	private static final String GET_INSTITUTE_BY_MULTIPLE_ID = "/institute/multiple/id";
 	private static final String UPDATE_PROCEDURE_ID = "/course/procedure_id";
+	private static final String UPDATE_PROCEDURE_ID_BY_INSITUTE_ID = "/institute_id";
 	private static final String GET_IS_CAREER_TEST_COMPLETED= "/career-test-result/is-completed";
 	private static final String USER_ID = "userId";
 	@Autowired
@@ -193,7 +194,7 @@ public class InstituteHandler {
 		return response.getBody().getData();
 	}
 	
-	public void updateProcedureIdInCourse(String procedureId, List<String> courseIds) {
+	public void updateProcedureIdInCourse(String procedureId,String studentType, List<String> courseIds) {
 		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
 		try {
 			StringBuilder path = new StringBuilder();
@@ -202,6 +203,33 @@ public class InstituteHandler {
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			courseIds.stream().forEach(e -> uriBuilder.queryParam("course_ids", e));
 			uriBuilder.queryParam("procedure_id", procedureId);
+			uriBuilder.queryParam("student_type", studentType);
+
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.PUT, null,
+					new ParameterizedTypeReference<GenericWrapperDto<String>>() {});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+	}
+	public void updateProcedureIdInCourseByInstituteId(String procedureId,String studentType, String instituteId) {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(UPDATE_PROCEDURE_ID).append(UPDATE_PROCEDURE_ID_BY_INSITUTE_ID);
+
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			uriBuilder.queryParam("student_type", studentType);
+			uriBuilder.queryParam("procedure_id", procedureId);
+			uriBuilder.queryParam("institute_id", instituteId);
 
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.PUT, null,
 					new ParameterizedTypeReference<GenericWrapperDto<String>>() {});
