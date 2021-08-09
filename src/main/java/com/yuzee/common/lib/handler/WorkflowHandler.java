@@ -55,7 +55,7 @@ public class WorkflowHandler {
 
 	
 	public String createDeployment(List<ProcedureStepDto> procedureStepDtoList) throws InvokeException {
-		ResponseEntity<GenericWrapperDto<String>> createDeployement = null;
+		ResponseEntity<GenericWrapperDto<String>> createDeployment = null;
 
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -63,10 +63,10 @@ public class WorkflowHandler {
 	    	HttpEntity<List<ProcedureStepDto>> entity = new HttpEntity<>(procedureStepDtoList, headers);
 	    	StringBuilder path = new StringBuilder();
 			path.append(CREATE_DEPLOYMENT);
-			createDeployement = restTemplate.exchange(path.toString(), HttpMethod.POST, entity,
+			createDeployment = restTemplate.exchange(path.toString(), HttpMethod.POST, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<String>>() {});
-			if (createDeployement.getStatusCode().value() != 200) {
-				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + createDeployement.getStatusCode().value() );
+			if (createDeployment.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + createDeployment.getStatusCode().value() );
 			}
 		} catch (InvokeException e) {
 			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
@@ -75,17 +75,17 @@ public class WorkflowHandler {
 		catch (Exception e) {
 			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG,e);
 		}
-		return createDeployement.getBody().getData();
+		return createDeployment.getBody().getData();
 	}
 	
-	public String runDeployment(String deployementKey, Map<String, Object> userApplicationMap) {
+	public String runDeployment(String deploymentKey, Map<String, Object> userApplicationMap) {
 		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			HttpEntity<Map<String, Object>> entity = new HttpEntity<>(userApplicationMap,headers);
 			StringBuilder path = new StringBuilder();
-			path.append(RUN_DEPLOYMENT).append(URL_SEPARATOR).append(deployementKey).append(RUN);
+			path.append(RUN_DEPLOYMENT).append(URL_SEPARATOR).append(deploymentKey).append(RUN);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,

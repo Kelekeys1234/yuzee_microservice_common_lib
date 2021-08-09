@@ -32,6 +32,7 @@ import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.dto.institute.InstituteElasticSearchDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.institute.ScholarshipElasticDto;
+import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
@@ -277,7 +278,7 @@ public class ElasticHandler {
 		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
 	}
 	
-	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, List<String> facultyName,List<String> levelName,List<String> cityNames){
+	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
 		try {
@@ -296,6 +297,8 @@ public class ElasticHandler {
 			if(!CollectionUtils.isEmpty(cityNames)) {
 				cityNames.stream().forEach(e -> uriBuilder.queryParam("city_names", e));
 			}
+			uriBuilder.queryParam("course_type", campusType);
+			
 			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
 			if (courseDtoResponse.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + courseDtoResponse.getStatusCode().value() );

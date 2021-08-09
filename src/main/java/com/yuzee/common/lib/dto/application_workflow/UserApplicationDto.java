@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.yuzee.common.lib.dto.application.RPLDto;
+import com.yuzee.common.lib.dto.application.UpskillingApplicationDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
@@ -26,12 +28,18 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("applicant_id")
 	private String applicantId;
 	
+	@JsonProperty("application_id")
+	private String applicationId;
+	
+	@JsonProperty("application_type")
+	private String applicationType;
+	
 	@JsonProperty("family_member_id")
 	private String familyMemberId;
 	
-	@NotNull(message = "{user_application.application_type.is_required}")
-	@JsonProperty("application_type")
-	private String applicationType;
+	@NotNull(message = "{user_application.type.is_required}")
+	@JsonProperty("type")
+	private String type;
 	
 	@NotNull(message = "{user_application.applying_for_type.is_required}")
 	@JsonProperty("applying_for_type")
@@ -110,5 +118,10 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("video_pitch")
 	private List<StorageDto> videoPitch;
 	
+	@JsonProperty("recognition_for_prior_leaning")
+	private RPLDto rpl;
+	
+	@JsonProperty("upskilling_applicaiton")
+	private UpskillingApplicationDto UpskillingApplicationDto;
 	
 }
