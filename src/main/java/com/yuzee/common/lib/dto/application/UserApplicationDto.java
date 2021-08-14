@@ -1,4 +1,4 @@
-package com.yuzee.common.lib.dto.application_workflow;
+package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.yuzee.common.lib.dto.application.RPLDto;
+import com.yuzee.common.lib.dto.application.RPLApplicationDto;
 import com.yuzee.common.lib.dto.application.UpskillingApplicationDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
@@ -119,9 +119,9 @@ public class UserApplicationDto implements Serializable {
 	private List<StorageDto> videoPitch;
 	
 	@JsonProperty("recognition_for_prior_leaning")
-	private RPLDto rpl;
+	private RPLApplicationDto rpl;
 	
 	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto UpskillingApplicationDto;
+	private UpskillingApplicationDto UpskillingApplication;
 	
 }

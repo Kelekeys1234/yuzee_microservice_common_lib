@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
-import com.yuzee.common.lib.dto.application_workflow.ProcedureStepDto;
+import com.yuzee.common.lib.dto.application.ProcedureStepDto;
 import com.yuzee.common.lib.dto.application_workflow.TaskDto;
 import com.yuzee.common.lib.enumeration.TaskNameEnum;
 import com.yuzee.common.lib.exception.InvokeException;
@@ -51,8 +51,6 @@ public class WorkflowHandler {
 	private static final String GET_COMPLETE_TASK = IConstant.WORKFLOW_CONNECTION_URL + "/history/task/completed";
 	
 	private static final String COMPLTED_TASK = IConstant.WORKFLOW_CONNECTION_URL +"/task/complete" ;
-
-
 	
 	public String createDeployment(List<ProcedureStepDto> procedureStepDtoList) throws InvokeException {
 		ResponseEntity<GenericWrapperDto<String>> createDeployment = null;

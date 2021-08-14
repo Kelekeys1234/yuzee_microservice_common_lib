@@ -1,4 +1,4 @@
-package com.yuzee.common.lib.dto.application_workflow;
+package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.List;

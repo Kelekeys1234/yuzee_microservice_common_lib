@@ -3,6 +3,7 @@ package com.yuzee.common.lib.dto.application_workflow;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.application.UserApplicationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

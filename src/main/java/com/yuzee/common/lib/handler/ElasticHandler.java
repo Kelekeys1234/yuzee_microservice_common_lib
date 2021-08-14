@@ -20,7 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
-import com.yuzee.common.lib.dto.application_workflow.UserApplicationDto;
+import com.yuzee.common.lib.dto.application.UserApplicationDto;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchBulkWrapperDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
@@ -313,36 +313,4 @@ public class ElasticHandler {
 		return courseDtoResponse.getBody().getData();
 	}
 	
-	public void saveUpdateUserApplication(final UserApplicationDto userApplicationDto) {
-		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-		elasticSearchDto.setType(EntityTypeEnum.APPLICATION.name());
-		elasticSearchDto.setEntityId(String.valueOf(userApplicationDto.getId()));
-		elasticSearchDto.setObject(userApplicationDto);
-		log.info("{}",elasticSearchDto);
-		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
-	}
-	
-	public PaginationResponseDto<List<UserApplicationDto>> getFilterUserApplication(int pageNumber ,int pageSize){
-		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserApplicationDto>>>> userApplicationDtoResponse = null;
-
-		try {
-			StringBuilder path = new StringBuilder();
-			path.append(GET_USER_APPLICATION_FILTER_URL)
-			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			userApplicationDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserApplicationDto>>>>() {});
-			if (userApplicationDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userApplicationDtoResponse.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + userApplicationDtoResponse.getStatusCode().value() );
-			}
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKING_ELASTIC,e);
-			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
-		}
-		return userApplicationDtoResponse.getBody().getData();
-	}
-
 }

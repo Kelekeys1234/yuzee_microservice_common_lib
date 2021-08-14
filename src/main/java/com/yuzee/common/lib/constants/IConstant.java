@@ -109,4 +109,9 @@ public class IConstant {
 	public static final String WORKFLOW_SERVICE = "WORKFLOW-SERVICE/workflow";
 
 	public static final String WORKFLOW_CONNECTION_URL = "http://" + WORKFLOW_SERVICE + "/api/v1";
+	
+	public static final String APPLICATION_SERVICE = "APPLICATION-SERVICE/application";
+
+	public static final String APPLICATION_CONNECTION_URL = "http://" + APPLICATION_SERVICE + "/api/v1";
+	
 }

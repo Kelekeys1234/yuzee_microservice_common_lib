@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class RPLDto implements Serializable {
+public class RPLApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
