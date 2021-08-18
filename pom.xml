@@ -125,12 +125,11 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>nexusdeploymentrepo</id>
-			<url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
+		
 		</snapshotRepository>
 		<repository>
-			<id>nexusdeploymentrepo</id>
-			<url>http://3.0.199.179:8081/repository/maven-releases/</url>
+			<id>yuzee-maven-release</id>
+			<url>https://yuzee-607951638574.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-release/</url>
 		</repository>
 
 	</distributionManagement>
