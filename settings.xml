@@ -117,10 +117,11 @@ under the License.
      |       used together.
      |-->
     <server>
-      <id>nexusdeploymentrepo</id>
-      <username>Deployment</username>
-      <password>QyUJAJ6mrpxifaV</password>
+      <id>yuzee-maven-release</id>
+      <username>aws</username>
+      <password>passwd12</password>
     </server>
+   
     
 
     <!-- Another sample, using keys to authenticate.
@@ -143,7 +144,7 @@ under the License.
    | repository, to be used as an alternate download site. The mirror site will be the preferred
    | server for that repository.
    |-->
-  <mirrors>
+<mirrors>
     <mirror>
       <id>maven-central-http-unblocker</id>
       <mirrorOf>central</mirrorOf>
@@ -152,18 +153,12 @@ under the License.
     </mirror>
     <mirror>
 		<id>release-http-unblocker</id>
-        <mirrorOf>nexus-release-repo</mirrorOf>
+        <mirrorOf>yuzee-maven-release</mirrorOf>
         <name></name>
-        <url>http://3.0.199.179:8081/repository/maven-release/</url>
+        <url>https://yuzee-607951638574.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-release/</url>
         <blocked>false</blocked>
     </mirror>
-    <mirror>
-        <id>snapshot-http-unblocker</id>
-        <mirrorOf>nexus-snapshot-repo</mirrorOf>
-        <name></name>
-        <url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
-        <blocked>false</blocked>
-    </mirror>
+   
 </mirrors>
 
 
@@ -253,25 +248,13 @@ under the License.
         <tomcatPath>/path/to/tomcat/instance</tomcatPath>
       </properties>
     </profile>
-	
-	<profile>
-     <id>snapshot</id>
-     <repositories>
-       <repository>
-         <id>nexus-snapshot-repo</id>
-         <name>your custom repo</name>
-         <url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
-       </repository>
-	   
-     </repositories>
-   </profile>
     <profile>
-     <id>release</id>
+     <id>yuzee-maven-release</id>
      <repositories>
        <repository>
-         <id>nexus-release-repo</id>
-         <name>your custom repo</name>
-         <url>http://3.0.199.179:8081/repository/maven-release/</url>
+         <id>yuzee-maven-release</id>
+         <name>yuzee-maven-release</name>
+         <url>https://yuzee-607951638574.d.codeartifact.ap-southeast-1.amazonaws.com/maven/maven-release/</url>
        </repository>
      </repositories>
    </profile>
