@@ -28,7 +28,7 @@ pipelines:
          
           - source set_env.sh
           - echo $value
-          - sed -i 's/passwd12/'"$value"'/g' ./settings.xml
+          - export passwd12=$valuee
           - cat settings.xml
           - mvn clean deploy -s settings.xml -P snapshot
           
