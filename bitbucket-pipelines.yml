@@ -1,16 +1,35 @@
-# This is a sample build configuration for Java (Maven).
-# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: maven:3.8.1
-
 pipelines:
   custom:
     manual-build:
-       - step:
-           name : Build and Uploade to nexus
-           caches:
-             - maven
-           script: # Modify the commands below to build your repository.
-             - mvn clean deploy -s settings.xml -P snapshot
+    - step:
+        name: test
+        image: atlassian/pipelines-awscli
+        script:
+           - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+           - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+           - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+           - aws codeartifact get-authorization-token --domain yuzee --domain-owner 607951638574 --query authorizationToken --output text > pass.txt
+           - value=$(<pass.txt)
+           - echo $value
+           - echo "export value=$value" set_env.sh
+
+           - printenv > set_env.sh 
+
+        artifacts:
+           - set_env.sh
+     
+              
+    - step:
+        name: maven
+        image: maven:3.8.1
+        caches:
+          - maven
+        script: # Modify the commands below to build your repository.
+         
+          - source set_env.sh
+          - echo $value
+          - sed -i 's/passwd12/'"$value"'/g' ./settings.xml
+          - cat settings.xml
+          - mvn clean deploy -s settings.xml -P snapshot
+          
+ 
