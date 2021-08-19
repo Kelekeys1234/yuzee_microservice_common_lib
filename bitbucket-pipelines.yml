@@ -30,6 +30,6 @@ pipelines:
           - echo $value
           - export CODEARTIFACT_AUTH_TOKEN=$value
           - cat settings.xml
-          - mvn clean deploy -s settings.xml -P snapshot
+          - mvn clean deploy -s settings.xml 
           
  
