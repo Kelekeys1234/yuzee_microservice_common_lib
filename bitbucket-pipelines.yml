@@ -28,7 +28,7 @@ pipelines:
          
           - source set_env.sh
           - echo $value
-          - export passwd12=$value
+          - export CODEARTIFACT_AUTH_TOKEN=$value
           - cat settings.xml
           - mvn clean deploy -s settings.xml -P snapshot
           
