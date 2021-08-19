@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,14 +14,17 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
-import com.yuzee.common.lib.dto.application.UserApplicationDto;
+import com.yuzee.common.lib.dto.SystemEventDTO;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchBulkWrapperDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
@@ -34,6 +38,8 @@ import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.institute.ScholarshipElasticDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
+import com.yuzee.common.lib.enumeration.EventType;
+import com.yuzee.common.lib.enumeration.KafkaTopicEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,15 +53,16 @@ public class ElasticHandler {
 	private RestTemplate restTemplate;
 
 	private static final String SYNC_NETWORK = "api/v1/sync/network";
-	
+
 	private static final String MSG_ERROR_INVOKING_ELASTIC = "Error invoking elastic service";
 	private static final String MSG_ERROR_CODE = "Error response recieved from elastic service with error code ";
-	
-	private static final String GET_COURSE_BASIC_INFO_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/course/basic_info";
-	
-	private static final String GET_USER_APPLICATION_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/user_application";
 
-	
+	private static final String GET_COURSE_BASIC_INFO_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/course/basic_info";
+
+
+	@Autowired
+	KafkaTemplate<String, String> kafkaTemplate;
+
 	public void syncNetworkWithElastic (NetworkElasticDto networkElasticDto){
 		try {
 			StringBuilder path = new StringBuilder();
@@ -73,7 +80,7 @@ public class ElasticHandler {
 			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
 		}
 	}
-	
+
 	public void saveUpdateInstitutes(List<InstituteElasticSearchDTO> institutes) {
 		List<ElasticSearchDTO> entities = institutes.stream().map(e -> {
 			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
@@ -82,9 +89,13 @@ public class ElasticHandler {
 			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
 			elasticSearchDto.setObject(e);
 			return elasticSearchDto;
-			
+
 		}).collect(Collectors.toList());
-		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_INSTITUTE);
+		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 
@@ -137,7 +148,7 @@ public class ElasticHandler {
 			restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.DELETE, httpEntity, Map.class);
 		}
 	}
-	
+
 	public void saveUpdateData(List<CourseDTOElasticSearch> courseList) {
 		List<ElasticSearchDTO> entities = courseList.stream().map(e -> {
 			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
@@ -148,13 +159,27 @@ public class ElasticHandler {
 			return elasticSearchDto;
 
 		}).collect(Collectors.toList());
-		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_COURSE);
+		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
-	public void saveDataOnElasticSearchInBulk(ElasticSearchBulkWrapperDto elasticSearchBulkWrapperDto) {
-		StringBuilder path = new StringBuilder();
-		path.append(IConstant.ELASTIC_SEARCH_BULK);
-		restTemplate.postForEntity(path.toString(), elasticSearchBulkWrapperDto, Object.class);
+	public void saveDataOnElasticSearchInBulk(SystemEventDTO systemEventDto) {
+		log.info("Handler ElasticHandler method saveDataOnElasticSearchInBulk systemEventDto : {} ", systemEventDto);
+		String systemEvent;
+		try {
+			systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
+			kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), systemEvent);
+
+		} catch (JsonProcessingException e) {
+			log.error("Error saveDataOnElasticSearchInBulk", e);
+		}
+		//		StringBuilder path = new StringBuilder();
+		//		path.append(IConstant.ELASTIC_SEARCH_BULK);
+		//		restTemplate.postForEntity(path.toString(), elasticSearchBulkWrapperDto, Object.class);
 	}
 
 	public void saveArticleOnElasticSearch(final String elasticSearchIndex, final String type, final ArticleElasticSearchDto articleDto) {
@@ -212,7 +237,7 @@ public class ElasticHandler {
 		HttpEntity<ElasticSearchDTO> httpEntity = new HttpEntity<>(elasticSearchDto, headers);
 		restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.DELETE, httpEntity, Object.class);
 	}
-	
+
 	public void addUpdateUserDetailsOnElastic(UserElasticDto userElasticDto){
 		log.debug("Inside saveInsituteOnElasticSearch() method");
 		List<ElasticSearchDTO> elasticSearchDtoList = new ArrayList<>();
@@ -226,9 +251,13 @@ public class ElasticHandler {
 		elasticSearchDtoList.add(elasticSearchDto);
 
 		elasticSearchBulkWrapperDto.setEntities(elasticSearchDtoList);
-		this.saveDataOnElasticSearchInBulk(elasticSearchBulkWrapperDto);
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_USER);
+		systemEvent.setPayload(elasticSearchBulkWrapperDto);
+		this.saveDataOnElasticSearchInBulk(systemEvent);
 	}
-	
+
 	public void saveUserOnElasticSearch(String elasticSearchIndex, String type, List<UserElasticDto> userElasticDtoList) {
 		ResponseEntity<Object> object = null;
 		try {
@@ -251,7 +280,7 @@ public class ElasticHandler {
 			log.error(MSG_ERROR_INVOKING_ELASTIC, e);
 		}
 	}
-	
+
 	public void saveUpdateFaculties(List<FacultyDto> faculties) {
 		List<ElasticSearchDTO> entities = faculties.stream().map(e -> {
 			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
@@ -260,9 +289,13 @@ public class ElasticHandler {
 			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
 			elasticSearchDto.setObject(e);
 			return elasticSearchDto;
-			
+
 		}).collect(Collectors.toList());
-		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_FACULTY);
+		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void saveUpdateLevels(List<LevelDto> level) {
@@ -273,11 +306,15 @@ public class ElasticHandler {
 			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
 			elasticSearchDto.setObject(e);
 			return elasticSearchDto;
-			
+
 		}).collect(Collectors.toList());
-		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_LEVEL);
+		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
-	
+
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
@@ -285,7 +322,7 @@ public class ElasticHandler {
 			StringBuilder path = new StringBuilder();
 			path.append(GET_COURSE_BASIC_INFO_FILTER_URL)
 			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
-			
+
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			uriBuilder.queryParam("institute_id", instituteId);
 			if(!CollectionUtils.isEmpty(levelName)) {
@@ -298,7 +335,7 @@ public class ElasticHandler {
 				cityNames.stream().forEach(e -> uriBuilder.queryParam("city_names", e));
 			}
 			uriBuilder.queryParam("course_type", campusType);
-			
+
 			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
 			if (courseDtoResponse.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + courseDtoResponse.getStatusCode().value() );
@@ -312,5 +349,5 @@ public class ElasticHandler {
 		}
 		return courseDtoResponse.getBody().getData();
 	}
-	
+
 }
