@@ -119,7 +119,7 @@ under the License.
     <server>
       <id>yuzee-maven-release</id>
       <username>aws</username>
-      <password>${env.passwd12}</password>
+      <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
     </server>
    
     
