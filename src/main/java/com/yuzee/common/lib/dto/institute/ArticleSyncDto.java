@@ -3,7 +3,7 @@ package com.yuzee.common.lib.dto.institute;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ArticleElasticSearchDto implements Serializable{
+public class ArticleSyncDto implements Serializable{
 
 	
     /**

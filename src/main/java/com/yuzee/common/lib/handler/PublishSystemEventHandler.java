@@ -1,6 +1,6 @@
 package com.yuzee.common.lib.handler;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +45,9 @@ import com.yuzee.common.lib.exception.InvokeException;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@ConditionalOnProperty(name = "yuzee.elastic-handler.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "yuzee.publish-system-event-handler.enabled", havingValue = "true")
 @Slf4j
-public class ElasticHandler {
+public class PublishSystemEventHandler {
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -82,32 +82,28 @@ public class ElasticHandler {
 	}
 
 	public void saveUpdateInstitutes(List<InstituteSyncDTO> institutes) {
-		List<ElasticSearchDTO> entities = institutes.stream().map(e -> {
-			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-			elasticSearchDto.setType(EntityTypeEnum.INSTITUTE.name());
-			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
-			elasticSearchDto.setObject(e);
-			return elasticSearchDto;
-
-		}).collect(Collectors.toList());
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_INSTITUTE);
-		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		systemEvent.setPayload(institutes);
 		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 
 	public void saveInsituteOnElasticSearch(final String elasticSearchIndex, final String type, final List<InstituteSyncDTO> instituteList) {
-		for (InstituteSyncDTO insitute : instituteList) {
-			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-			elasticSearchDto.setIndex(elasticSearchIndex);
-			elasticSearchDto.setType(type);
-			elasticSearchDto.setEntityId(String.valueOf(insitute.getId()));
-			elasticSearchDto.setObject(insitute);
-			restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
-		}
+//		for (InstituteSyncDTO insitute : instituteList) {
+//			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//			elasticSearchDto.setIndex(elasticSearchIndex);
+//			elasticSearchDto.setType(type);
+//			elasticSearchDto.setEntityId(String.valueOf(insitute.getId()));
+//			elasticSearchDto.setObject(insitute);
+//			restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
+//		}
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_INSTITUTE);
+		systemEvent.setPayload(instituteList);
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void updateInsituteOnElasticSearch(final String elasticSearchIndex, final String type, final List<InstituteSyncDTO> instituteList) {
@@ -121,6 +117,11 @@ public class ElasticHandler {
 			HttpEntity<ElasticSearchDTO> httpEntity = new HttpEntity<>(elasticSearchDto, headers);
 			restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.PUT, httpEntity, Object.class);
 		}
+//		SystemEventDTO systemEvent = new  SystemEventDTO();
+//		systemEvent.setEventTime(new Date().getTime());
+//		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_INSTITUTE);
+//		systemEvent.setPayload(instituteList);
+//		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void deleteInsituteOnElasticSearch(final String elasticSearchIndex, final String type, final List<InstituteSyncDTO> instituteList) {
@@ -134,6 +135,11 @@ public class ElasticHandler {
 			HttpEntity<ElasticSearchDTO> httpEntity = new HttpEntity<>(elasticSearchDto, headers);
 			restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.DELETE, httpEntity, Object.class);
 		}
+//		SystemEventDTO systemEvent = new  SystemEventDTO();
+//		systemEvent.setEventTime(new Date().getTime());
+//		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_INSTITUTE);
+//		systemEvent.setPayload(instituteList);
+//		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void deleteCourseOnElasticSearch(final String elasticSearchIndex, final String type, final List<CourseSyncDTO> courseList) {
@@ -150,45 +156,38 @@ public class ElasticHandler {
 	}
 
 	public void saveUpdateData(List<CourseSyncDTO> courseList) {
-		List<ElasticSearchDTO> entities = courseList.stream().map(e -> {
-			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-			elasticSearchDto.setType(EntityTypeEnum.COURSE.name());
-			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
-			elasticSearchDto.setObject(e);
-			return elasticSearchDto;
-
-		}).collect(Collectors.toList());
-		SystemEventDTO systemEvent = new  SystemEventDTO();
+				SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_COURSE);
-		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
-		
+		systemEvent.setPayload(courseList);
 		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void saveDataOnElasticSearchInBulk(SystemEventDTO systemEventDto) {
 		log.info("Handler ElasticHandler method saveDataOnElasticSearchInBulk systemEventDto : {} ", systemEventDto);
+		String systemEvent;
 		try {
-			String systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
+			systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
 			kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), systemEvent);
 
 		} catch (JsonProcessingException e) {
 			log.error("Error saveDataOnElasticSearchInBulk", e);
 		}
-		//		StringBuilder path = new StringBuilder();
-		//		path.append(IConstant.ELASTIC_SEARCH_BULK);
-		//		restTemplate.postForEntity(path.toString(), elasticSearchBulkWrapperDto, Object.class);
 	}
 
 	public void saveArticleOnElasticSearch(final String elasticSearchIndex, final String type, final ArticleSyncDto articleDto) {
-		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-		elasticSearchDto.setIndex(elasticSearchIndex);
-		elasticSearchDto.setType(type);
-		elasticSearchDto.setEntityId(String.valueOf(articleDto.getId()));
-		elasticSearchDto.setObject(articleDto);
-		log.info("{}",elasticSearchDto);
-		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
+//		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//		elasticSearchDto.setIndex(elasticSearchIndex);
+//		elasticSearchDto.setType(type);
+//		elasticSearchDto.setEntityId(String.valueOf(articleDto.getId()));
+//		elasticSearchDto.setObject(articleDto);
+//		log.info("{}",elasticSearchDto);
+//		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_ARTICLE);
+		systemEvent.setPayload(Arrays.asList(articleDto));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void updateArticleOnElasticSearch(final String elasticSearchIndex, final String type, final ArticleSyncDto articleDto) {
@@ -201,6 +200,11 @@ public class ElasticHandler {
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<ElasticSearchDTO> httpEntity = new HttpEntity<>(elasticSearchDto, headers);
 		restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.PUT, httpEntity, Object.class);
+//		SystemEventDTO systemEvent = new  SystemEventDTO();
+//		systemEvent.setEventTime(new Date().getTime());
+//		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_ARTICLE);
+//		systemEvent.setPayload(Arrays.asList(articleDto));
+//		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void deleteArticleOnElasticSearch(final String elasticSearchIndex, final String type, final ArticleSyncDto articleDto) {
@@ -216,13 +220,18 @@ public class ElasticHandler {
 	}
 
 	public void saveUpdateScholarship(final ScholarshipElasticDto scholarshipDto) {
-		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-		elasticSearchDto.setType(EntityTypeEnum.SCHOLARSHIP.name());
-		elasticSearchDto.setEntityId(String.valueOf(scholarshipDto.getId()));
-		elasticSearchDto.setObject(scholarshipDto);
-		log.info("{}",elasticSearchDto);
-		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
+//		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
+//		elasticSearchDto.setType(EntityTypeEnum.SCHOLARSHIP.name());
+//		elasticSearchDto.setEntityId(String.valueOf(scholarshipDto.getId()));
+//		elasticSearchDto.setObject(scholarshipDto);
+//		log.info("{}",elasticSearchDto);
+//		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_SCHOLARSHIP);
+		systemEvent.setPayload(Arrays.asList(scholarshipDto));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void deleteScholarshipOnElasticSearch(final String elasticSearchIndex, final String type, final ScholarshipElasticDto scholarshipDto) {
@@ -239,78 +248,63 @@ public class ElasticHandler {
 
 	public void addUpdateUserDetailsOnElastic(UserSyncDto userElasticDto){
 		log.debug("Inside saveInsituteOnElasticSearch() method");
-		List<ElasticSearchDTO> elasticSearchDtoList = new ArrayList<>();
-		ElasticSearchBulkWrapperDto elasticSearchBulkWrapperDto = new ElasticSearchBulkWrapperDto();
-
-		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX_GENERIC);
-		elasticSearchDto.setType(IConstant.ELASTIC_SEARCH_USER_TYPE);
-		elasticSearchDto.setEntityId(String.valueOf(userElasticDto.getId()));
-		elasticSearchDto.setObject(userElasticDto);
-		elasticSearchDtoList.add(elasticSearchDto);
-
-		elasticSearchBulkWrapperDto.setEntities(elasticSearchDtoList);
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_USER);
-		systemEvent.setPayload(elasticSearchBulkWrapperDto);
-		this.saveDataOnElasticSearchInBulk(systemEvent);
+		systemEvent.setPayload(Arrays.asList(userElasticDto));
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void saveUserOnElasticSearch(String elasticSearchIndex, String type, List<UserSyncDto> userElasticDtoList) {
-		ResponseEntity<Object> object = null;
-		try {
-			log.debug("Inside saveUserOnElasticSearch() method");
-			for (UserSyncDto userElasticDto : userElasticDtoList) {
-				ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-				elasticSearchDto.setIndex(elasticSearchIndex);
-				elasticSearchDto.setType(type);
-				elasticSearchDto.setEntityId(String.valueOf(userElasticDto.getId()));
-				elasticSearchDto.setObject(userElasticDto);
-				log.info("{}",elasticSearchDto);
-				object = restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL,elasticSearchDto, Object.class);
-				if(object.getStatusCode().value() != 200) {
-					log.error(MSG_ERROR_CODE + object.getStatusCodeValue());
-					throw new InvokeException(MSG_ERROR_CODE
-							+ object.getStatusCode().value());
-				}
-			}
-		}catch (Exception e) {
-			log.error(MSG_ERROR_INVOKING_ELASTIC, e);
-		}
+//		ResponseEntity<Object> object = null;
+//		try {
+//			log.debug("Inside saveUserOnElasticSearch() method");
+//			for (UserSyncDto userElasticDto : userElasticDtoList) {
+//				ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//				elasticSearchDto.setIndex(elasticSearchIndex);
+//				elasticSearchDto.setType(type);
+//				elasticSearchDto.setEntityId(String.valueOf(userElasticDto.getId()));
+//				elasticSearchDto.setObject(userElasticDto);
+//				log.info("{}",elasticSearchDto);
+//				object = restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL,elasticSearchDto, Object.class);
+//				if(object.getStatusCode().value() != 200) {
+//					log.error(MSG_ERROR_CODE + object.getStatusCodeValue());
+//					throw new InvokeException(MSG_ERROR_CODE
+//							+ object.getStatusCode().value());
+//				}
+//			}
+//		}catch (Exception e) {
+//			log.error(MSG_ERROR_INVOKING_ELASTIC, e);
+//		}
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_USER);
+		systemEvent.setPayload(userElasticDtoList);
+		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void saveUpdateFaculties(List<FacultySyncDto> faculties) {
-		List<ElasticSearchDTO> entities = faculties.stream().map(e -> {
-			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-			elasticSearchDto.setType(EntityTypeEnum.FACULTY.name());
-			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
-			elasticSearchDto.setObject(e);
-			return elasticSearchDto;
-
-		}).collect(Collectors.toList());
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_FACULTY);
-		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		systemEvent.setPayload(faculties);
 		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 
 	public void saveUpdateLevels(List<LevelSyncDto> level) {
-		List<ElasticSearchDTO> entities = level.stream().map(e -> {
-			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
-			elasticSearchDto.setType(EntityTypeEnum.LEVEL.name());
-			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
-			elasticSearchDto.setObject(e);
-			return elasticSearchDto;
-
-		}).collect(Collectors.toList());
+//		List<ElasticSearchDTO> entities = level.stream().map(e -> {
+//			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
+//			elasticSearchDto.setType(EntityTypeEnum.LEVEL.name());
+//			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
+//			elasticSearchDto.setObject(e);
+//			return elasticSearchDto;
+//
+//		}).collect(Collectors.toList());
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_LEVEL);
-		systemEvent.setPayload(new ElasticSearchBulkWrapperDto(entities));
+		systemEvent.setPayload(level);
 		saveDataOnElasticSearchInBulk(systemEvent);
 	}
 

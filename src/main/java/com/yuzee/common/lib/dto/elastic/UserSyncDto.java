@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserElasticDto {
+public class UserSyncDto {
 	
 	@JsonProperty("id")
 	private String id;

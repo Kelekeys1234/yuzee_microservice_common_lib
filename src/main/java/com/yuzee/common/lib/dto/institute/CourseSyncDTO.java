@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class CourseDTOElasticSearch {
+public class CourseSyncDTO {
 
 	@JsonProperty("id")
 	private String id;
@@ -20,13 +20,13 @@ public class CourseDTOElasticSearch {
 	private String readableId;
 
 	@JsonProperty("faculty")
-	private FacultyDto faculty;
+	private FacultySyncDto faculty;
 
 	@JsonProperty("institute")
-	private InstituteElasticSearchDTO institute;
+	private InstituteSyncDTO institute;
 
 	@JsonProperty("level")
-	private LevelDto level;
+	private LevelSyncDto level;
 
 	@JsonProperty("course_curriculum")
 	private CourseCurriculumDto courseCurriculum;

@@ -51,5 +51,5 @@ public class EducationSystemDto {
 	private String levelId;
 	
 	@JsonProperty("level")
-	private LevelDto level;
+	private LevelSyncDto level;
 }

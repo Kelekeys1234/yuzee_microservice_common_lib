@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstituteElasticSearchDTO {
+public class InstituteSyncDTO {
 
 	@JsonProperty("institute_id")
 	@NotBlank(message = "institute_id should not be blank")

@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ScholarshipElasticDto extends ScholarshipDto {
 	@JsonProperty("levels")
-	private List<LevelDto> levels;
+	private List<LevelSyncDto> levels;
 
 	@JsonProperty("faculty")
-	private FacultyDto faculty;
+	private FacultySyncDto faculty;
 
 	@JsonProperty("institute")
-	private InstituteElasticSearchDTO institute;
+	private InstituteSyncDTO institute;
 
 	@JsonProperty("intakes")
 	private List<ScholarshipIntakeDto> scholarshipIntakes;

@@ -16,13 +16,13 @@ public class ScholarshipResponseDto extends ScholarshipDto {
 	private List<StorageDto> media;
 
 	@JsonProperty("levels")
-	private List<LevelDto> levels;
+	private List<LevelSyncDto> levels;
 
 	@JsonProperty("faculty")
-	private FacultyDto faculty;
+	private FacultySyncDto faculty;
 
 	@JsonProperty("institute")
-	private InstituteElasticSearchDTO institute;
+	private InstituteSyncDTO institute;
 
 	@JsonProperty("has_edit_access")
 	private Boolean hasEditAccess;
