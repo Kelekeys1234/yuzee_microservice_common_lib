@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.review.ReviewStarDto;
 
 import lombok.Data;
 import lombok.Getter;
@@ -116,4 +117,9 @@ public class InstituteElasticSearchDTO {
 	
 	@JsonProperty("cover_photo_url")
 	private String coverPhotoUrl;
+	
+	@JsonProperty("review_count")
+	private ReviewStarDto reviewCount;
+	
+	
 }
