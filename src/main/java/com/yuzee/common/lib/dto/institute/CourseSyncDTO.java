@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class CourseSyncDTO {
+public class CourseSyncDTO implements SyncDTO{
 
 	@JsonProperty("id")
 	private String id;
@@ -156,4 +156,9 @@ public class CourseSyncDTO {
 	
 	@JsonProperty("is_active")
 	private Boolean isActive;
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }

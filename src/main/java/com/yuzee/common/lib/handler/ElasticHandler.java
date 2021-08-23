@@ -28,7 +28,7 @@ import com.yuzee.common.lib.dto.SystemEventDTO;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchBulkWrapperDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
-import com.yuzee.common.lib.dto.elastic.NetworkElasticDto;
+import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.elastic.UserSyncDto;
 import com.yuzee.common.lib.dto.institute.ArticleSyncDto;
 import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
@@ -63,7 +63,7 @@ public class ElasticHandler {
 	@Autowired
 	KafkaTemplate<String, String> kafkaTemplate;
 
-	public void syncNetworkWithElastic (NetworkElasticDto networkElasticDto){
+	public void syncNetworkWithElastic (NetworkSyncDto networkElasticDto){
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.ELASTIC_SEARCH_URL).append(SYNC_NETWORK);

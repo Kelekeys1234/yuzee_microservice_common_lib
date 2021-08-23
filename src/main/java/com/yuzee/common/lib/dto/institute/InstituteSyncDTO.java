@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstituteSyncDTO {
+public class InstituteSyncDTO implements SyncDTO {
 
 	@JsonProperty("institute_id")
 	@NotBlank(message = "institute_id should not be blank")
@@ -116,4 +116,9 @@ public class InstituteSyncDTO {
 	
 	@JsonProperty("cover_photo_url")
 	private String coverPhotoUrl;
+
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }
