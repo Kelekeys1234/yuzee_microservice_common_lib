@@ -21,6 +21,7 @@ import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.application.UserApplicationDto;
+import com.yuzee.common.lib.dto.company.CompanyElasticDto;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchBulkWrapperDto;
 import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
@@ -270,6 +271,19 @@ public class ElasticHandler {
 			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
 			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
 			elasticSearchDto.setType(EntityTypeEnum.LEVEL.name());
+			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
+			elasticSearchDto.setObject(e);
+			return elasticSearchDto;
+			
+		}).collect(Collectors.toList());
+		saveDataOnElasticSearchInBulk(new ElasticSearchBulkWrapperDto(entities));
+	}
+	
+	public void saveUpdateCompanies(List<CompanyElasticDto> company) {
+		List<ElasticSearchDTO> entities = company.stream().map(e -> {
+			ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+			elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
+			elasticSearchDto.setType(EntityTypeEnum.COMPANY.name());
 			elasticSearchDto.setEntityId(String.valueOf(e.getId()));
 			elasticSearchDto.setObject(e);
 			return elasticSearchDto;
