@@ -1,16 +1,12 @@
 package com.yuzee.common.lib.handler;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuzee.common.lib.constants.IConstant;
@@ -25,15 +23,13 @@ import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.SystemEventDTO;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
-import com.yuzee.common.lib.dto.elastic.ElasticSearchDTO;
 import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.elastic.UserSyncDto;
-import com.yuzee.common.lib.dto.institute.ArticleSyncDto;
 import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
 import com.yuzee.common.lib.dto.institute.FacultySyncDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelSyncDto;
-import com.yuzee.common.lib.dto.institute.ScholarshipElasticDto;
+import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
 import com.yuzee.common.lib.enumeration.KafkaTopicEnum;
@@ -74,7 +70,7 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 
-	public void syncScholarships(List<ScholarshipElasticDto> scholarships) {
+	public void syncScholarships(List<ScholarshipSyncDto> scholarships) {
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_SCHOLARSHIP);
@@ -131,7 +127,7 @@ public class PublishSystemEventHandler {
 		log.info("Handler ElasticHandler method saveDataOnElasticSearchInBulk systemEventDto : {} ", systemEventDto);
 		String systemEvent;
 		try {
-			systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
+			systemEvent = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, Visibility.ANY).writeValueAsString(systemEventDto);
 			kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), systemEvent);
 
 		} catch (JsonProcessingException e) {

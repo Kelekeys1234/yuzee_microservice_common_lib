@@ -35,7 +35,7 @@ import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
 import com.yuzee.common.lib.dto.institute.FacultySyncDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelSyncDto;
-import com.yuzee.common.lib.dto.institute.ScholarshipElasticDto;
+import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
@@ -215,7 +215,7 @@ public class ElasticHandler {
 		restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.DELETE, httpEntity, Object.class);
 	}
 
-	public void saveUpdateScholarship(final ScholarshipElasticDto scholarshipDto) {
+	public void saveUpdateScholarship(final ScholarshipSyncDto scholarshipDto) {
 		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
 		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX);
 		elasticSearchDto.setType(EntityTypeEnum.SCHOLARSHIP.name());
@@ -225,7 +225,7 @@ public class ElasticHandler {
 		restTemplate.postForEntity(IConstant.ELASTIC_SEARCH_URL, elasticSearchDto, Object.class);
 	}
 
-	public void deleteScholarshipOnElasticSearch(final String elasticSearchIndex, final String type, final ScholarshipElasticDto scholarshipDto) {
+	public void deleteScholarshipOnElasticSearch(final String elasticSearchIndex, final String type, final ScholarshipSyncDto scholarshipDto) {
 		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
 		elasticSearchDto.setIndex(elasticSearchIndex);
 		elasticSearchDto.setType(type);

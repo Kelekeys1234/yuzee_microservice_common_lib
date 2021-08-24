@@ -11,5 +11,5 @@ public class CourseScholarshipElasticDto {
 	private String id;
 
 	@JsonProperty(value = "scholarship")
-	private ScholarshipElasticDto scholarship;
+	private ScholarshipSyncDto scholarship;
 }

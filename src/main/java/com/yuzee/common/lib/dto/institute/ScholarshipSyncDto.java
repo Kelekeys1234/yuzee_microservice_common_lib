@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ScholarshipElasticDto extends ScholarshipDto {
+public class ScholarshipSyncDto extends ScholarshipDto implements SyncDTO{
 	@JsonProperty("levels")
 	private List<LevelSyncDto> levels;
 
@@ -21,4 +21,9 @@ public class ScholarshipElasticDto extends ScholarshipDto {
 
 	@JsonProperty("intakes")
 	private List<ScholarshipIntakeDto> scholarshipIntakes;
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }
