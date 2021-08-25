@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstituteElasticSearchDTO {
+public class InstituteSyncDTO implements SyncDTO {
 
 	@JsonProperty("institute_id")
 	@NotBlank(message = "institute_id should not be blank")
@@ -120,6 +120,9 @@ public class InstituteElasticSearchDTO {
 	
 	@JsonProperty("review_count")
 	private ReviewStarDto reviewCount;
-	
-	
+
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.institute.SyncDTO;
 
 import lombok.Data;
 
 @Data
-public class CompanyElasticDto {
+public class CompanySyncDto implements SyncDTO{
 	
 	@JsonProperty("id")
 	private String id;
@@ -81,5 +82,10 @@ public class CompanyElasticDto {
 
 	@JsonProperty("company_contact_detail")
 	private List<CompanyContactDetailDto> listOfCompanyContactDetails = new ArrayList<>();
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 	
 }

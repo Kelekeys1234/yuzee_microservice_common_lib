@@ -87,5 +87,7 @@ public enum EntityTypeEnum {
 
 	JOB_APPLICANT,
 
-	APPLICATION_PITCH;
+	APPLICATION_PITCH,
+	
+	NETWORK;
 }
