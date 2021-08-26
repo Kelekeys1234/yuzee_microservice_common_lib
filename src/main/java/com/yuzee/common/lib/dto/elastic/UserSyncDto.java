@@ -165,6 +165,9 @@ public class UserSyncDto implements SyncDTO{
 	@JsonProperty("user_accomplishment")
 	private List<UserAccomplishmentElasticDto> userAccomplishment;
 	
+	@JsonProperty("profile_picture_path")
+	private String profilePicturePath;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuzee.common.lib.constants.IConstant;
@@ -26,11 +24,13 @@ import com.yuzee.common.lib.dto.company.CompanySyncDto;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.elastic.UserSyncDto;
+import com.yuzee.common.lib.dto.event.EventSyncDto;
 import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
 import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
+import com.yuzee.common.lib.dto.post.PostSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
 import com.yuzee.common.lib.enumeration.KafkaTopicEnum;
@@ -79,10 +79,10 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 
-	public void syncUsers(List<UserSyncDto> users) {
+	public void syncUsers(List<UserSyncDto> users, EventType eventType) {
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
-		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_USER);
+		systemEvent.setMessageType(eventType);
 		systemEvent.setPayload(users);
 		syncData(systemEvent);
 	}
@@ -103,10 +103,10 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 
-	public void syncNetwork (List<NetworkSyncDto> networks){
+	public void syncNetwork (List<NetworkSyncDto> networks, EventType eventType){
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
-		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_NETWORK);
+		systemEvent.setMessageType(eventType);
 		systemEvent.setPayload(networks);
 		syncData(systemEvent);
 	}
@@ -121,9 +121,9 @@ public class PublishSystemEventHandler {
 	
 	public void syncData(SystemEventDTO systemEventDto) {
 		log.info("Handler PublishSystemEventHandler method syncData systemEventDto : {} ", systemEventDto);
-		String systemEvent;
+	
 		try {
-			systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
+			String systemEvent = new ObjectMapper().writeValueAsString(systemEventDto);
 			kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), systemEvent);
 
 		} catch (JsonProcessingException e) {
@@ -166,5 +166,30 @@ public class PublishSystemEventHandler {
 		return courseDtoResponse.getBody().getData();
 	}
 
+//	----------------- get-stream ----------------------
+	
+	public void syncUserProfilePicture(List<UserSyncDto> syncUsers, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncUsers);
+		syncData(systemEvent);
+	}
+	
+	public void syncPost(List<PostSyncDto> syncPosts, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncPosts);
+		syncData(systemEvent);
+	}
+
+	public void syncEvent(List<EventSyncDto> syncEvents, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncEvents);
+		syncData(systemEvent);
+	}
 
 }

@@ -253,7 +253,7 @@ public class ElasticHandler {
 		elasticSearchBulkWrapperDto.setEntities(elasticSearchDtoList);
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
-		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_USER);
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_USER);
 		systemEvent.setPayload(elasticSearchBulkWrapperDto);
 		this.saveDataOnElasticSearchInBulk(systemEvent);
 	}
