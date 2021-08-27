@@ -1,35 +1,17 @@
 package com.yuzee.common.lib.handler;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import com.yuzee.common.lib.enumeration.PostTypeEnum;
-import com.yuzee.common.lib.enumeration.UserConnectionType;
-import com.yuzee.common.lib.enumeration.VoteValueEnum;
-
 import io.getstream.client.Client;
-import io.getstream.client.FlatFeed;
 import io.getstream.core.LookupKind;
 import io.getstream.core.exceptions.StreamException;
-import io.getstream.core.models.Activity;
-import io.getstream.core.models.Data;
 import io.getstream.core.models.EnrichedActivity;
-import io.getstream.core.models.FeedID;
 import io.getstream.core.models.Reaction;
 import io.getstream.core.options.EnrichmentFlags;
 import io.getstream.core.options.Filter;
@@ -45,7 +27,7 @@ public class GetStreamHandler {
 	
 //	private static final String USER_FEED = "user";
 	
-	private DateFormat dateFormat;
+//	private DateFormat dateFormat;
 	
 	@Autowired
 	private Client client;
@@ -53,7 +35,7 @@ public class GetStreamHandler {
 //	private static final String MSG_CREATE_FOLLOW = "Create a follow relation between followerId {} and followingId {}";
 //	private static final String MSG_REMOVE_FOLLOW = "Remove a follow relation between followerId {} and followingId {}";
 	
-	private static final String ENTITY_TYPE = "entityType";
+//	private static final String ENTITY_TYPE = "entityType";
 	private static final String COMMENT = "comment";
 	private static final String COMMENT_ID = "commentId";
 	
@@ -221,10 +203,10 @@ public class GetStreamHandler {
 	}
 
 
-	public void deleteReaction(String reactionId) throws StreamException {
-		log.info("Removing reaction with reactionId {}", reactionId);
-		this.client.reactions().delete(reactionId).join();
-	}
+//	public void deleteReaction(String reactionId) throws StreamException {
+//		log.info("Removing reaction with reactionId {}", reactionId);
+//		this.client.reactions().delete(reactionId).join();
+//	}
 
 	public Reaction addComment(String userId ,String activityId, String commentText, String commentId) throws StreamException {
 		log.info("Adding comment for activityId {} by userId {}",activityId,userId);
@@ -244,19 +226,19 @@ public class GetStreamHandler {
 		return	this.client.reactions().addChild(userId, reactionId, comment).join();
 	}
 
-	public void updateComment(String userId, String reactionId, String commentText, String commentId) throws StreamException {
-		log.info("Updating comment with reactionId {} by userId {}",reactionId,userId);
-		Reaction updatedComment = new Reaction.Builder()
-				.id(reactionId)
-				.extraField("text", commentText).extraField(COMMENT_ID, commentId)
-				.build();
-		this.client.reactions().update(updatedComment).join();
-	}
+//	public void updateComment(String userId, String reactionId, String commentText, String commentId) throws StreamException {
+//		log.info("Updating comment with reactionId {} by userId {}",reactionId,userId);
+//		Reaction updatedComment = new Reaction.Builder()
+//				.id(reactionId)
+//				.extraField("text", commentText).extraField(COMMENT_ID, commentId)
+//				.build();
+//		this.client.reactions().update(updatedComment).join();
+//	}
 
-	public void removeComment(String userId, String reactionId) throws StreamException {
-		log.info("Removing comment with reactionId {} by userId {}",reactionId,userId);
-		this.client.reactions().delete(reactionId).join();
-	}
+//	public void removeComment(String userId, String reactionId) throws StreamException {
+//		log.info("Removing comment with reactionId {} by userId {}",reactionId,userId);
+//		this.client.reactions().delete(reactionId).join();
+//	}
 
 	public List<Reaction> getComments(String activityId, String reactionId, Integer limit) throws StreamException {
 		if (StringUtils.isEmpty(reactionId)) {
@@ -279,12 +261,12 @@ public class GetStreamHandler {
 		}
 	}
 
-	public void addVote (String userId ,String activityId, VoteValueEnum voteValueEnum ) throws StreamException {
-		log.info("Adding vote type {} for activityId {} by userId {}",voteValueEnum.toString(),activityId,userId);
-		Reaction like = new Reaction.Builder()
-				.kind(voteValueEnum.name())
-				.activityID(activityId)
-				.build();
-		this.client.reactions().add(userId, like).join();	
-	}
+//	public void addVote (String userId ,String activityId, VoteValueEnum voteValueEnum ) throws StreamException {
+//		log.info("Adding vote type {} for activityId {} by userId {}",voteValueEnum.toString(),activityId,userId);
+//		Reaction like = new Reaction.Builder()
+//				.kind(voteValueEnum.name())
+//				.activityID(activityId)
+//				.build();
+//		this.client.reactions().add(userId, like).join();	
+//	}
 }

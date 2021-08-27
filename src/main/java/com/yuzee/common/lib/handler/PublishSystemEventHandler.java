@@ -30,6 +30,7 @@ import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
+import com.yuzee.common.lib.dto.interaction.InteractionSyncDto;
 import com.yuzee.common.lib.dto.post.PostSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
@@ -79,7 +80,7 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 
-	public void syncUsers(List<UserSyncDto> users, EventType eventType) {
+	public void syncUsers(List<UserSyncDto> users, EventType eventType) { // sync data of elastic and getstream
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(eventType);
@@ -103,7 +104,7 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 
-	public void syncNetwork (List<NetworkSyncDto> networks, EventType eventType){
+	public void syncNetwork (List<NetworkSyncDto> networks, EventType eventType){ // sync data of elastic and getstream
 		SystemEventDTO systemEvent = new  SystemEventDTO();
 		systemEvent.setEventTime(new Date().getTime());
 		systemEvent.setMessageType(eventType);
@@ -119,7 +120,7 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 	
-	public void syncData(SystemEventDTO systemEventDto) {
+	public void syncData(SystemEventDTO systemEventDto) { // sync data of elastic and getstream
 		log.info("Handler PublishSystemEventHandler method syncData systemEventDto : {} ", systemEventDto);
 	
 		try {
@@ -191,5 +192,29 @@ public class PublishSystemEventHandler {
 		systemEvent.setPayload(syncEvents);
 		syncData(systemEvent);
 	}
+	
+	public void syncVotes(List<InteractionSyncDto> syncVotes, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncVotes);
+		syncData(systemEvent);
+	}
 
+	public void syncReaction(List<InteractionSyncDto> syncReaction, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncReaction);
+		syncData(systemEvent);
+	}
+
+	public void syncComments(List<InteractionSyncDto> syncComments, EventType eventType) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(eventType);
+		systemEvent.setPayload(syncComments);
+		syncData(systemEvent);
+	}
+	
 }
