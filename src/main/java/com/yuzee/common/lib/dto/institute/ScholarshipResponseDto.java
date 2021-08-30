@@ -22,7 +22,7 @@ public class ScholarshipResponseDto extends ScholarshipDto {
 	private FacultyDto faculty;
 
 	@JsonProperty("institute")
-	private InstituteElasticSearchDTO institute;
+	private InstituteSyncDTO institute;
 
 	@JsonProperty("has_edit_access")
 	private Boolean hasEditAccess;

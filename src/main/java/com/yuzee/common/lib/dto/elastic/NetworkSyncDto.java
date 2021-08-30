@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NetworkElasticDto {
+public class NetworkSyncDto {
 
 	@JsonProperty("follower_id")
 	private String followerId;

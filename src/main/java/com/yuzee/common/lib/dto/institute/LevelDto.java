@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class LevelDto {
+public class LevelDto implements SyncDTO{
 
 	@JsonProperty("level_id")
 	private String id;
@@ -28,4 +28,9 @@ public class LevelDto {
 
 	@JsonProperty("description")
 	private String description;
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }

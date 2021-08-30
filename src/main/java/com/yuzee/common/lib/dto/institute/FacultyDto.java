@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FacultyDto {
+public class FacultyDto implements SyncDTO{
 
 	@JsonProperty("faculty_id")
 	private String id;
@@ -23,5 +23,10 @@ public class FacultyDto {
 
 	@JsonProperty("icon")
 	private String icon;
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 
 }

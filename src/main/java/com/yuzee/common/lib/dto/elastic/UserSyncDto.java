@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.institute.SyncDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserElasticDto {
+public class UserSyncDto implements SyncDTO{
 	
 	@JsonProperty("id")
 	private String id;
@@ -163,5 +164,13 @@ public class UserElasticDto {
 	
 	@JsonProperty("user_accomplishment")
 	private List<UserAccomplishmentElasticDto> userAccomplishment;
+	
+	@JsonProperty("profile_picture_path")
+	private String profilePicturePath;
+	
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 	
 }

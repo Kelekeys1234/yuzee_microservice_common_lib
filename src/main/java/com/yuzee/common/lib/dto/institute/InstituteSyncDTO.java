@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.review.ReviewStarDto;
 
 import lombok.Data;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstituteElasticSearchDTO {
+public class InstituteSyncDTO implements SyncDTO {
 
 	@JsonProperty("institute_id")
 	@NotBlank(message = "institute_id should not be blank")
@@ -116,4 +117,12 @@ public class InstituteElasticSearchDTO {
 	
 	@JsonProperty("cover_photo_url")
 	private String coverPhotoUrl;
+	
+	@JsonProperty("review_count")
+	private ReviewStarDto reviewCount;
+
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }
