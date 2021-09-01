@@ -238,25 +238,25 @@ public class ElasticHandler {
 		restTemplate.exchange(IConstant.ELASTIC_SEARCH_URL, HttpMethod.DELETE, httpEntity, Object.class);
 	}
 
-	public void addUpdateUserDetailsOnElastic(UserSyncDto userElasticDto){
-		log.debug("Inside saveInsituteOnElasticSearch() method");
-		List<ElasticSearchDTO> elasticSearchDtoList = new ArrayList<>();
-		ElasticSearchBulkWrapperDto elasticSearchBulkWrapperDto = new ElasticSearchBulkWrapperDto();
-
-		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
-		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX_GENERIC);
-		elasticSearchDto.setType(IConstant.ELASTIC_SEARCH_USER_TYPE);
-		elasticSearchDto.setEntityId(String.valueOf(userElasticDto.getId()));
-		elasticSearchDto.setObject(userElasticDto);
-		elasticSearchDtoList.add(elasticSearchDto);
-
-		elasticSearchBulkWrapperDto.setEntities(elasticSearchDtoList);
-		SystemEventDTO systemEvent = new  SystemEventDTO();
-		systemEvent.setEventTime(new Date().getTime());
-		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_USER);
-		systemEvent.setPayload(elasticSearchBulkWrapperDto);
-		this.saveDataOnElasticSearchInBulk(systemEvent);
-	}
+//	public void addUpdateUserDetailsOnElastic(UserSyncDto userElasticDto){
+//		log.debug("Inside saveInsituteOnElasticSearch() method");
+//		List<ElasticSearchDTO> elasticSearchDtoList = new ArrayList<>();
+//		ElasticSearchBulkWrapperDto elasticSearchBulkWrapperDto = new ElasticSearchBulkWrapperDto();
+//
+//		ElasticSearchDTO elasticSearchDto = new ElasticSearchDTO();
+//		elasticSearchDto.setIndex(IConstant.ELASTIC_SEARCH_INDEX_GENERIC);
+//		elasticSearchDto.setType(IConstant.ELASTIC_SEARCH_USER_TYPE);
+//		elasticSearchDto.setEntityId(String.valueOf(userElasticDto.getId()));
+//		elasticSearchDto.setObject(userElasticDto);
+//		elasticSearchDtoList.add(elasticSearchDto);
+//
+//		elasticSearchBulkWrapperDto.setEntities(elasticSearchDtoList);
+//		SystemEventDTO systemEvent = new  SystemEventDTO();
+//		systemEvent.setEventTime(new Date().getTime());
+//		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_USER);
+//		systemEvent.setPayload(elasticSearchBulkWrapperDto);
+//		this.saveDataOnElasticSearchInBulk(systemEvent);
+//	}
 
 	public void saveUserOnElasticSearch(String elasticSearchIndex, String type, List<UserSyncDto> userElasticDtoList) {
 		ResponseEntity<Object> object = null;
