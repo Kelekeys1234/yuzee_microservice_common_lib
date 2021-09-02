@@ -62,6 +62,11 @@ public class CompanyDto {
 	@NotNull(message = "locations can not be null / empty")
 	private List<CompanyLocationDto> locations = new ArrayList<>();
 	
+	@JsonProperty("contact_details")
+	@Valid
+	@NotNull(message = "contact_details can not be null / empty")
+	private List<CompanyContactDetailDto> contactDetails = new ArrayList<>();
+	
 	@JsonProperty("profile_pic_url")
 	private String profilePicUrl;
 	
