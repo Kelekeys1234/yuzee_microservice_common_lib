@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.institute.SyncDTO;
 import com.yuzee.common.lib.enumeration.Gender;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scholarship {
+public class ScholarshipSyncDto implements SyncDTO{
 
 	@JsonProperty("scholarship_id")
 	private String id;
@@ -84,11 +85,16 @@ public class Scholarship {
 	private Set<String> eligibleLevel;
 
 	@JsonProperty("eligible_entity")
-	private List<ScholarshipEligibleEntity> listOfScholarshipEligibleEntity = new ArrayList<>();
+	private List<ScholarshipEligibleEntityDto> listOfScholarshipEligibleEntity = new ArrayList<>();
 
 	@JsonProperty("reuquired_languages")
 	private Set<String> requiredLanguages;
 
 	@JsonProperty("scholarship_application_deadline")
-	private List<ScholarshipApplicationDeadline> listOfScholarshipApplicationDeadline = new ArrayList<>();
+	private List<ScholarshipApplicationDeadlineDto> listOfScholarshipApplicationDeadline = new ArrayList<>();
+
+	@Override
+	public String getIdentifier() {
+		return this.getId();
+	}
 }

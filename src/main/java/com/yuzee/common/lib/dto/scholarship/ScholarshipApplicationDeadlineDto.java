@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ScholarshipApplicationDeadline {
+public class ScholarshipApplicationDeadlineDto {
 
 	@JsonProperty("scholarship_application_deadline_id")
 	private String id;
@@ -17,6 +17,6 @@ public class ScholarshipApplicationDeadline {
 	private String studentType;
 
 	@JsonProperty("scholarship_intakes")
-	private List<ScholarshipApplicationDeadlineIntake> scholarshipIntakes = new ArrayList<>();
+	private List<ScholarshipApplicationDeadlineIntakeDto> scholarshipIntakes = new ArrayList<>();
 
 }
