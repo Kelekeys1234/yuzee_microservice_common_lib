@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.institute.SyncDTO;
 import com.yuzee.common.lib.enumeration.Gender;
@@ -58,6 +59,7 @@ public class ScholarshipSyncDto implements SyncDTO{
 	private Gender gender;
 
 	@JsonProperty("application_dead_line")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date applicationDeadLine;
 
 	@JsonProperty("general_requirements")
