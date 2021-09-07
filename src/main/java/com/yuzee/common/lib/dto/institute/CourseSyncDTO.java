@@ -157,6 +157,9 @@ public class CourseSyncDTO implements SyncDTO{
 	@JsonProperty("is_active")
 	private Boolean isActive;
 	
+	@JsonProperty("course_contact_person")
+	private List<CourseContactPersonDto> CourseContactPersons;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();

@@ -126,7 +126,7 @@ public class UserSyncDto implements SyncDTO{
 	@JsonProperty("user_hobbies")
 	private List<String> hobbies;
 	
-	@JsonProperty("user_fields")
+	@JsonProperty("user_interested_fields")
 	private List<String> fields ;
 
 	@JsonProperty("user_skills")

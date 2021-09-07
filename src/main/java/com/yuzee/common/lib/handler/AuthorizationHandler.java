@@ -552,7 +552,7 @@ public class AuthorizationHandler {
 						+ responseEntity.getStatusCode().value());
 			}
 		} catch (Exception e) {
-			log.error("Error invoking authorization service");
+			log.error("Error invoking authorization service",e);
 			throw new InvokeException(MSG_ERROR_INVOKING_AUTH_SERVICE);
 		}
 	}
