@@ -29,7 +29,7 @@ import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
 import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
-import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
+import com.yuzee.common.lib.dto.scholarship.ScholarshipSyncDto;
 import com.yuzee.common.lib.dto.interaction.InteractionSyncDto;
 import com.yuzee.common.lib.dto.post.PostSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
