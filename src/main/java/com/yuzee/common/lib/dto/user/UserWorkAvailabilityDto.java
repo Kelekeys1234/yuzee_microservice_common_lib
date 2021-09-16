@@ -2,6 +2,7 @@ package com.yuzee.common.lib.dto.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
@@ -28,7 +29,7 @@ public class UserWorkAvailabilityDto {
 	
 	@NotBlank(message = "work_type is required")
 	@JsonProperty("preferred_work_type")
-	private List<String> preferredWorkTypesList;
+	private String preferredWorkType;
 	
 	@DecimalMin(value = "0.0", message = "distance is required") 
 	@JsonProperty("distance")
