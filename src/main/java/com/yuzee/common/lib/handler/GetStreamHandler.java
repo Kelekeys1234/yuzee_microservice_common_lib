@@ -38,6 +38,7 @@ public class GetStreamHandler {
 //	private static final String ENTITY_TYPE = "entityType";
 	private static final String COMMENT = "comment";
 	private static final String COMMENT_ID = "commentId";
+	private static final String REACTION_TEXT = "reactionText";
 	
 //	@PostConstruct
 //	public void init () {
@@ -186,19 +187,21 @@ public class GetStreamHandler {
 //		client.user(userId).delete().join();
 //	}
 	
-	public Reaction addLike(String userId ,String activityId) throws InterruptedException, ExecutionException, StreamException {
+	public Reaction addLike(String userId ,String activityId, String reactionText) throws InterruptedException, ExecutionException, StreamException {
 		log.info("Adding like for activityId {} by userId {}",activityId,userId);
 		Reaction like = new Reaction.Builder()
 				.kind("like")
+				.extraField(REACTION_TEXT, reactionText)
 				.activityID(activityId)
 				.build();
 		return this.client.reactions().add(userId, like).join();
 	}
 
-	public Reaction addLikeToCommentAndReply(String userId, String reactionId)
+	public Reaction addLikeToCommentAndReply(String userId, String reactionId, String reactionText)
 			throws InterruptedException, ExecutionException, StreamException {
 		log.info("Adding like for reactionId {} by userId {}", reactionId, userId);
-		Reaction like = new Reaction.Builder().kind("like").build();
+		Reaction like = new Reaction.Builder().kind("like")
+				.extraField(REACTION_TEXT, reactionText).build();
 		return this.client.reactions().addChild(userId, reactionId, like).join();
 	}
 
