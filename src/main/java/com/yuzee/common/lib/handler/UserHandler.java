@@ -256,7 +256,7 @@ public class UserHandler {
 	    try {
 			HttpEntity<String> entity = new HttpEntity<>("",headers);
 	    	StringBuilder path = new StringBuilder();
-			path.append(GET_USER_WORK_AVAILABILITY);
+			path.append(GET_USER_WORK_AVAILABILITY).append("/").append(userId);
 			userWorkAvailability = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<UserWorkAvailabilityDto>>() {});
 			if (userWorkAvailability.getStatusCode().value() != 200) {
