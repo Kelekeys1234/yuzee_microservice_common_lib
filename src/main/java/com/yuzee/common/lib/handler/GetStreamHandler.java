@@ -156,11 +156,11 @@ public class GetStreamHandler {
 		if (StringUtils.isEmpty(idLessThan)) {
 			return client.flatFeed(feedName, userId)
 			        .getEnrichedActivities(new Limit(limit),new EnrichmentFlags()
-			                .withReactionCounts().withOwnReactions()).get();
+			                .withReactionCounts().withOwnReactions().withRecentReactions()).get();
 		} else {
 			return client.flatFeed(feedName, userId)
 			        .getEnrichedActivities(new Limit(limit),new Filter().idLessThan(idLessThan),new EnrichmentFlags()
-			                .withReactionCounts().withOwnReactions()).get();
+			                .withReactionCounts().withOwnReactions().withRecentReactions()).get();
 		}
 	}
 	
