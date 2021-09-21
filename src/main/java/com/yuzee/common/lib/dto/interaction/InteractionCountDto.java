@@ -1,5 +1,7 @@
 package com.yuzee.common.lib.dto.interaction;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +22,16 @@ public class InteractionCountDto {
 	@JsonProperty("comment_count")
 	private long commentCount;
 	
+	@JsonProperty("reaction_text_counts")
+	private List<ReactionTextCountDto> reactionTextCounts;
+	
 	public InteractionCountDto(long likeCount, long commentCount) {
+		this.likeCount = likeCount;
+		this.commentCount = commentCount;
+	}
+
+	public InteractionCountDto(String entityId, long likeCount, long commentCount) {
+		this.entityId = entityId;
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
 	}
