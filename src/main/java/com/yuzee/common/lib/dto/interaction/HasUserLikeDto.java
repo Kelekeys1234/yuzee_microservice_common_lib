@@ -16,4 +16,7 @@ public class HasUserLikeDto {
 	
 	@JsonProperty("has_user_like")
 	private boolean hasUserLike;
+	
+	@JsonProperty("reaction_text")
+	private String reactionText;
 }
