@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.institute.InstituteTimingElasticDto;
@@ -105,4 +106,8 @@ public class Institute implements Serializable {
 	@JsonProperty("readable_id")
 	@Field(name = "readable_id")
 	private String readableId;
+	
+	@JsonProperty("contact_details")
+	@Field(name = "contact_details", type = FieldType.Nested)
+	private List<ContactDetail> contactDetails = new ArrayList<>();
 }

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyContactDetail implements Serializable {
+public class ContactDetail implements Serializable {
 	/**
 	 * 
 	 */

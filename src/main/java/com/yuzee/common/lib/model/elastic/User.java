@@ -232,9 +232,9 @@ public class User implements Serializable {
 	@JsonProperty("user_language_qualifications")
 	private List<UserLanguageQualificationElasticDto> userLanguageQualifications = null;
 	
-	@Field(name = "user_extended_contacts")
-	@JsonProperty("user_extended_contacts")
-	private List<UserExtenededContactElasticDto> userExtendedContacts = null;
+	@JsonProperty("contact_details")
+	@Field(name = "contact_details", type = FieldType.Nested)
+	private List<ContactDetail> contactDetails = new ArrayList<>();
 	
 	@Field(name = "user_reachout_info")
 	@JsonProperty("user_reachout_info")
