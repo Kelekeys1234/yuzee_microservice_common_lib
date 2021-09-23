@@ -13,7 +13,8 @@ public enum ProcedureStepEnum {
 	INFO_SESSION("Info session"), //TaskNameEnum.INFO_SESSION
 	PAYMENT("Payment"), //TaskNameEnum.PAYMENT
 	PRE_TRAINING_REVIEW("Pre training review"), //TaskNameEnum.SCHEDULE_PRE_TRAINING_REVIEW
-	OTHER("Other"); //TaskNameEnum.OTHER
+	OTHER("Other"), //TaskNameEnum.OTHER`
+	JOB_APPLICATION("Job application");
 	
 	@Getter private String displayName;
 	

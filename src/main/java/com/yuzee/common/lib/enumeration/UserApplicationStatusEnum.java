@@ -8,6 +8,8 @@ public enum UserApplicationStatusEnum {
 	PAYMENT_CONFIRMED, //TaskNameEnum.PAYMENT
 	COMPLETED, //TaskNameEnum.COMPLETED_ENVIROMENT
 	EXPIRED, //TaskNameEnum.PAYMENT
-	REJECTED // reject user application
+	REJECTED,// reject user application
+	IN_REVIEW,
+	HIRED
 	
 }
