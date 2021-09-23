@@ -1,8 +1,8 @@
 package com.yuzee.common.lib.dto.job;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -91,11 +91,11 @@ public class JobSyncDto implements Serializable {
 	
 	@JsonProperty("job_start_date")
 	@JsonFormat (pattern ="yyyy-MM-dd")
-	private LocalDate jobStartDate;
+	private Date jobStartDate;
 	
 	@JsonProperty("job_end_date")
 	@JsonFormat (pattern ="yyyy-MM-dd")
-	private LocalDate jobEndDate;
+	private Date jobEndDate;
 	
 	@JsonProperty("type")
 	private String type;
@@ -117,7 +117,7 @@ public class JobSyncDto implements Serializable {
 
 	@JsonProperty("application_deadline")
 	@JsonFormat (pattern ="yyyy-MM-dd")
-	private LocalDate applicationDeadline;
+	private Date applicationDeadline;
 	
 	@JsonProperty("number_of_applicant_to_hire")
 	private Integer numberOfApplicantToHire;
