@@ -1,6 +1,9 @@
 package com.yuzee.common.lib.dto.notification;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
+import org.bouncycastle.jcajce.provider.digest.GOST3411.HashMac;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -23,4 +26,12 @@ public class ContentTemplateDataDto implements Serializable {
 
 	@JsonProperty("target")
 	private String target;
+	
+	private HashMap<Object, Object> queryData=new HashMap<>();
+	
+	public ContentTemplateDataDto(String entityId, String name, String target) {
+		this.entityId = entityId;
+		this.name = name;
+		this.target = target;
+	}
 }
