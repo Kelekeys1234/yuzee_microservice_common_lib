@@ -80,8 +80,8 @@ public class CompanySyncDto implements SyncDTO{
 	@JsonProperty("company_working_hours")
 	private List<CompanyWorkingHoursDto> listOfCompanyWorkingHours = new ArrayList<>();
 
-	@JsonProperty("company_contact_detail")
-	private List<CompanyContactDetailDto> listOfCompanyContactDetails = new ArrayList<>();
+	@JsonProperty("contact_details")
+	private List<CompanyContactDetailDto> contactDetails = new ArrayList<>();
 	
 	@Override
 	public String getIdentifier() {
