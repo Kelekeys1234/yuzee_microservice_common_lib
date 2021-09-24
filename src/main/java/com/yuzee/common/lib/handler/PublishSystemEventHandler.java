@@ -31,6 +31,7 @@ import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.scholarship.ScholarshipSyncDto;
 import com.yuzee.common.lib.dto.interaction.InteractionSyncDto;
+import com.yuzee.common.lib.dto.job.JobSyncDto;
 import com.yuzee.common.lib.dto.post.PostSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
@@ -217,4 +218,11 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 	
+	public void syncJobs(List<JobSyncDto> jobs) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_JOB);
+		systemEvent.setPayload(jobs);
+		syncData(systemEvent);
+	}
 }

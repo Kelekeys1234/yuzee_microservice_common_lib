@@ -7,6 +7,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.yuzee.common.lib.enumeration.ContactTypeEnum;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
+import com.yuzee.common.lib.enumeration.ElasticType;
 import com.yuzee.common.lib.enumeration.EntitySubTypeEnum;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
@@ -33,6 +34,7 @@ public class ValidationUtil {
 	private static final String VERIFICATION_ENUM_VALIDATION_MESSAGE = "verification value must be in one of the following: ";
 
 	private static final String TASK_NAME_VALIDATION_MESSAGE = "task_name must be in one of the following: ";
+	private static final String ELASTIC_TYPE_VALIDATION_MESSAGE = "elastic_type must be in one of the following: ";
 
 	private ValidationUtil() {
 
@@ -177,6 +179,15 @@ public class ValidationUtil {
 				Arrays.toString(Utils.getEnumNames(TaskNameEnum.class)));
 			throw new ValidationException(TASK_NAME_VALIDATION_MESSAGE +
 				Arrays.toString(Utils.getEnumNames(TaskNameEnum.class)));
+		}
+	}
+
+	public static void validateElasticType(String elasticType) {
+		if (!EnumUtils.isValidEnum(ElasticType.class, elasticType)) {
+			log.error(ELASTIC_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(ElasticType.class)));
+			throw new ValidationException(ELASTIC_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(ElasticType.class)));
 		}
 	}
 }

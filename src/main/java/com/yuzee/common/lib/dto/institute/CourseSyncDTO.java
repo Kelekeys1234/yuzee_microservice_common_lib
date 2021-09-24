@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
 
 import lombok.Data;
 
@@ -159,6 +160,9 @@ public class CourseSyncDTO implements SyncDTO{
 	
 	@JsonProperty("course_contact_person")
 	private List<CourseContactPersonDto> CourseContactPersons;
+	
+	@JsonProperty("contact_details")
+	private List<CompanyContactDetailDto> contactDetails;
 	
 	@Override
 	public String getIdentifier() {

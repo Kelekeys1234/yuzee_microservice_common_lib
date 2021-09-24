@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ReactionTextCountDto {
 
 	@JsonProperty("reaction_text")
-	private String reaction_text;
+	private String reactionText;
 
 	@JsonProperty("count")
 	private Long count;
