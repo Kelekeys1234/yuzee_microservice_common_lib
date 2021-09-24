@@ -110,4 +110,8 @@ public class Institute implements Serializable {
 	@JsonProperty("contact_details")
 	@Field(name = "contact_details", type = FieldType.Nested)
 	private List<ContactDetail> contactDetails = new ArrayList<>();
+	
+	@JsonProperty("provider_codes")
+	@Field(name = "provider_codes", type = FieldType.Nested)
+	private List<ProviderCode> providerCodes = new ArrayList<>();
 }

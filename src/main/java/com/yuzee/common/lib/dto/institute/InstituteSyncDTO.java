@@ -125,6 +125,9 @@ public class InstituteSyncDTO implements SyncDTO {
 	@JsonProperty("contact_details")
 	private List<CompanyContactDetailDto> contactDetails;
 
+	@JsonProperty("provider_codes")
+	private List<ProviderCodeDto> providerCodes;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();
