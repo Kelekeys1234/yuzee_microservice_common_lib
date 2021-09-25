@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDto {
+public class TaskDto <T> {
 	@JsonProperty("id")
 	private String id;
 	
@@ -32,5 +32,5 @@ public class TaskDto {
 	private Map<String, Object> taskProcessVariables;
 	
 	@JsonProperty("userApplication")
-	private UserApplicationDto userApplication;
+	private T userApplication;
 }
