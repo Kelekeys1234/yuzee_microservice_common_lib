@@ -102,7 +102,7 @@ public class WorkflowHandler {
 		return responseEntity.getBody().getData();
 	}
 	
-	public PaginationResponseDto<List<TaskDto>> getPendingTask(int pageNumber, int pageSize, String userApplicationId, String entityId, TaskNameEnum taskNameEnum , String formType) {
+	public PaginationResponseDto<List<TaskDto>> getPendingTask(int pageNumber, int pageSize, String userApplicationId, String entityId, TaskNameEnum taskNameEnum) {
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<TaskDto>>>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
