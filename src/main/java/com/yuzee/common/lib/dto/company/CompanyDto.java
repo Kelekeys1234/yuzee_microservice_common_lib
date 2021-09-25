@@ -80,4 +80,7 @@ public class CompanyDto {
 	@JsonProperty("privacy_level")
 	private String privacyLevel;
 	
+	@JsonProperty("created_by")
+	private String createdBy;
+	
 }

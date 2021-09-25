@@ -1,5 +1,7 @@
 package com.yuzee.common.lib.dto.elastic;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.UserConnectionType;
@@ -30,5 +32,8 @@ public class NetworkSyncDto {
 	
 	@JsonProperty("sync_type")
 	private String syncType;
+	
+	@JsonProperty("createdOn")
+	private Date createdOn;
 	
 }
