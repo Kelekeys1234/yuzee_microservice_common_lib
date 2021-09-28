@@ -71,7 +71,9 @@ public enum EntitySubTypeEnum {
 	JOB_APPLICANT_SAMPLE_MEDIA(false),
 	CHILDREN_CHECK_CERTIFICATE(true),
 	POLICE_CHECK_CERTIFICATE(true),
-	FIRST_AID_CHECK_CERTIFICATE(true);
+	FIRST_AID_CHECK_CERTIFICATE(true),
+	OFFER_MEDIA(false),
+	OFFER_ATTACHMENT(false);
 	
 	@Getter private boolean singleEntity;
 	
