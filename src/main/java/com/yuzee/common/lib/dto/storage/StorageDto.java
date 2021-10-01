@@ -50,7 +50,10 @@ public class StorageDto implements Serializable {
 	
 	@JsonProperty("mime_type")
 	private String mimeType;
-	
+
 	@JsonProperty("thumbnails")
 	private List<ThumbnailsDTO> thumbnails;
+	
+	@JsonProperty("has_thumbnails")
+	private boolean hasThumbNails;
 }
