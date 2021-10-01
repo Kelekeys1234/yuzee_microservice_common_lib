@@ -1,31 +1,24 @@
 package com.yuzee.common.lib.handler;
 
 import java.io.File;
-import java.text.Collator;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
-import com.ctc.wstx.util.StringUtil;
-import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.SystemEventDTO;
 import com.yuzee.common.lib.dto.notification.EmailNotificationDto;
 import com.yuzee.common.lib.dto.notification.EmailNotificationWrapperDto;
 import com.yuzee.common.lib.dto.notification.EmailPayloadDto;
 import com.yuzee.common.lib.dto.notification.NotificationTemplateDataDto;
 import com.yuzee.common.lib.enumeration.EventType;
+import com.yuzee.common.lib.enumeration.KafkaTopicEnum;
 import com.yuzee.common.lib.exception.ConfigurationException;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.util.ObjectMapperHelper;
@@ -40,22 +33,16 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationHandler{
 	
 	@Autowired
-	JmsMessagingTemplate jmsMessagingTemplate;
+	KafkaTemplate<String, String> kafkaTemplate;
 	
-	public NotificationHandler(@Value("${spring.activemq.broker-url:}") String brokerUrl) throws ConfigurationException {
-		if(StringUtils.isEmpty(brokerUrl)) {
-			throw new ConfigurationException("broker url not setup for this instance");
-		}
-	}
-
-	public void sendMessage(final String queueName, final String textMessage) {
-		log.info("Sending message " + textMessage + "to queue - " + queueName);
-		jmsMessagingTemplate.convertAndSend(queueName, textMessage);
+	public void sendMessage(final String textMessage) {
+		log.info("Sending message " + textMessage);
+		kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), textMessage);
 	}
 	
 	public void sendPushNotification(NotificationTemplateDataDto notificationDto){
 		try {
-			sendMessage(IConstant.EVENT_QUEUE_NOTIFICATION, ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_NOTIFICATION,notificationDto)));
+			sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_NOTIFICATION,notificationDto)));
 		} catch (Exception e) {
 			log.error("Error invoking notification service {}", e);
 			throw new InvokeException("Error invoking notification service");
@@ -80,7 +67,7 @@ public class NotificationHandler{
 		EmailNotificationWrapperDto notificationWrapper = new EmailNotificationWrapperDto();
 		notificationWrapper.setNotification(emailNotificationDto);		
 		notificationWrapper.setFiles(listOfFiles.stream().map(File::getName).collect(Collectors.toList()));
-		sendMessage(IConstant.EVENT_QUEUE_NOTIFICATION, ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
+		sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
 		return status;
 	}
 	
@@ -88,7 +75,7 @@ public class NotificationHandler{
 		try {
 			EmailNotificationWrapperDto notificationWrapper = new EmailNotificationWrapperDto();
 			notificationWrapper.setNotification(emailNotificationDto);			
-			sendMessage(IConstant.EVENT_QUEUE_NOTIFICATION, ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
+			sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
 		} catch (Exception e) {
 			log.error("Error invoking notification service {}", e);
 			throw new InvokeException("Error invoking notification service");
