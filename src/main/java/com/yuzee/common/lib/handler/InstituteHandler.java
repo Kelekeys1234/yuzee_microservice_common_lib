@@ -24,6 +24,7 @@ import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.institute.CourseDto;
 import com.yuzee.common.lib.dto.institute.InstituteBasicInfoDto;
 import com.yuzee.common.lib.dto.institute.InstituteDto;
+import com.yuzee.common.lib.dto.institute.InstituteRequestDto;
 import com.yuzee.common.lib.dto.institute.InstituteWrapperDto;
 import com.yuzee.common.lib.dto.institute.ScholarshipDto;
 import com.yuzee.common.lib.exception.InvokeException;
@@ -38,6 +39,7 @@ public class InstituteHandler {
 
 	private static final String GET_COURSE_BY_ID = "/course/courseIds";
 	private static final String GET_INSTITUTE_BY_ID = "/public/basic/info";
+	private static final String GET_INSTITUTE_DETAIL_INFO_BY_ID = "/{instituteId}" ;
 	private static final String GET_SCHOLARSHIP_BY_ID = "/scholarship/multiple/id";
 	private static final String GET_INSTITUTE_BY_MULTIPLE_ID = "/institute/multiple/id";
 	private static final String UPDATE_PROCEDURE_ID = "/course/procedure_id";
@@ -245,5 +247,30 @@ public class InstituteHandler {
 			log.error(MSG_ERROR_INVOKING, e);
 			throw new InvokeException(MSG_ERROR_INVOKING);
 		}
+	}
+	
+	public InstituteRequestDto getInstituteDetailInfo(String instituteId) {
+		ResponseEntity<GenericWrapperDto<InstituteRequestDto>> responseEntity = null;
+		try {
+			Map<String, String> params = new HashMap<>();
+			params.put("instituteId", instituteId);
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_INSTITUTE_DETAIL_INFO_BY_ID);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<InstituteRequestDto>>() {}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return responseEntity.getBody().getData();
 	}
 }

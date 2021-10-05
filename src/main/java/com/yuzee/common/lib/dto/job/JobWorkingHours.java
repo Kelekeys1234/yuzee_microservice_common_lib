@@ -33,4 +33,13 @@ public class JobWorkingHours {
 	@JsonProperty("close_at")
 	@JsonFormat(pattern = "hh:mm a")
 	private Date closingAt;
+
+	public JobWorkingHours(@NotBlank(message = "day_of_week should not be null / blank") String weekDay,
+			@NotNull(message = "open_at can not be null / blank") Date openingAt,
+			@NotNull(message = "close_at can not be null / blank") Date closingAt) {
+		super();
+		this.weekDay = weekDay;
+		this.openingAt = openingAt;
+		this.closingAt = closingAt;
+	}
 }
