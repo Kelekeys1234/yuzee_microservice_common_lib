@@ -83,4 +83,11 @@ public class CompanyDto {
 	@JsonProperty("created_by")
 	private String createdBy;
 	
+	@JsonProperty("rating")
+	private Double rating;
+	
+	@JsonProperty("working_hours")
+	List<CompanyWorkingHoursDto> workingHours = new ArrayList<>();
+	
+	
 }
