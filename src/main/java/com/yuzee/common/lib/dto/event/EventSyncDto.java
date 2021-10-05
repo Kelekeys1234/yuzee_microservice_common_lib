@@ -7,6 +7,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.institute.SyncDTO;
+import com.yuzee.common.lib.dto.review.ReviewStarDto;
+import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
 
@@ -118,6 +120,12 @@ public class EventSyncDto implements SyncDTO {
 
 	@JsonProperty("ticket_link")
 	private String ticketLink;
+
+	@JsonProperty("storages")
+	List<StorageDto> storages;
+	
+	@JsonProperty("review_count")
+	private ReviewStarDto reviewCount;
 
 	@Override
 	public String getIdentifier() {
