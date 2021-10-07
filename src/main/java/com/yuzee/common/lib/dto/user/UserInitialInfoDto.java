@@ -69,4 +69,12 @@ public class UserInitialInfoDto implements Serializable{
 	
 	@JsonProperty( "longitude")
 	private Double longitude;
+	
+	@JsonProperty("dobStr")
+	private String dobStr;
+	
+	@JsonProperty("gender")
+	private String gender;
+	
+
 }
