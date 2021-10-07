@@ -43,7 +43,7 @@ public class ApplicationHandler {
 			+ "/user/application";
 
 	private static final String GET_ENABLE_APPLICATIONS_BY_ET_EI = IConstant.APPLICATION_CONNECTION_URL
-			+ "/application/procedure/entity/{entityType}";
+			+ "/enable/application/entity/{entityType}";
 
 	private static final String STATUS = "/status";
 
