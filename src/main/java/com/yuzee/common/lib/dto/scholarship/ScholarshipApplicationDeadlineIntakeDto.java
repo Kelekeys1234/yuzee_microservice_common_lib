@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScholarshipApplicationDeadlineIntake {
+public class ScholarshipApplicationDeadlineIntakeDto {
 
 	@JsonProperty("intake_id")
 	private String id;

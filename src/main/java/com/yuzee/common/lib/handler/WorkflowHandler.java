@@ -102,7 +102,7 @@ public class WorkflowHandler {
 		return responseEntity.getBody().getData();
 	}
 	
-	public PaginationResponseDto<List<TaskDto>> getPendingTask(int pageNumber, int pageSize, String userApplicationId, String instituteId, TaskNameEnum taskNameEnum) {
+	public PaginationResponseDto<List<TaskDto>> getPendingTask(int pageNumber, int pageSize, String userApplicationId, String entityId, TaskNameEnum taskNameEnum) {
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<TaskDto>>>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -118,7 +118,7 @@ public class WorkflowHandler {
 			if(!ObjectUtils.isEmpty(taskNameEnum)) {			
 				builder.queryParam("task_name", taskNameEnum.name());
 			}
-			builder.queryParam("institute_id", instituteId);
+			builder.queryParam("entity_id", entityId);
 			builder.queryParam("user_application_id", userApplicationId);
 			
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,

@@ -55,5 +55,11 @@ public class CultureTypeDto{
 	
 	@JsonProperty("has_sub_culture")
 	private Boolean hasSubCulture;
+	
+	@JsonProperty("sub_culture_test_required")
+	private Boolean subCultureTestRequired;
+	
+	@JsonProperty("company_sub_culture")
+	SubCultureTypeDto companySubCulture;
 
 }

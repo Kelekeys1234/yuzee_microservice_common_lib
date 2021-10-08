@@ -5,7 +5,9 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
 import com.yuzee.common.lib.dto.review.ReviewStarDto;
+import com.yuzee.common.lib.enumeration.InstituteType;
 
 import lombok.Data;
 import lombok.Getter;
@@ -120,7 +122,16 @@ public class InstituteSyncDTO implements SyncDTO {
 	
 	@JsonProperty("review_count")
 	private ReviewStarDto reviewCount;
+	
+	@JsonProperty("contact_details")
+	private List<CompanyContactDetailDto> contactDetails;
 
+	@JsonProperty("provider_codes")
+	private List<ProviderCodeDto> instituteProviderCodes;
+	
+	@JsonProperty("institute_type_obj")
+	private InstituteType instituteTypeObj;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();

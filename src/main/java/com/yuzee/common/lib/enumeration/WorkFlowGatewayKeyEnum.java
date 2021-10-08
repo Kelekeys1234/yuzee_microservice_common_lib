@@ -14,7 +14,11 @@ public enum WorkFlowGatewayKeyEnum {
 	
 	IS_CONTINUE("isContinue"),
 	
-	IS_STUDENT_ATTENDED("studentAttendedStatus");
+	IS_STUDENT_ATTENDED("studentAttendedStatus"),
+	
+	EMPLOYEE_APPLICATION_REVIEW("employeeApplicationReviewStatus"),
+	
+	JOB_OFFER("jobOffer");
 	
 	@Getter private String gatewayKey;
 

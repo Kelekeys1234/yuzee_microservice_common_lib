@@ -247,8 +247,8 @@ public class UserHandler {
 		return responseEntity.getBody().getData();
 	}
 	
-	public UserWorkAvailabilityDto getUserWorkAvailabilityByUserID(String userId) {
-		ResponseEntity<GenericWrapperDto<UserWorkAvailabilityDto>> userWorkAvailability = null;
+	public List<UserWorkAvailabilityDto> getUserWorkAvailabilityByUserID(String userId) {
+		ResponseEntity<GenericWrapperDto<List<UserWorkAvailabilityDto>>> userWorkAvailability = null;
 
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add(USER_ID, userId);
@@ -258,7 +258,7 @@ public class UserHandler {
 	    	StringBuilder path = new StringBuilder();
 			path.append(GET_USER_WORK_AVAILABILITY);
 			userWorkAvailability = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<UserWorkAvailabilityDto>>() {});
+					new ParameterizedTypeReference<GenericWrapperDto<List<UserWorkAvailabilityDto>>>() {});
 			if (userWorkAvailability.getStatusCode().value() != 200) {
 				throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG + userWorkAvailability.getStatusCode().value() );
 			}
@@ -327,5 +327,15 @@ public class UserHandler {
 			throw new InvokeException(ERROR_FROM_USER_SERVICE_MEG);
 		}
 		return responseEntity.getBody().getData();
+	}
+	
+	//temporary fix
+	public UserWorkAvailabilityDto getSingleUserWorkAvailabilityDto(String userId) {
+		
+		List<UserWorkAvailabilityDto> userWorkAvailabilities = getUserWorkAvailabilityByUserID(userId);
+		if(!CollectionUtils.isEmpty(userWorkAvailabilities)) {
+			return userWorkAvailabilities.get(0);
+		}
+		return new UserWorkAvailabilityDto();
 	}
 }

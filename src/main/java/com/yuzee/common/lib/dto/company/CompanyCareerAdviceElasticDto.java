@@ -22,6 +22,9 @@ public class CompanyCareerAdviceElasticDto {
 
 	@JsonProperty("description")
 	private String description;
+	
+	@JsonProperty("detail_description")
+	private String detailDescription;
 
 	@JsonProperty("company_employees")
 	private List<String> listOfCompanyEmployee = new ArrayList<>();

@@ -29,8 +29,9 @@ import com.yuzee.common.lib.dto.institute.CourseSyncDTO;
 import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.dto.institute.LevelDto;
-import com.yuzee.common.lib.dto.institute.ScholarshipSyncDto;
+import com.yuzee.common.lib.dto.scholarship.ScholarshipSyncDto;
 import com.yuzee.common.lib.dto.interaction.InteractionSyncDto;
+import com.yuzee.common.lib.dto.job.JobSyncDto;
 import com.yuzee.common.lib.dto.post.PostSyncDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.enumeration.EventType;
@@ -132,41 +133,6 @@ public class PublishSystemEventHandler {
 		}
 	}
 
-	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType){
-		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
-
-		try {
-			StringBuilder path = new StringBuilder();
-			path.append(GET_COURSE_BASIC_INFO_FILTER_URL)
-			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
-
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			uriBuilder.queryParam("institute_id", instituteId);
-			if(!CollectionUtils.isEmpty(levelName)) {
-				levelName.stream().forEach(e -> uriBuilder.queryParam("level_name", e));
-			}
-			if(!CollectionUtils.isEmpty(facultyName)) {
-				facultyName.stream().forEach(e -> uriBuilder.queryParam("faculty_names", e));
-			}
-			if(!CollectionUtils.isEmpty(cityNames)) {
-				cityNames.stream().forEach(e -> uriBuilder.queryParam("city_names", e));
-			}
-			uriBuilder.queryParam("course_type", campusType);
-
-			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
-			if (courseDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + courseDtoResponse.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + courseDtoResponse.getStatusCode().value() );
-			}
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKING_ELASTIC,e);
-			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
-		}
-		return courseDtoResponse.getBody().getData();
-	}
-
 //	----------------- get-stream ----------------------
 	
 	public void syncUserProfilePicture(List<UserSyncDto> syncUsers, EventType eventType) {
@@ -217,4 +183,11 @@ public class PublishSystemEventHandler {
 		syncData(systemEvent);
 	}
 	
+	public void syncJobs(List<JobSyncDto> jobs) {
+		SystemEventDTO systemEvent = new  SystemEventDTO();
+		systemEvent.setEventTime(new Date().getTime());
+		systemEvent.setMessageType(EventType.EVENT_TYPE_SAVE_UPDATE_JOB);
+		systemEvent.setPayload(jobs);
+		syncData(systemEvent);
+	}
 }
