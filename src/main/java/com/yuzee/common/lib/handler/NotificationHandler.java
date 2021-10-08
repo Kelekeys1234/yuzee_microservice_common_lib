@@ -12,6 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.SystemEventDTO;
 import com.yuzee.common.lib.dto.notification.EmailNotificationDto;
 import com.yuzee.common.lib.dto.notification.EmailNotificationWrapperDto;
@@ -37,7 +38,7 @@ public class NotificationHandler{
 	
 	public void sendMessage(final String textMessage) {
 		log.info("Sending message " + textMessage);
-		kafkaTemplate.send(KafkaTopicEnum.SYSTEM_EVENT.name(), textMessage);
+		kafkaTemplate.send(IConstant.EVENT_QUEUE_NOTIFICATION, textMessage);
 	}
 	
 	public void sendPushNotification(NotificationTemplateDataDto notificationDto){

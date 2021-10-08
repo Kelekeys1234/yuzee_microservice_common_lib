@@ -1,5 +1,7 @@
 package com.yuzee.common.lib.dto.connection;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -36,5 +38,7 @@ public class NetworkElasticDto {
 	@JsonProperty("sync_type")
 	@NotNull(message = "sync_type should not be null/empty")
 	private ElasticSyncType syncType;
-	
+
+	@JsonProperty("createdOn")
+	private Date createdOn;
 }

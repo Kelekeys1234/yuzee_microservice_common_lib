@@ -34,6 +34,10 @@ public class CompanyCareerAdvice implements Serializable {
 	@JsonProperty("description")
 	@Field(name = "description")
 	private String description;
+	
+	@JsonProperty("detail_description")
+	@Field(name = "detail_description")
+	private String detailDescription;
 
 	@JsonProperty("company_employees")
 	@Field(name = "company_employees", type = FieldType.Nested)
