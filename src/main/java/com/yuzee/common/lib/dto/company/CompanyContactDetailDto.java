@@ -23,4 +23,7 @@ public class CompanyContactDetailDto {
 	@NotBlank(message = "value should not be null / blank")
 	@JsonProperty("value")
 	private String value;
+	
+	@JsonProperty("icon")
+	private String icon;
 }
