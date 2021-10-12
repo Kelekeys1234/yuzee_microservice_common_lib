@@ -43,6 +43,8 @@ public class CommonHandler {
 	
 	private static final String GET_SKILLS_BY_NAME = "/skill/name";
 
+	private static final String GET_SKILLS_BY_IDS = "/skill/ids";
+
 	private static final String MSG_ERROR_CODE = "Error response recieved from common service with error code ";
 	private static final String MSG_ERROR_INVOKE_SERVICE = "Error invoking common service";
 	
@@ -160,6 +162,32 @@ public class CommonHandler {
 			responseEntity = restTemplate.exchange(builder.build(false).toUriString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<List<SkillDto>>>() {
 					});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_SERVICE);
+		}
+		return responseEntity.getBody().getData();
+	}
+
+	public List<SkillDto> getSkillByIds(Set<String> skillIds) {
+		ResponseEntity<GenericWrapperDto<List<SkillDto>>> responseEntity = null;
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.COMMON_URL).append(GET_SKILLS_BY_IDS);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			builder.queryParam("skill_ids", skillIds);
+			responseEntity = restTemplate.exchange(builder.build(false).toUriString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<List<SkillDto>>>() {
+			});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE
 						+ responseEntity.getStatusCode().value());
