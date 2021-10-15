@@ -8,6 +8,8 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.institute.SyncDTO;
+import com.yuzee.common.lib.dto.review.ReviewStarDto;
+import com.yuzee.common.lib.dto.storage.StorageDto;
 import com.yuzee.common.lib.enumeration.Gender;
 
 import lombok.AllArgsConstructor;
@@ -95,6 +97,12 @@ public class ScholarshipSyncDto implements SyncDTO{
 	@JsonProperty("scholarship_application_deadline")
 	private List<ScholarshipApplicationDeadlineDto> listOfScholarshipApplicationDeadline = new ArrayList<>();
 
+	@JsonProperty("storages")
+	List<StorageDto> storages;
+	
+	@JsonProperty("review_count")
+	private ReviewStarDto reviewCount;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();
