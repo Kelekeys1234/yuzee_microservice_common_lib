@@ -50,6 +50,9 @@ public class EducationSystemDto {
 	@NotBlank(message = "level_id should not be blank")
 	private String levelId;
 	
+	@JsonProperty(value = "level_code",access = Access.WRITE_ONLY)
+	private String levelCode;
+	
 	@JsonProperty("level")
 	private LevelDto level;
 }
