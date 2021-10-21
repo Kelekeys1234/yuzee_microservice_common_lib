@@ -25,4 +25,10 @@ public class JobApplicationDto {
 
 	@JsonProperty("jobApplicant")
 	private List<JobApplicantAudit> listOfJobApplicantAudits = new ArrayList<>();
+	
+	@JsonProperty("job_application_working_hours")
+	private JobApplicationWorkingHoursDto jobApplicationWorkingHoursDto;
+	
+	@JsonProperty("job_application_distance_willing_to_travel")
+	private JobApplicationDistanceWillingToTravelDto jobApplicationDistanceWillingToTravelDto;
 }
