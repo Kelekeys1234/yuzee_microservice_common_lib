@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
+import com.yuzee.common.lib.dto.connection.NetworkDto;
 import com.yuzee.common.lib.dto.institute.SyncDTO;
 
 import lombok.AllArgsConstructor;
@@ -141,12 +142,12 @@ public class UserSyncDto implements SyncDTO {
 
 	@JsonProperty("user_reachout_info")
 	private List<String> userReachOutInfo;
-
+	
 	@JsonProperty("connections")
-	private List<String> connections;
-
-	@JsonProperty("followers")
-	private List<String> followers;
+	private List<NetworkDto> connections;
+	
+	@JsonProperty("followings")
+	private List<NetworkDto> followings;
 
 	@JsonProperty("user_achievements")
 	private List<UserAchivementsElasticDto> userAchivements;
@@ -176,5 +177,75 @@ public class UserSyncDto implements SyncDTO {
 	public String getIdentifier() {
 		return this.getId();
 	}
+
+	public UserSyncDto(String id, String privacyLevel, String firstName, String middleName, String lastName,
+			String readableId, String gender, String dob, String countryOrgin, String citizenship, String email,
+			String username, String mobileNo, String skypeId, String userEduInfo, Boolean status, String signUpType,
+			String socialAccountId, String userType, boolean enabled, boolean accountExpired,
+			boolean credentialsExpired, boolean accountLocked, String whattsappNo, String city, String state,
+			String postalCode, String homeAddress, String mailingAddress, String aboutMe, String passportNo,
+			Date passportExpiryDate, Date passportIssueDate, String currencyCode, String imageName,
+			UserFutureMeElasticDto userFutureMe, List<String> hobbies, List<String> fields, List<String> skills,
+			List<String> interest, List<String> userInterestedCountries, List<String> userReachOutInfo,
+			List<UserAchivementsElasticDto> userAchivements, List<UserEducationElasticDto> userEducation,
+			List<UserWorkExperienceElasticDto> userWorkExperience,
+			List<UserLanguageQualificationElasticDto> userLanguageQualifications,
+			List<UserExtenededContactElasticDto> userExtendedContacts,
+			List<UserAccomplishmentElasticDto> userAccomplishment, List<CompanyContactDetailDto> contactDetails,
+			String profilePicturePath) {
+		super();
+		this.id = id;
+		this.privacyLevel = privacyLevel;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.readableId = readableId;
+		this.gender = gender;
+		this.dob = dob;
+		this.countryOrgin = countryOrgin;
+		this.citizenship = citizenship;
+		this.email = email;
+		this.username = username;
+		this.mobileNo = mobileNo;
+		this.skypeId = skypeId;
+		this.userEduInfo = userEduInfo;
+		this.status = status;
+		this.signUpType = signUpType;
+		this.socialAccountId = socialAccountId;
+		this.userType = userType;
+		this.enabled = enabled;
+		this.accountExpired = accountExpired;
+		this.credentialsExpired = credentialsExpired;
+		this.accountLocked = accountLocked;
+		this.whattsappNo = whattsappNo;
+		this.city = city;
+		this.state = state;
+		this.postalCode = postalCode;
+		this.homeAddress = homeAddress;
+		this.mailingAddress = mailingAddress;
+		this.aboutMe = aboutMe;
+		this.passportNo = passportNo;
+		this.passportExpiryDate = passportExpiryDate;
+		this.passportIssueDate = passportIssueDate;
+		this.currencyCode = currencyCode;
+		this.imageName = imageName;
+		this.userFutureMe = userFutureMe;
+		this.hobbies = hobbies;
+		this.fields = fields;
+		this.skills = skills;
+		this.interest = interest;
+		this.userInterestedCountries = userInterestedCountries;
+		this.userReachOutInfo = userReachOutInfo;
+		this.userAchivements = userAchivements;
+		this.userEducation = userEducation;
+		this.userWorkExperience = userWorkExperience;
+		this.userLanguageQualifications = userLanguageQualifications;
+		this.userExtendedContacts = userExtendedContacts;
+		this.userAccomplishment = userAccomplishment;
+		this.contactDetails = contactDetails;
+		this.profilePicturePath = profilePicturePath;
+	}
+
+	
 
 }

@@ -96,8 +96,6 @@ public class IConstant {
 	
 	public static final String EVENT_QUEUE_STORAGE_EVENTS="EVENT_QUEUE_STORAGE_EVENTS";
 	
-	public static final String ACTIVE_MQ_DLQ="ActiveMQ.DLQ";
-
 	public static final String FILE_PATH = "/home/ec2-user/RemainingRecordsFile/";
 	
 	public static final String FOLDER_NAME = "remainingRecords/";
@@ -113,5 +111,7 @@ public class IConstant {
 	public static final String APPLICATION_SERVICE = "APPLICATION-SERVICE/application";
 
 	public static final String APPLICATION_CONNECTION_URL = "http://" + APPLICATION_SERVICE + "/api/v1";
+	
+	public static final String GIFS = "gifs";
 	
 }
