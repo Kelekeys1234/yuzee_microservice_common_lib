@@ -16,4 +16,19 @@ public class JobApplicationDistanceWillingToTravelDto {
 	
 	@JsonProperty("user_distance_from_job")
 	private double userDistanceFromJob; 
+	
+	@JsonProperty("location")
+	private String jobLocation;
+	
+	@JsonProperty("job_latitude")
+	private Double joblatitude;
+	
+	@JsonProperty("job_longitude")
+	private Double joblongitude;
+	
+	@JsonProperty("user_latitude")
+	private Double userlatitude;
+	
+	@JsonProperty("user_longitude")
+	private Double userlongitude;
 }
