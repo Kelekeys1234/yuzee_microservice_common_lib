@@ -1,5 +1,8 @@
 package com.yuzee.common.lib.dto.interaction;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.enumeration.VoteValueEnum;
 
@@ -26,5 +29,7 @@ public class InteractionSyncDto {
 	@JsonProperty("comment_text")
 	private String commentText;
 	
-	
+	// specific to GIF
+	@JsonProperty("gifs")
+	private Set<String> gifs = new HashSet<>();
 }
