@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class JobApplicationDistanceWillingToTravelDto {
 	
 	@JsonProperty("willing_to_travel_to_job_mentioned_address")
-	private boolean willingToTravelToJobMentionedAddress;
+	private boolean willingToTravelToJobMentionedAddress = true;
 	
 	@JsonProperty("user_distance_from_job")
 	private double userDistanceFromJob; 
