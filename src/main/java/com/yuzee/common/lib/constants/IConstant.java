@@ -114,4 +114,8 @@ public class IConstant {
 	
 	public static final String GIFS = "gifs";
 	
+	public static final String HASHTAG = "hashtag";
+	
+	public static final String USER_MENTIONED = "user_mentioned";
+	
 }

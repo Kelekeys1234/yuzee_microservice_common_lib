@@ -32,4 +32,10 @@ public class InteractionSyncDto {
 	// specific to GIF
 	@JsonProperty("gifs")
 	private Set<String> gifs = new HashSet<>();
+	
+	@JsonProperty("mentioned_user_id")
+	private Set<String> mentionedUser = new HashSet<>();
+	
+	@JsonProperty("hash_tags")
+	private Set<String> hashTags = new HashSet<>();
 }

@@ -99,4 +99,36 @@ public class PostHandler {
 		}
 		return responseEntity.getBody().getData();
 	}
+	
+	public List<TagDto> getHashTagByIds(List<String> tagIds){
+		ResponseEntity<GenericWrapperDto<List<TagDto>>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		try{
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.POST_URL).append(HASHTAG);
+			
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			tagIds.stream().forEach(t -> builder.queryParam("tag_id", t));
+			
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<TagDto>>>() {});
+
+			if(responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
+			}
+			
+		} catch (InvokeException e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw e;
+		} 
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		
+		return responseEntity.getBody().getData();
+	}
 }
