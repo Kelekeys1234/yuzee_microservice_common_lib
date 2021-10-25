@@ -36,4 +36,15 @@ public class NetworkSyncDto {
 	@JsonProperty("createdOn")
 	private Date createdOn;
 	
+	public NetworkSyncDto(String followerId, EntityTypeEnum followerEntityType, String followingId,
+			EntityTypeEnum followingEntityType, UserConnectionType connectionType, String syncType) {
+		super();
+		this.followerId = followerId;
+		this.followerEntityType = followerEntityType;
+		this.followingId = followingId;
+		this.followingEntityType = followingEntityType;
+		this.connectionType = connectionType;
+		this.syncType = syncType;
+	}
+	
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yuzee.common.lib.dto.job.JobWorkingHours;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class JobApplicationWorkingHoursDto {
 	
 	@JsonProperty("willing_to_work_on_job_mentioned_hours")
-	private boolean willingToWorkOnJobMentionedHours;
+	private boolean willingToWorkOnJobMentionedHours = true;
 	
 	@Valid
 	@JsonProperty("working_hours")
