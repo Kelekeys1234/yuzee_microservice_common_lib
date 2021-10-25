@@ -177,6 +177,9 @@ public class UserSyncDto implements SyncDTO {
 	public String getIdentifier() {
 		return this.getId();
 	}
+	
+	@JsonProperty("verified")
+	private boolean verified;
 
 	public UserSyncDto(String id, String privacyLevel, String firstName, String middleName, String lastName,
 			String readableId, String gender, String dob, String countryOrgin, String citizenship, String email,

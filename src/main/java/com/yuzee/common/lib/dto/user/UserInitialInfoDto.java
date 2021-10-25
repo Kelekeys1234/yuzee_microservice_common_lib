@@ -76,5 +76,8 @@ public class UserInitialInfoDto implements Serializable{
 	@JsonProperty("gender")
 	private String gender;
 	
+	@JsonProperty("verified")
+	private boolean verified;
+	
 
 }
