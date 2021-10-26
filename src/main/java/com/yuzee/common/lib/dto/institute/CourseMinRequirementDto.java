@@ -38,11 +38,13 @@ public class CourseMinRequirementDto {
 
 	@Valid
 	@JsonProperty("min_requirement_subjects")
-	@NotNull(message = "min_requirement_subjects must not be null")
 	private ValidList<CourseMinRequirementSubjectDto> minRequirementSubjects;
-	
 
 	@NotNull(message = "linked_course_ids must not be null")
 	@JsonProperty("linked_course_ids")
 	List<String> linkedCourseIds;
+
+	@JsonProperty("study_languages")
+	@NotNull(message = "study_languages must not be null")
+	List<String> studyLanguages;
 }
