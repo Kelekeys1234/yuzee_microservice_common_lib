@@ -244,4 +244,8 @@ public class User implements Serializable {
 	@JsonProperty("user_accomplishment")
 	private List<UserAccomplishmentElasticDto> userAccomplishment = null;
 	
+	@Field(name = "verified")
+	@JsonProperty("verified")
+	private boolean verified;
+	
 }

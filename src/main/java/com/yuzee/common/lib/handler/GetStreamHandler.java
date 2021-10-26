@@ -87,11 +87,14 @@ public class GetStreamHandler {
 		return this.client.reactions().add(userId, comment).join();
 	}
 
-	public Reaction addReply(String userId ,String reactionId, String commentText, String commentId) throws StreamException {
+	public Reaction addReply(String userId ,String reactionId, String commentText, String commentId, Set<String> gifs, Set<String> hashtag, Set<String> userMentioned) throws StreamException, JsonProcessingException {
 		log.info("Adding reply for reactionId {} by userId {}",reactionId,userId);
 		Reaction comment = new Reaction.Builder()
 				.kind(COMMENT)
 				.extraField("text", commentText).extraField(COMMENT_ID, commentId)
+				.extraField(IConstant.GIFS, objectMapper.writeValueAsString(gifs))
+				.extraField(IConstant.HASHTAG, objectMapper.writeValueAsString(hashtag))
+				.extraField(IConstant.USER_MENTIONED, objectMapper.writeValueAsString(userMentioned))
 				.build();
 		return	this.client.reactions().addChild(userId, reactionId, comment).join();
 	}
