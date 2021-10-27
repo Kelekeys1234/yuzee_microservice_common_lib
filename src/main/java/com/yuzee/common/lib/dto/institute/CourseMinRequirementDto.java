@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.dto.institute;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -38,11 +39,13 @@ public class CourseMinRequirementDto {
 
 	@Valid
 	@JsonProperty("min_requirement_subjects")
-	@NotNull(message = "min_requirement_subjects must not be null")
 	private ValidList<CourseMinRequirementSubjectDto> minRequirementSubjects;
-	
 
 	@NotNull(message = "linked_course_ids must not be null")
 	@JsonProperty("linked_course_ids")
 	List<String> linkedCourseIds;
+
+	@JsonProperty("study_languages")
+	@NotNull(message = "study_languages must not be null")
+	Set<String> studyLanguages;
 }

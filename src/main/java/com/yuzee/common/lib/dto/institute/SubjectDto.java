@@ -22,6 +22,10 @@ public class SubjectDto {
 	@NotBlank(message = "subject_name should not be blank")
 	private String subjectName;
 	
+	@JsonProperty("semester_name")
+	@NotBlank(message = "semester_name should not be blank")
+	private String semesterName;
+	
 	@NotBlank(message = "grade is required") 
 	private String grade;
 	

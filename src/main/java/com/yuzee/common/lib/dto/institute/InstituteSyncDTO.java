@@ -136,4 +136,7 @@ public class InstituteSyncDTO implements SyncDTO {
 	public String getIdentifier() {
 		return this.getId();
 	}
+	
+	@JsonProperty("verified")
+	private boolean verified;
 }

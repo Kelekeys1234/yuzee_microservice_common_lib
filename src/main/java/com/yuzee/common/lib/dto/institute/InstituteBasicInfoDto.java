@@ -57,4 +57,7 @@ public class InstituteBasicInfoDto {
 	
 	@JsonProperty("reviews_count")
 	private Long reviewsCount;
+	
+	@JsonProperty("verified")
+	private boolean verified;
 }

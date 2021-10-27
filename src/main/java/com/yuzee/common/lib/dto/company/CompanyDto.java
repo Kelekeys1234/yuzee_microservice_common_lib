@@ -89,5 +89,8 @@ public class CompanyDto {
 	@JsonProperty("working_hours")
 	List<CompanyWorkingHoursDto> workingHours = new ArrayList<>();
 	
+	@JsonProperty("is_verified")
+	private boolean isVerified;
+	
 	
 }

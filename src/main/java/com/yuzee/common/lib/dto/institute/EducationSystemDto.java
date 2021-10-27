@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.yuzee.common.lib.enumeration.GradeType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +51,15 @@ public class EducationSystemDto {
 	@NotBlank(message = "level_id should not be blank")
 	private String levelId;
 	
+	@JsonProperty(value = "level_code",access = Access.WRITE_ONLY)
+	private String levelCode;
+	
+	@JsonProperty(value = "grade_type_code",access = Access.WRITE_ONLY)
+	private String gradeTypeCode;
+
+	@JsonProperty(value = "grade_type",access = Access.READ_ONLY)
+	private GradeType gradeType;
+	
 	@JsonProperty("level")
-	private LevelDto level;
+	private LevelDto level;		
 }

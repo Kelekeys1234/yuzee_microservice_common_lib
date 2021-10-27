@@ -206,19 +206,19 @@ public class User implements Serializable {
 	
 	@Field(name = "connections", type = FieldType.Nested)
 	@JsonProperty("connections")
-	private List<NetworkDto> connections = new ArrayList<>();
+	private List<NetworkDto> connections = null;
 	
 	@Field(name = "followings", type = FieldType.Nested)
 	@JsonProperty("followings")
-	private List<NetworkDto> followings = new ArrayList<>();
+	private List<NetworkDto> followings = null;
 	
 	@Field(name = "user_achievements")
 	@JsonProperty("user_achievements")
-	private List<UserAchivementsElasticDto> userAchivements = null;
+	private List<UserAchivementsElasticDto> userAchivements = new ArrayList<>();
 	
 	@Field(name = "user_educations", type = FieldType.Nested)
 	@JsonProperty("user_educations")
-	private List<UserEducationElasticDto> userEducation = null;
+	private List<UserEducationElasticDto> userEducation = new ArrayList<>();
 	
 	@Field(name = "user_work_experiences", type = FieldType.Nested)
 	@JsonProperty("user_work_experiences")
@@ -243,4 +243,9 @@ public class User implements Serializable {
 	@Field(name = "user_accomplishment")
 	@JsonProperty("user_accomplishment")
 	private List<UserAccomplishmentElasticDto> userAccomplishment = null;
+	
+	@Field(name = "verified")
+	@JsonProperty("verified")
+	private boolean verified;
+	
 }
