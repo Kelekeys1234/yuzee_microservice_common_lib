@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.dto.user;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.institute.LevelDto;
 import com.yuzee.common.lib.dto.institute.SubjectDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
@@ -56,8 +58,8 @@ public class UserEducationDto {
 	@JsonProperty("country")
 	public String country;
 
-	@JsonProperty("system")
-	public String system;
+	@JsonProperty("education_system_id")
+	public String educationSystemId;
 
 	@JsonProperty("course_name")
 	public String courseName;
@@ -85,6 +87,21 @@ public class UserEducationDto {
 
 	@JsonProperty("institute_logo_url")
 	private String instituteLogoUrl;
+	
+	@JsonProperty("level_id")
+	private String levelId;
+	
+	@JsonProperty("latitude")
+	private BigDecimal latitude;
+	
+	@JsonProperty("longitude")
+	private BigDecimal longitude;
+	
+	@JsonProperty("result_type")
+	private String resultType;
+	
+	@JsonProperty("level")
+	private LevelDto level;
 
 	List<SubjectDto> subjects = new ArrayList<>();
 
