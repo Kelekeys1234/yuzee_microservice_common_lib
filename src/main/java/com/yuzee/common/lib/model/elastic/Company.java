@@ -120,4 +120,5 @@ public class Company implements Serializable {
 	@JsonProperty("contact_details")
 	@Field(name = "contact_details", type = FieldType.Nested)
 	private List<ContactDetail> contactDetails = new ArrayList<>();
+	
 }
