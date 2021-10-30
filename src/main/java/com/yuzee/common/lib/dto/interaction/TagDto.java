@@ -16,4 +16,7 @@ public class TagDto {
 	
 	@JsonProperty("tag_text")
 	private String tagText;
+	
+	@JsonProperty("post_count")
+	private long postCount;
 }
