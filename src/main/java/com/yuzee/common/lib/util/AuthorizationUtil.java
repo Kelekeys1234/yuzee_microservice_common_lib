@@ -1,5 +1,6 @@
 package com.yuzee.common.lib.util;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +23,9 @@ public class AuthorizationUtil {
 
 		CheckUserAccessEntityDto checkUserAccessEntityDto = accessibilityHandler.checkAccessibility(entityId,
 				grantUserId, moduleName, subModuleName, claim, entityType);
-		if (!checkUserAccessEntityDto.isPresent()) {
-			log.error("No User Access for entityId {} , grantUserId {}", entityId, grantUserId);
-			throw new ForbiddenException("No User Access Found");
+		if (ObjectUtils.isEmpty(checkUserAccessEntityDto) || !checkUserAccessEntityDto.isAuthorized()) {
+			log.error("No User Access for entityId {} , grantUserId {} ", entityId, grantUserId);
+			throw new ForbiddenException("No User Access Found for entityId ");
 		}
 	}
 }

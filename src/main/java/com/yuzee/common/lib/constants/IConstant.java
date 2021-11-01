@@ -118,7 +118,7 @@ public class IConstant {
 	
 	public static final String USER_MENTIONED = "user_mentioned";
 	
-	public static final String ACCESSIBILITY = "accessibility-service/api/v1/";
+	public static final String ACCESSIBILITY = "ACCESSIBILITY-SERVICE/accessibility-service/api/v1/";
 	
 	public static final String ACCESSIBILITY_CONNECTION_URL = "http://" + ACCESSIBILITY;
 }

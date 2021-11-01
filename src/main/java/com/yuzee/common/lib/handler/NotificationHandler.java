@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.SystemEventDTO;
@@ -19,8 +17,6 @@ import com.yuzee.common.lib.dto.notification.EmailNotificationWrapperDto;
 import com.yuzee.common.lib.dto.notification.EmailPayloadDto;
 import com.yuzee.common.lib.dto.notification.NotificationTemplateDataDto;
 import com.yuzee.common.lib.enumeration.EventType;
-import com.yuzee.common.lib.enumeration.KafkaTopicEnum;
-import com.yuzee.common.lib.exception.ConfigurationException;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.util.ObjectMapperHelper;
 
