@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,6 +18,7 @@ import com.yuzee.common.lib.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class AccessibilityHandler {
 
 	private final static String CHECK_ACCESSIBILITY = "check/access";
