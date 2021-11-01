@@ -8,12 +8,18 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GradeType {
-	SG("Single Grade"),
-	MSG("Multiple Subject Grade"),
-	SGMSG("Single Grade+Multiple Subject Grade");
+	SG("Single Grade", true, false),
+	MSG("Multiple Subject Grade", false, true),
+	SGMSG("Single Grade+Multiple Subject Grade", true, false);
 
 	@Getter
 	private String displayName;
+
+	@Getter
+	private boolean displayEducationSystemName;
+
+	@Getter
+	private boolean automaticGradeCalculator;
 
 	public String getName() {
 		return this.name();
