@@ -180,6 +180,9 @@ public class UserSyncDto implements SyncDTO {
 	
 	@JsonProperty("verified")
 	private boolean verified;
+	
+	@JsonProperty("designation")
+	private String designation;
 
 	public UserSyncDto(String id, String privacyLevel, String firstName, String middleName, String lastName,
 			String readableId, String gender, String dob, String countryOrgin, String citizenship, String email,
