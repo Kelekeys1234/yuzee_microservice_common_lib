@@ -14,7 +14,6 @@ import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
 import com.yuzee.common.lib.enumeration.ExperienceEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.InstituteType;
-import com.yuzee.common.lib.enumeration.IntakeType;
 import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
 import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
 import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
@@ -195,14 +194,14 @@ public class ValidationUtil {
 		}
 	}
 
-	public static void validateIntakeType(String intakeType) {
-		if (!EnumUtils.isValidEnum(IntakeType.class, intakeType)) {
-			log.error(INTAKE_TYPE_VALIDATION_MESSAGE +
-					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
-			throw new ValidationException(INTAKE_TYPE_VALIDATION_MESSAGE +
-					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
-		}
-	}
+//	public static void validateIntakeType(String intakeType) {
+//		if (!EnumUtils.isValidEnum(IntakeType.class, intakeType)) {
+//			log.error(INTAKE_TYPE_VALIDATION_MESSAGE +
+//					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
+//			throw new ValidationException(INTAKE_TYPE_VALIDATION_MESSAGE +
+//					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
+//		}
+//	}
 
 	public static void validateInstituteType(String instituteType) {
 		if (!EnumUtils.isValidEnum(InstituteType.class, instituteType)) {
