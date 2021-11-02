@@ -14,6 +14,9 @@ public class PostSyncDto {
 	@JsonProperty("post_id")
 	private String postId;
 
+	@JsonProperty("privacy_level")
+	private String privacyLevel;
+	
 	@JsonProperty("entity_id")
 	private String entityId;
 	
