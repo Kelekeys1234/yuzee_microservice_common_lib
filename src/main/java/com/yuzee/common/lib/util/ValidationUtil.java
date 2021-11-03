@@ -14,6 +14,7 @@ import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
 import com.yuzee.common.lib.enumeration.ExperienceEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.InstituteType;
+import com.yuzee.common.lib.enumeration.IntakeType;
 import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
 import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
 import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
@@ -37,6 +38,7 @@ public class ValidationUtil {
 	private static final String TASK_NAME_VALIDATION_MESSAGE = "task_name must be in one of the following: ";
 	private static final String ELASTIC_TYPE_VALIDATION_MESSAGE = "elastic_type must be in one of the following: ";
 	private static final String INSTITUTE_TYPE_VALIDATION_MESSAGE = "institute_type must be in one of the following: ";
+	private static final String INTAKE_TYPE_VALIDATION_MESSAGE = "intake_type must be in one of the following: ";
 
 	private ValidationUtil() {
 
@@ -190,6 +192,15 @@ public class ValidationUtil {
 					Arrays.toString(Utils.getEnumNames(ElasticType.class)));
 			throw new ValidationException(ELASTIC_TYPE_VALIDATION_MESSAGE +
 					Arrays.toString(Utils.getEnumNames(ElasticType.class)));
+		}
+	}
+
+	public static void validateIntakeType(String intakeType) {
+		if (!EnumUtils.isValidEnum(IntakeType.class, intakeType)) {
+			log.error(INTAKE_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
+			throw new ValidationException(INTAKE_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(IntakeType.class)));
 		}
 	}
 
