@@ -1,10 +1,7 @@
 package com.yuzee.common.lib.enumeration;
-
-public class ModuleTypeEnum {
 	
-public enum ModuleName {
+public enum ModuleNameEnum {
 	
 	JOB_MODULE, COMPANY_MODULE, INSTITUTE_MODULE
 	
-}
 }
