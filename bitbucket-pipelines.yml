@@ -10,7 +10,5 @@ pipelines:
     manual-build:
        - step:
            name : Build and Uploade to nexus
-           caches:
-             - maven
            script: # Modify the commands below to build your repository.
              - mvn clean deploy -s settings.xml -P snapshot
