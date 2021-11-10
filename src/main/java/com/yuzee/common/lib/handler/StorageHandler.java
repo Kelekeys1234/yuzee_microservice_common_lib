@@ -71,6 +71,8 @@ public class StorageHandler {
 	private static final String ENTITY_SUB_TYPE = "entity_sub_type";
 	
 	private static final String PRIVACY_LEVEL = "privacy_level";
+	
+	private static final String USER_ID = "userId";
 
 	public List<StorageDto> getStorages(String entityId, EntityTypeEnum entityType, EntitySubTypeEnum entitySubType) {
 		return getStorages(Arrays.asList(entityId), entityType, Arrays.asList(entitySubType));
@@ -294,5 +296,40 @@ public class StorageHandler {
 	public List<StorageDto> getStorages(List<String> entityIds, EntityTypeEnum entityType,
 			List<EntitySubTypeEnum> entitySubTypeEnums, List<String> privacyLevels) {
 		return getStoragesResponse(entityIds, entityType, entitySubTypeEnums, null, null, privacyLevels, false);
+	}
+	
+	public void copyStorage(String userId, String entityId, EntityTypeEnum entityType,
+			EntitySubTypeEnum entitySubType, String copyFrom, String parentEntityId) {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(USER_ID, userId);
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.STORAGE_CONNECTION_URL).append(STORAGE);
+
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			uriBuilder.queryParam("copy_from", copyFrom);
+			uriBuilder.queryParam("entity_id", entityId);
+			uriBuilder.queryParam("entity_type", entityType);
+			uriBuilder.queryParam("entity_sub_type", entitySubType);
+			uriBuilder.queryParam("parent_entity_id", parentEntityId);
+
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.POST, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<String>>() {});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException(MSG_ERROR_RECEIVED_FROM_STORAGE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKING_STORAGE, e);
+			throw e;
+		}
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_STORAGE, e);
+			throw new InvokeException(MSG_ERROR_INVOKING_STORAGE);
+		}
 	}
 }
