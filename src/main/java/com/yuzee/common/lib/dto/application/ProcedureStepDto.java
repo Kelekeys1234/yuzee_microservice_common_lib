@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class ProcedureStepDto implements Serializable {
 	@Valid
 	@NotNull(message = "{procedure.procedure_step.propeties.is_required}") 
 	@JsonProperty("properties")
-	private List<ProcedureStepPropertyDto> propeties;
+	private List<ProcedureStepPropertyDto> propeties = new ArrayList<>();
 	
 	@JsonProperty("status")
 	private boolean status;
