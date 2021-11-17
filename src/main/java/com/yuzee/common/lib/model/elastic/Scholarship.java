@@ -83,7 +83,7 @@ public class Scholarship implements Serializable {
 	@Field(name = "gender")
 	private Gender gender;
 
-	@Field(type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "uuuu-MM-dd")
+	@Field(name = "application_dead_line", type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "uuuu-MM-dd")
 	@JsonProperty("application_dead_line")
 	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd")
 	private LocalDate applicationDeadLine;
