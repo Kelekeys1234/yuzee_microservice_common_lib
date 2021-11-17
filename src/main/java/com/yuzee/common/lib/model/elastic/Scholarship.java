@@ -98,7 +98,7 @@ public class Scholarship implements Serializable {
 
 	@JsonProperty("how_to_apply")
 	@Field(name = "how_to_apply")
-	private String howToApply;
+	private Set<String> howToApply;
 
 	@JsonProperty("benefits")
 	@Field(name = "benefits")
