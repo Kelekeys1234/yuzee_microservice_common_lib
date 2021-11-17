@@ -117,7 +117,7 @@ under the License.
      |       used together.
      |-->
     <server>
-      <id>nexusdeploymentrepo</id>
+      <id>nexusdeploymentrepo</id>      
       <username>Deployment</username>
       <password>QyUJAJ6mrpxifaV</password>
     </server>
