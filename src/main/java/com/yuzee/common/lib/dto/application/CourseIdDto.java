@@ -16,4 +16,7 @@ public class CourseIdDto implements Serializable {
 	@NotBlank(message = "{course.course_id.is_required}") 
 	@JsonProperty("course_id")
 	private String courseId;
+	
+	@JsonProperty("name")
+	private String name;
 }
