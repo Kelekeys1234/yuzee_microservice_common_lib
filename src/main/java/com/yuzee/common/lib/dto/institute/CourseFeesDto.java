@@ -1,0 +1,26 @@
+package com.yuzee.common.lib.dto.institute;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+
+@Data
+public class CourseFeesDto {
+	@JsonProperty("id")
+	private String id;
+
+	@JsonProperty("name")
+	@NotEmpty(message = "name should not be blank")
+	private String name;
+	
+	@JsonProperty("currency")
+	@NotEmpty(message = "currency should not be blank")
+	private String currency;
+
+	@JsonProperty("amount")
+	@NotNull(message = "amount should not be null")
+	private Double amount;
+}

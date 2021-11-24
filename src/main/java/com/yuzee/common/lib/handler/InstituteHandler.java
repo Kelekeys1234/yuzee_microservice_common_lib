@@ -251,15 +251,20 @@ public class InstituteHandler {
 		}
 	}
 	
-	public InstituteRequestDto getInstituteDetailInfo(String instituteId) {
+	public InstituteRequestDto getInstituteDetailInfo(String userId, String instituteId) {
 		ResponseEntity<GenericWrapperDto<InstituteRequestDto>> responseEntity = null;
 		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(USER_ID, userId);
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
 			Map<String, String> params = new HashMap<>();
 			params.put("instituteId", instituteId);
 			StringBuilder path = new StringBuilder();
 			
 			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_INSTITUTE_DETAIL_INFO_BY_ID);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<InstituteRequestDto>>() {}, params);
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE

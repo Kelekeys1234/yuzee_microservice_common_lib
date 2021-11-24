@@ -17,6 +17,7 @@ import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
+import com.yuzee.common.lib.dto.institute.FacultyDto;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
@@ -35,11 +36,11 @@ public class ElasticHandler {
 	private static final String MSG_ERROR_CODE = "Error response recieved from elastic service with error code ";
 
 	private static final String GET_COURSE_BASIC_INFO_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/course/basic_info";
+	
+	private static final String GET_FACULTY_BY_FILTERS = IConstant.ELASTIC_SEARCH_URL+ "api/v1/faculty";
 
 	@Autowired
 	KafkaTemplate<String, String> kafkaTemplate;
-	
-
 
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, 
 			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds){
@@ -78,6 +79,33 @@ public class ElasticHandler {
 			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
 		}
 		return courseDtoResponse.getBody().getData();
+	}
+	
+	public PaginationResponseDto<List<FacultyDto>> getFacultyByFilters(int pageNumber ,int pageSize, List<String> facultyIds){
+		
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<FacultyDto>>>> facultyDtoResponse = null;
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(GET_FACULTY_BY_FILTERS)
+			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
+			
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			if(!CollectionUtils.isEmpty(facultyIds)) {
+				facultyIds.stream().forEach(e -> uriBuilder.queryParam("faculty_ids", e));
+			}
+			facultyDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<FacultyDto>>>>() {});
+			if (facultyDtoResponse.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + facultyDtoResponse.getStatusCode().value() );
+				throw new InvokeException(MSG_ERROR_CODE + facultyDtoResponse.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_ELASTIC,e);
+			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
+		}
+		return facultyDtoResponse.getBody().getData();
 	}
 
 }
