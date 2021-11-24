@@ -1,9 +1,11 @@
 package com.yuzee.common.lib.dto.institute;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.ValidList;
 
 import lombok.Data;
 import lombok.ToString;
@@ -25,23 +27,19 @@ public class CourseDeliveryModesDto {
 	@JsonProperty("duration_time")
 	private String durationTime;
 
-	@JsonProperty("domestic_fee")
-	@NotNull(message = "domestic_fee should not be blank")
-	private Double domesticFee;
-
-	@JsonProperty("international_fee")
-	@NotNull(message = "international_fee should not be blank")
-	private Double internationalFee;
-
 	@JsonProperty("study_mode")
 	private String studyMode;
 
-	@JsonProperty("usd_domestic_fee")
-	private Double usdDomesticFee;
-
-	@JsonProperty("usd_international_fee")
-	private Double usdInternationalFee;
-
 	@JsonProperty("course_id")
 	private String courseId;
+	
+	@Valid
+	@JsonProperty("fundings")
+	@NotNull
+	private ValidList<CourseDeliveryModeFundingDto> fundings;
+	
+	@Valid
+	@JsonProperty("fees")
+	@NotNull
+	private ValidList<CourseFeesDto> fees;
 }
