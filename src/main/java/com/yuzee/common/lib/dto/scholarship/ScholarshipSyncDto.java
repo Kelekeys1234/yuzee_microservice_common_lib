@@ -71,7 +71,7 @@ public class ScholarshipSyncDto implements SyncDTO{
 	private Set<String> eligbleNationality;
 
 	@JsonProperty("how_to_apply")
-	private String howToApply;
+	private Set<String> howToApply;
 
 	@JsonProperty("benefits")
 	private String benefits;
