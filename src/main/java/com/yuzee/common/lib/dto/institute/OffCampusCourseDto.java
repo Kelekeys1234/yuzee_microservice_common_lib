@@ -2,10 +2,13 @@ package com.yuzee.common.lib.dto.institute;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
@@ -49,4 +52,11 @@ public class OffCampusCourseDto {
 	@JsonProperty("end_date")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
+	
+	@JsonProperty("location_help_required")
+	private boolean locationHelpRequired;
+	
+	@JsonProperty("skip_location")
+	private boolean skipLocation;
+	
 }
