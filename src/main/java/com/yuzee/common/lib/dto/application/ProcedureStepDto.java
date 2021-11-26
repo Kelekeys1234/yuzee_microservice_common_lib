@@ -25,6 +25,9 @@ public class ProcedureStepDto implements Serializable {
 	@JsonProperty("step")
 	private String step;
 	
+	@JsonProperty("step_display_name")
+	private String stepDisplayName;
+	
 	@NotNull(message = "{procedure.procedure_step.order.is_required}") 
 	@Min(value = 1, message = "{procedure.procedure_step.order.order_must_be_greater_than_zero}")
 	@JsonProperty("step_order")
