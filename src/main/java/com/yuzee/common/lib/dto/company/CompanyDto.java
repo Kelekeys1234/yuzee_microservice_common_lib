@@ -92,5 +92,7 @@ public class CompanyDto {
 	@JsonProperty("is_verified")
 	private boolean isVerified;
 	
+	@JsonProperty("australian_business_number")
+	private String australianBusinessNumber;
 	
 }
