@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.yuzee.common.lib.dto.connection.ConnectionExportDto;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericResponse;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
@@ -482,6 +483,32 @@ public class ConnectionHandler {
 			HttpEntity<String> entity = new HttpEntity<>("",headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return responseEntity.getBody().getData();
+	}
+	//  /api/v1/connection/userId/{userId}
+	public List<ConnectionExportDto> getConnectionsByUserId(String userId){
+		ResponseEntity<GenericWrapperDto<List<ConnectionExportDto>>> responseEntity = null;
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_BASE_PATH).append(USERID).append(userId);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<ConnectionExportDto>>>() {});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE
 						+ responseEntity.getStatusCode().value());
