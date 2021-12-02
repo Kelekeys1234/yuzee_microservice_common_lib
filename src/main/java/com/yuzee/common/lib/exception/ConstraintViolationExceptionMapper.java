@@ -8,6 +8,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import com.yuzee.common.lib.dto.ErrorWrapper;
 import com.yuzee.local.config.MessageTranslator;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Provider
 @Slf4j
+@Component
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
 	@Autowired
