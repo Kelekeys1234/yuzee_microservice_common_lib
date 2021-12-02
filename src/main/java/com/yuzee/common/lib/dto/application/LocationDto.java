@@ -35,5 +35,7 @@ public class LocationDto implements Serializable {
 	@NotBlank(message = "{location.country.is_required}") 
 	@JsonProperty("country")
 	private String country;
-
+	
+	@JsonProperty("address")
+	private String address;
 }
