@@ -18,6 +18,9 @@ public class OffCampusCourseDto {
 	@JsonProperty("off_campus_course_id")
 	private String id;
 
+	@JsonProperty("title")
+	private String title;
+
 	@JsonProperty("latitude")
 	private Double latitude;
 
