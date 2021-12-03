@@ -93,7 +93,7 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("preffered_careers")
 	private List <UserApplicationPrefferedCareerIdsListDto> careersIds;
 	
-	@NotBlank(message = "{offer.student_type.is_required}") 
+
 	@JsonProperty("student_type")
 	private String studentType;
 	
