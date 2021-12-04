@@ -6,6 +6,7 @@ import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -62,4 +63,10 @@ public class OffCampusCourseDto {
 	@JsonProperty("skip_location")
 	private boolean skipLocation;
 	
+	@JsonProperty("reference_course_id")
+	private String reference_course_id;
+	
+	@JsonProperty(value = "reference_course_name", access = Access.READ_ONLY)
+	private String reference_course_name;
+
 }
