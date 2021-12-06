@@ -76,7 +76,7 @@ public class ConnectionHandler {
 	private static final String ENTITY_TYPE = "entityType";
 	private static final String FOLLOWING_ID = "following_id";
 	
-	
+	private static final String GET_CONNECTION = "/api/v1/connection";
 	private static final String GET_CONNECTION_FOLLOWING = "/api/v1/connection/following";
 
 	public List<String> getUserConnectionUserId(String userId) {
@@ -498,6 +498,7 @@ public class ConnectionHandler {
 		return responseEntity.getBody().getData();
 	}
 	//  /api/v1/connection/userId/{userId}
+	// http://CONNECTIONS/connection//api/v1/connection/userId/{}
 	public List<ConnectionExportDto> getConnectionsByUserId(String userId){
 		ResponseEntity<GenericWrapperDto<List<ConnectionExportDto>>> responseEntity = null;
 
@@ -505,9 +506,10 @@ public class ConnectionHandler {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_BASE_PATH).append(USERID).append(userId);
+			path.append(IConstant.CONNECTION_BASE_PATH).append("/").append(GET_CONNECTION).append("/").append(USERID).append("/").append(userId);
 			HttpEntity<String> entity = new HttpEntity<>("",headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			log.info(uriBuilder.toUriString());
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<ConnectionExportDto>>>() {});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE

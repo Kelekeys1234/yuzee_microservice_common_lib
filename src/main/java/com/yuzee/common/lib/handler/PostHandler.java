@@ -38,6 +38,7 @@ public class PostHandler {
 	private static final String POST_BASE_URL = IConstant.POST_URL + "/post";
 
 	private static final String USERID = "/userId";
+	
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -143,9 +144,10 @@ public class PostHandler {
 		try{
 			HttpEntity<String> entity = new HttpEntity<>("",headers);
 			StringBuilder path = new StringBuilder();
-			path.append(POST_BASE_URL).append(USERID).append(userId);
+			path.append(POST_BASE_URL).append(USERID).append("/").append(userId);
 			
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			log.info(builder.toUriString());
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<PostExportDto>>>() {});
 			if(responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );

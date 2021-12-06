@@ -170,11 +170,12 @@ public class InteractionHandler {
 		return voteCommentCountResponseDto.getBody().getData();
 	}
 
+	// "http://INTERACTION-SERVICE/interaction-service/api/v1/comment/userId"
 	public List<CommentExportDto> getAllCommentsByUserId(String userId) {
 		ResponseEntity<GenericWrapperDto<List<CommentExportDto>>> responseEntity = null;
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(INTERACTION_BASE_URL).append(USERID).append(userId);
+			path.append(INTERACTION_BASE_URL).append(USERID).append("/").append(userId);
 			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<List<CommentExportDto>>>() {
 					});
