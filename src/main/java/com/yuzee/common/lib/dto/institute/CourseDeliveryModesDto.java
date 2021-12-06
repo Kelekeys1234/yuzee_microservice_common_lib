@@ -33,6 +33,12 @@ public class CourseDeliveryModesDto {
 	@JsonProperty("course_id")
 	private String courseId;
 	
+	@JsonProperty("accessibility")
+	private String accessibility;
+	
+	@JsonProperty("is_government_eligible")
+	private Boolean isGovernmentEligibile;
+	
 	@Valid
 	@JsonProperty("fundings")
 	@NotNull
