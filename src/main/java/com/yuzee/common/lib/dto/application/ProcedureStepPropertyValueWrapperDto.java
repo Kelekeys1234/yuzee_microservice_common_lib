@@ -24,8 +24,8 @@ public class ProcedureStepPropertyValueWrapperDto implements Serializable {
 	@JsonProperty("property_value")
 	private String propertyValue;
 	
-	@JsonProperty("pre_traning_review_location")
-	private LocationDto preTrainingReviewlocation;
+	@JsonProperty("location")
+	private LocationDto location;
 	
 	@JsonProperty("payment_option")
 	private List<ProcedureStepPropertyPayment> paymentOptions;

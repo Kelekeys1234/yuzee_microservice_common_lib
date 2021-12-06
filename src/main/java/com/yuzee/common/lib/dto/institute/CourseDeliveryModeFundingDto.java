@@ -18,6 +18,10 @@ public class CourseDeliveryModeFundingDto {
 	@NotEmpty(message = "funding_name_id must not be null")
 	private String fundingNameId;
 
+	@JsonProperty(value = "name")
+	@NotEmpty
+	private String name;
+	
 	@JsonProperty(value = "currency")
 	@NotEmpty
 	private String currency;

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
 
@@ -92,5 +93,10 @@ public class CompanyDto {
 	@JsonProperty("is_verified")
 	private boolean isVerified;
 	
+	@JsonProperty("australian_business_number")
+	private String australianBusinessNumber;
+	
+	@JsonProperty("storages")
+	private List<StorageDto> storages;
 	
 }

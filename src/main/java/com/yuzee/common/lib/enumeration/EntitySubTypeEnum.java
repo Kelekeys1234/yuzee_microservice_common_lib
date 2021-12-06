@@ -73,7 +73,9 @@ public enum EntitySubTypeEnum {
 	POLICE_CHECK_CERTIFICATE(true),
 	FIRST_AID_CHECK_CERTIFICATE(true),
 	OFFER_MEDIA(false),
-	OFFER_ATTACHMENT(false);
+	OFFER_ATTACHMENT(false),
+	PERSONAL_IDENTITY(true),
+	AUSTRALIAN_BUSINESS_NUMBER(true);
 	
 	@Getter private boolean singleEntity;
 	

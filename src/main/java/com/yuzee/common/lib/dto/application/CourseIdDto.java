@@ -19,4 +19,10 @@ public class CourseIdDto implements Serializable {
 	
 	@JsonProperty("name")
 	private String name;
+	
+	@JsonProperty("procedure_id")
+	private String procedureId;
+	
+	@JsonProperty("procedure_name")
+	private String procedureName;
 }
