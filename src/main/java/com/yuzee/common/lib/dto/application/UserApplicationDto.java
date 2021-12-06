@@ -92,7 +92,6 @@ public class UserApplicationDto implements Serializable {
 	@NotNull(message = "{user_application.preffered_careers.is_required}") 
 	@JsonProperty("preffered_careers")
 	private List <UserApplicationPrefferedCareerIdsListDto> careersIds;
-	
 
 	@JsonProperty("student_type")
 	private String studentType;
@@ -122,6 +121,9 @@ public class UserApplicationDto implements Serializable {
 	private RPLApplicationDto rpl;
 	
 	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto UpskillingApplication;
+	private UpskillingApplicationDto upskillingApplication;
+	
+	@JsonProperty("other_details")
+	private UserApplicationOtherDetailsDto otherDetails;
 	
 }
