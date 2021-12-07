@@ -68,7 +68,26 @@ public class NotificationHandler{
 		sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
 		return status;
 	}
-	
+	public int sendEmailNotification(String emailAddress,String otp, String subject, String user) {
+		int status = 200;
+		EmailNotificationDto emailNotificationDto = new EmailNotificationDto();
+		EmailPayloadDto emailPayloadDto = new EmailPayloadDto();
+        emailPayloadDto.setToaddress(emailAddress);
+		emailPayloadDto.setSubject(subject);
+		emailPayloadDto.setBody(otp);
+		emailNotificationDto.setChannel("EMAIL");
+		emailNotificationDto.setUser(user);
+		emailNotificationDto.setUserId("uploader");
+		emailNotificationDto.setNotificationType("Email");
+
+		emailPayloadDto.setBody("Please find below Attachment");
+		emailNotificationDto.setPayload(emailPayloadDto);
+		
+		EmailNotificationWrapperDto notificationWrapper = new EmailNotificationWrapperDto();
+		notificationWrapper.setNotification(emailNotificationDto);		
+		sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
+		return status;
+	}
 	public int sendEmailNotificationWithAttachment(String emailAddress,String subject, String user, List<File> listOfFiles) {
 		int status = 200;
 		EmailNotificationDto emailNotificationDto = new EmailNotificationDto();
