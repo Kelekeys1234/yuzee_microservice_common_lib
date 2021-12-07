@@ -11,4 +11,4 @@ pipelines:
        - step:
            name : Build and Uploade to nexus
            script: # Modify the commands below to build your repository.
-             - mvn clean deploy -s settings.xml -P snapshot
+             - mvn clean deploy -s settings.xml -P snapshot -X

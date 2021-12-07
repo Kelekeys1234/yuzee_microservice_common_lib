@@ -76,6 +76,12 @@ public class UserSyncDto implements SyncDTO {
 
 	@JsonProperty("enabled")
 	private boolean enabled;
+	
+	@JsonProperty("is_deactivated")
+	private boolean isDeactivated;
+	
+	@JsonProperty("is_deleted")
+	private boolean isDeleted;
 
 	@JsonProperty("account_expired")
 	private boolean accountExpired;

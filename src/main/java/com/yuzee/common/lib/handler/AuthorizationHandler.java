@@ -63,17 +63,18 @@ public class AuthorizationHandler {
 	private static final String ADD_USER_ROLES = USER + "/adduserroles";
 	private static final String REMOVE_USER_ROLES = USER + "/removeuserroles";
 	private static final String ACTIVATE_USER = USER + "/activateuser";
-	private static final String DEACTIVATE_USER = USER + "/deactivateuser";
+	
 	private static final String SET_EMAIL_VERIFIED = USER + "/setemailverified";
 	private static final String UPDATE_PASSWORD = USER + "/updatepassword";
 	private static final String UPDATE_EMAIL = USER + "/updateEmail";
 	private static final String GET_USER_ROLES = USER + "/getuserroles";
 	private static final String UPDATE_PERMISSIONS = USER + "/updatepermissions";
 	private static final String GET_USER_PERMISSIONS = USER + "/getuserpermission";
-	private static final String LOGOUT_USER = USER + "/logoutUser";
+	private static final String LOGOUT_ALLUSERSESSION = USER + "/logoutAllUserSession";
+	private static final String DEACTIVATE_USER = USER + "/deactivateUser";
+	private static final String DELETE_USER = USER + "/deleteUser";
 	private static final String MSG_ERROR_FROM_AUTH_SERVICE = "Error response recieved from authorization service with error code ";
 	private static final String MSG_ERROR_INVOKING_AUTH_SERVICE = "Error invoking Authorization service";
-
 	private static final String USER_ID = "userId";
 	private static final String EMAIL_VERIFIED = "emailVerified";
 	private static final String PASSWORD = "password";
@@ -433,7 +434,7 @@ public class AuthorizationHandler {
 			path.append(DEACTIVATE_USER);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			builder.queryParam(USER_ID, userId);
-
+			log.info(builder.toUriString());
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<AuthUserDTO>>() {
 					});
@@ -449,7 +450,6 @@ public class AuthorizationHandler {
 		}
 	}
 
-	// api/v1/provisioning/user/updateEmail
 	public AuthUserDTO updateEmail(String userId, CreateUserDto createUserDto) {
 		ResponseEntity<GenericWrapperDto<AuthUserDTO>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -477,7 +477,6 @@ public class AuthorizationHandler {
 		return responseEntity.getBody().getData();
 	}
 
-	// api/v1/provisioning/user/updatepassword
 	public void updatePassword(String userId, String password) {
 		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -586,33 +585,6 @@ public class AuthorizationHandler {
 		return responseEntity.getBody().getData();
 	}
 
-	// http://127.0.0.1:8180/auth/admin/realms/heroes/users/83c72e88-7ac9-4fc7-a7fb-97736d67d261/logout
-	// http://AUTHORIZATION-SERVICE/authorization-service/api/v1/provisioning/user/logoutUser
-//	public AuthUserDTO logOutUser(String userId) {
-//		ResponseEntity<GenericWrapperDto<AuthUserDTO>> responseEntity = null;
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		try {
-//			HttpEntity<String> entity = new HttpEntity<>("", headers);
-//			StringBuilder path = new StringBuilder();
-//			path.append(LOGOUT_USER);
-//			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
-//			builder.queryParam(USER_ID, userId);
-//			log.info(builder.toUriString());
-//			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,
-//					new ParameterizedTypeReference<GenericWrapperDto<AuthUserDTO>>() {
-//					});
-//			if (responseEntity.getStatusCode().value() != 200) {
-//				throw new InvokeException("Error response recieved from Authorization service with error code "
-//						+ responseEntity.getStatusCode().value());
-//			}
-//		} catch (Exception e) {
-//			log.error("Error invoking authorization service", e);
-//			throw new InvokeException(MSG_ERROR_INVOKING_AUTH_SERVICE);
-//		}
-//		return responseEntity.getBody().getData();
-//	}
-
 	public void logOutUser(String userId) {
 		log.info("Inside AuthoriationHandler.logOutUser");
 		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
@@ -621,7 +593,7 @@ public class AuthorizationHandler {
 		try {
 			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			StringBuilder path = new StringBuilder();
-			path.append(LOGOUT_USER);
+			path.append(LOGOUT_ALLUSERSESSION);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			builder.queryParam(USER_ID, userId);
 			log.info(builder.toUriString());
@@ -639,15 +611,30 @@ public class AuthorizationHandler {
 		log.info("calling keycloak proxy");
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void deleteUser(String userId) {
+		ResponseEntity<GenericWrapperDto<List<String>>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
+			StringBuilder path = new StringBuilder();
+			path.append(DELETE_USER);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			builder.queryParam(USER_ID, userId);
+			log.info(builder.toUriString());
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
+					});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException(MSG_ERROR_FROM_AUTH_SERVICE + responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
+			throw new InvokeException(MSG_ERROR_INVOKING_AUTH_SERVICE);
+		}	
+	}
+
 }

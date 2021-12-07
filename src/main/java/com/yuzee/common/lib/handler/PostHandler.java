@@ -20,6 +20,7 @@ import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.interaction.TagDto;
 import com.yuzee.common.lib.dto.post.MediaFeedDto;
+import com.yuzee.common.lib.dto.post.PostExportDto;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
@@ -33,7 +34,11 @@ public class PostHandler {
 	private static final String GET_POST_BY_ID = "/post/multiple/id";
 	
 	private static final String HASHTAG = "/hashtag";
+	
+	private static final String POST_BASE_URL = IConstant.POST_URL + "/post";
 
+	private static final String USERID = "/userId";
+	
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -115,6 +120,35 @@ public class PostHandler {
 			
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<TagDto>>>() {});
 
+			if(responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
+			}
+			
+		} catch (InvokeException e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw e;
+		} 
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		
+		return responseEntity.getBody().getData();
+	}
+	public List<PostExportDto> getAllPostsByUserId(String userId){
+		ResponseEntity<GenericWrapperDto<List<PostExportDto>>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		try{
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			StringBuilder path = new StringBuilder();
+			path.append(POST_BASE_URL).append(USERID).append("/").append(userId);
+			
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			log.info(builder.toUriString());
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<PostExportDto>>>() {});
 			if(responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
 				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value() );
