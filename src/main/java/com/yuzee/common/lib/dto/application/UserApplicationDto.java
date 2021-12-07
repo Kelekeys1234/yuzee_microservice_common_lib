@@ -112,7 +112,7 @@ public class UserApplicationDto implements Serializable {
 	private UserApplicationScholarshipDto scholarship;
 	
 	@JsonProperty("other_requirements")
-	private List<UserApplicationOtherRequirementDto> otherRequirements;
+	private List<UserApplicationOtherRequirementRestInterfaceDto> otherRequirements;
 	
 	@JsonProperty("video_pitch")
 	private List<StorageDto> videoPitch;
