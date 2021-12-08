@@ -15,12 +15,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
+import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.application.EnableApplicationDto;
+import com.yuzee.common.lib.dto.application.ProcedureDto;
 import com.yuzee.common.lib.exception.InvokeException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +49,9 @@ public class ApplicationHandler {
 			+ "/enable/application/entity/{entityType}";
 
 	private static final String STATUS = "/status";
+
+	private static final String PRODCEDURE_FILTER = IConstant.APPLICATION_CONNECTION_URL
+			+ "/institute/{institute_id}/application/procedure/pageNumber/{pageNumber}/pageSize/{pageSize}";
 
 	public void updateUserApplicationStatus(String userId, String id, String userApplicationStatus)
 			throws InvokeException {
@@ -111,5 +117,54 @@ public class ApplicationHandler {
 			map = dtos.stream().collect(Collectors.groupingBy(EnableApplicationDto::getEntityId));
 		}
 		return map;
+	}
+	
+	public List<ProcedureDto> getProceduresByFilters(String userId, String instituteId, List<String> statuses, String name,
+			String studentType, List<String> procedureIdList, String sortingType, String sortingOn)
+			throws InvokeException {
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<ProcedureDto>>>> responseEntity = null;
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("userId", userId);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<>("", headers);
+		try {
+			Map<String, String> urlParams = new HashMap<>();
+			urlParams.put("institute_id", instituteId);
+			urlParams.put("pageNumber", 0 + "");
+			urlParams.put("pageSize", Integer.MAX_VALUE + "");
+			StringBuilder path = new StringBuilder(PRODCEDURE_FILTER);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			if (!CollectionUtils.isEmpty(statuses)) {
+				uriBuilder.queryParam("status", statuses);
+			}
+			if (StringUtils.hasText(name)) {
+				uriBuilder.queryParam("search", name);
+			}
+			if (StringUtils.hasText(studentType)) {
+				uriBuilder.queryParam("student_type", studentType);
+			}
+			if (!CollectionUtils.isEmpty(procedureIdList)) {
+				uriBuilder.queryParam("procedure_ids", procedureIdList);
+			}
+			if (StringUtils.hasText(sortingType)) {
+				uriBuilder.queryParam("sorting_type", sortingType);
+			}
+			if (StringUtils.hasText(sortingOn)) {
+				uriBuilder.queryParam("sorting_on", sortingOn);
+			}
+			responseEntity = restTemplate.exchange(uriBuilder.buildAndExpand(urlParams).toUri(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<ProcedureDto>>>>() {
+					});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException(ERROR_FROM_APPLICATION_SERVICE_MEG + responseEntity.getStatusCode().value());
+			}
+			return responseEntity.getBody().getData().getResponse();
+		} catch (InvokeException e) {
+			log.error(APPLICATION_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		} catch (Exception e) {
+			throw new InvokeException(APPLICATION_INVOKE_EXCEPTION_MSG, e);
+		}
 	}
 }
