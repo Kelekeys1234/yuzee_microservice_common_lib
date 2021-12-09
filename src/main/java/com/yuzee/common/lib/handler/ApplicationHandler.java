@@ -131,7 +131,7 @@ public class ApplicationHandler {
 		try {
 			Map<String, String> urlParams = new HashMap<>();
 			urlParams.put("institute_id", instituteId);
-			urlParams.put("pageNumber", 0 + "");
+			urlParams.put("pageNumber", 1 + "");
 			urlParams.put("pageSize", Integer.MAX_VALUE + "");
 			StringBuilder path = new StringBuilder(PRODCEDURE_FILTER);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());

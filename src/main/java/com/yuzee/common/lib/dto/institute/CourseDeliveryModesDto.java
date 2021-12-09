@@ -37,7 +37,7 @@ public class CourseDeliveryModesDto {
 	private String accessibility;
 	
 	@JsonProperty("is_government_eligible")
-	private Boolean isGovernmentEligibile;
+	private Boolean isGovernmentEligible;
 	
 	@Valid
 	@JsonProperty("fundings")
