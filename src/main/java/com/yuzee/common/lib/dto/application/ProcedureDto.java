@@ -16,7 +16,7 @@ public class ProcedureDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty(value = "id", access = Access.READ_ONLY)
+	@JsonProperty(value = "id")
 	private String id;
 	
 	@NotBlank(message = "{procedure.name.is_required}") 
