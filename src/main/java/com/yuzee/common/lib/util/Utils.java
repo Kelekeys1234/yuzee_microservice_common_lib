@@ -128,4 +128,10 @@ public class Utils {
         UUID uuid = UUID.nameUUIDFromBytes(source.getBytes());
         return uuid.toString();
     }
+    
+    public static String generateUUID()
+    {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 }
