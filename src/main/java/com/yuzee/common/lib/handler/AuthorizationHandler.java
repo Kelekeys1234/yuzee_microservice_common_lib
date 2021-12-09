@@ -342,7 +342,7 @@ public class AuthorizationHandler {
 		}
 		return responseEntity.getBody().getData();
 	}
-
+	// http://AUTHORIZATION-SERVICE/authorization-service/api/v1/provisioning/user?userId=01d7dacb-4846-11ea-8cab-068a414d4152
 	public AuthUserDTO getUser(String userId) {
 		ResponseEntity<GenericWrapperDto<AuthUserDTO>> responseEntity = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -353,7 +353,7 @@ public class AuthorizationHandler {
 			path.append(USER);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			builder.queryParam(USER_ID, userId);
-
+			log.info(builder.toUriString());
 			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<AuthUserDTO>>() {
 					});
