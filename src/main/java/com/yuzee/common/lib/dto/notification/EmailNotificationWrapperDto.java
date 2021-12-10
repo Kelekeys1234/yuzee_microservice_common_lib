@@ -9,5 +9,4 @@ import lombok.Data;
 public class EmailNotificationWrapperDto {
 	private EmailNotificationDto notification;
 	private List<String> files;
-	private ZipFile zipFile;
 }
