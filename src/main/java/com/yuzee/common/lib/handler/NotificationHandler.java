@@ -64,7 +64,7 @@ public class NotificationHandler{
 		
 		EmailNotificationWrapperDto notificationWrapper = new EmailNotificationWrapperDto();
 		notificationWrapper.setNotification(emailNotificationDto);		
-		notificationWrapper.setZipFile(zipFile);
+		//notificationWrapper.setZipFile(zipFile);
 		sendMessage(ObjectMapperHelper.toCompactJSON(createSystemEventDTO(EventType.EVENT_TYPE_EMAIL_NOTIFICATION,notificationWrapper)));
 		return status;
 	}
