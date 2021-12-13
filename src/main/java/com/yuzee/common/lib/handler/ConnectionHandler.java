@@ -75,92 +75,97 @@ public class ConnectionHandler {
 	private static final String FOLLOWING_TYPE = "followingType";
 	private static final String ENTITY_TYPE = "entityType";
 	private static final String FOLLOWING_ID = "following_id";
-	
+
 	private static final String GET_CONNECTION = "/api/v1/connection";
 	private static final String GET_CONNECTION_FOLLOWING = "/api/v1/connection/following";
 
 	public List<String> getUserConnectionUserId(String userId) {
-		log.info("Get user interested tag for user id {}",userId);
+		log.info("Get user interested tag for user id {}", userId);
 		ResponseEntity<GenericWrapperDto<List<String>>> userConnectionUserIdDtoResponse = null;
 		Map<String, String> params = new HashMap<>();
-		params.put(USERID, userId	);
+		params.put(USERID, userId);
 
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_URL).append(GET_USER_CONNECTED_USER_ID);
-			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {},params);
+			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
+					}, params);
 			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
-				throw new InvokeException (MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
+				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return userConnectionUserIdDtoResponse.getBody().getData();
 
 	}
 
-	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId,List<String> userIds,int limit){
-		log.info("Get user details for user id {}",userIds);
+	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
+			int limit) {
+		log.info("Get user details for user id {}", userIds);
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>> userConnectionUserIdDtoResponse = null;
 
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_URL)
-			.append(GET_EXISTING_USER_BY_USER_ID)
-			.append("pageNumber/").append("1").append("/pageSize/").append(limit);
+			path.append(IConstant.CONNECTION_URL).append(GET_EXISTING_USER_BY_USER_ID).append("pageNumber/").append("1")
+					.append("/pageSize/").append(limit);
 
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> uriBuilder.queryParam(FOLLOWING_ID, e));
 			uriBuilder.queryParam(STATUS, "ACTIVE");
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add(USERID,userId);
+			headers.add(USERID, userId);
 			HttpEntity<String> body = new HttpEntity<>(headers);
 
-			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {});
+			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {
+					});
 			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
+				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return userConnectionUserIdDtoResponse.getBody().getData().getResponse();
 	}
 
-	public List<UserInitialInfoDto> getMutualConnectionCountByIdList(String userId,List<String> userIds){
-		log.info("Get user details for user id {}",userIds);
+	public List<UserInitialInfoDto> getMutualConnectionCountByIdList(String userId, List<String> userIds) {
+		log.info("Get user details for user id {}", userIds);
 		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> userConnectionUserIdDtoResponse = null;
 
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_URL)
-			.append(GET_MUTUAL_CONNECTION_COUNT_BY_USER_ID);
+			path.append(IConstant.CONNECTION_URL).append(GET_MUTUAL_CONNECTION_COUNT_BY_USER_ID);
 
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> uriBuilder.queryParam(USER_ID, e));
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add(USERID,userId);
+			headers.add(USERID, userId);
 
 			HttpEntity<String> body = new HttpEntity<>(headers);
 
-			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
+					new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {
+					});
 			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value() );
+				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return userConnectionUserIdDtoResponse.getBody().getData();
@@ -174,18 +179,20 @@ public class ConnectionHandler {
 		builder.queryParam("visitedUserId", visitedUserId);
 
 		try {
-			result = restTemplate.exchange(builder.build().toUri(),HttpMethod.GET ,null, new ParameterizedTypeReference<GenericWrapperDto<ConnectionNumberDto>>() {});
-			if(result.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + result.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value() );
+			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<ConnectionNumberDto>>() {
+					});
+			if (result.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + result.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
-		return (int)result.getBody().getData().getConnectionNumber();
+		return (int) result.getBody().getData().getConnectionNumber();
 	}
 
 	public Boolean userConnectionExist(String userId, String visitedUserId) {
@@ -198,16 +205,17 @@ public class ConnectionHandler {
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
 		try {
-			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity, 
-					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {});
-			if(result.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + result.getStatusCode().value() );
-				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value() );
+			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
+					});
+			if (result.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + result.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return result.getBody().getData().isConnectionExist();
@@ -223,7 +231,7 @@ public class ConnectionHandler {
 
 			getFollowersCountResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<FollowerCountDto>>() {
-			});
+					});
 			if (getFollowersCountResponse.getStatusCode().value() != 200) {
 				log.error("Error response recieved from connection service with error code:",
 						getFollowersCountResponse.getStatusCode().value());
@@ -234,7 +242,7 @@ public class ConnectionHandler {
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return getFollowersCountResponse.getBody().getData();
@@ -254,18 +262,16 @@ public class ConnectionHandler {
 
 			getFollowersCountResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
 					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
-			});
+					});
 			if (getFollowersCountResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE,
-						getFollowersCountResponse.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ getFollowersCountResponse.getStatusCode().value());
+				log.error(MSG_ERROR_CODE, getFollowersCountResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
 			}
 
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return getFollowersCountResponse.getBody().getData().isConnectionExist();
@@ -277,82 +283,81 @@ public class ConnectionHandler {
 		params.put(ENTITY_TYPE, entityType.name());
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,followerGuid);
+		headers.add(USERID, followerGuid);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(CONNECTION_FOR_ENTITY_TYPE_EXISTS);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {}, params);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
+					}, params);
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData().isConnectionExist();
 	}
 
-	public FollowerCountDto getConnectionCount(String entityId,String status)  {
+	public FollowerCountDto getConnectionCount(String entityId, String status) {
 		ResponseEntity<GenericWrapperDto<FollowerCountDto>> getFollowersCountResponse = null;
 		try {
 			Map<String, String> params = new HashMap<>();
 			params.put(FOLLOWINGID, entityId);
-			params.put(STATUS,status);
+			params.put(STATUS, status);
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(CONNECTION_COUNT);
 
 			getFollowersCountResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
-					new ParameterizedTypeReference<GenericWrapperDto<FollowerCountDto>>() {},params);
+					new ParameterizedTypeReference<GenericWrapperDto<FollowerCountDto>>() {
+					}, params);
 			if (getFollowersCountResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ getFollowersCountResponse.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ getFollowersCountResponse.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
 			}
 
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return getFollowersCountResponse.getBody().getData();
 	}
-	public boolean checkFollowerExists(String followerGuid, String followingGuid ) {
+
+	public boolean checkFollowerExists(String followerGuid, String followingGuid) {
 		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> responseEntity = null;
 		Map<String, String> params = new HashMap<>();
 		params.put(FOLLOWINGID, followingGuid);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,followerGuid);
+		headers.add(USERID, followerGuid);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(CONNECTION_EXISTS);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {}, params);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
+					}, params);
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData().isConnectionExist();
 	}
-
 
 	public GenericResponse updateUserFollowerCategory(String followerType, String followerId, String followingType,
 			String followingId, FollowerCategoryDto followCategoryDto) {
@@ -364,163 +369,162 @@ public class ConnectionHandler {
 		params.put(FOLLOWINGID, followingId);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,followerId);
+		headers.add(USERID, followerId);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOW_ENTITY);
 
-			HttpEntity<FollowerCategoryDto> body = new HttpEntity<>(followCategoryDto,headers);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.POST, body, GenericResponse.class, params);
+			HttpEntity<FollowerCategoryDto> body = new HttpEntity<>(followCategoryDto, headers);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.POST, body, GenericResponse.class,
+					params);
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody();
 	}
 
-	public List<UserInitialInfoDto> getIfConnectedWithUsers(String userId, List<String> userIds ) {
+	public List<UserInitialInfoDto> getIfConnectedWithUsers(String userId, List<String> userIds) {
 		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,userId);
+		headers.add(USERID, userId);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(CONNECTED_WITH_USERS);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> uriBuilder.queryParam("userIds", e));
-			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {
+					});
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData();
 	}
 
-	public List<UserInitialInfoDto> getIfFollowingUsers(String userId, List<String> userIds ) {
+	public List<UserInitialInfoDto> getIfFollowingUsers(String userId, List<String> userIds) {
 		ResponseEntity<GenericWrapperDto<List<UserInitialInfoDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,userId);
+		headers.add(USERID, userId);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOWING_USERS);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> uriBuilder.queryParam("userIds", e));
-			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {});
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<UserInitialInfoDto>>>() {
+					});
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData();
 	}
 
-	public List<NetworkDto> getFollowingsByUserId(String userId){
+	public List<NetworkDto> getFollowingsByUserId(String userId) {
 		ResponseEntity<GenericWrapperDto<List<NetworkDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,userId);
+		headers.add(USERID, userId);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOWING_USERS);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {});
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {
+					});
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData();
 	}
 
-	public List<NetworkDto> getFollowingConnectionByUserId(String userId){
+	public List<NetworkDto> getFollowingConnectionByUserId(String userId) {
 		ResponseEntity<GenericWrapperDto<List<NetworkDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(USERID,userId);
+		headers.add(USERID, userId);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.CONNECTION_BASE_PATH).append(GET_CONNECTION_FOLLOWING);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {});
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {
+					});
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData();
 	}
-	//  /api/v1/connection/userId/{userId}
-	// http://CONNECTIONS/connection//api/v1/connection/userId/{}
-	public List<ConnectionExportDto> getConnectionsByUserId(String userId){
+	
+	public List<ConnectionExportDto> getConnectionsByUserId(String userId) {
 		ResponseEntity<GenericWrapperDto<List<ConnectionExportDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_BASE_PATH).append("/").append(GET_CONNECTION).append("/").append(USERID).append("/").append(userId);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			path.append(IConstant.CONNECTION_BASE_PATH).append("/").append(GET_CONNECTION).append("/").append(USERID)
+					.append("/").append(userId);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			log.info(uriBuilder.toUriString());
-			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<GenericWrapperDto<List<ConnectionExportDto>>>() {});
+			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<List<ConnectionExportDto>>>() {
+					});
 			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
 			}
 		} catch (InvokeException e) {
 			throw e;
 		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION,e);
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData();

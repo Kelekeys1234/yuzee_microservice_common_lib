@@ -1,7 +1,7 @@
 package com.yuzee.common.lib.enumeration;
 
 public enum UserApplicationStatusEnum {
-	SUBMISSION_INPROGRESS, //create user application
+	DRAFT, //create user application
 	PENDING, // after submit application
 	OFFERED, //TaskNameEnum.MAKE_AN_OFFER
 	ACCEPTED, //TaskNameEnum.SCHEDULE_PRE_TRAINING_REVIEW
