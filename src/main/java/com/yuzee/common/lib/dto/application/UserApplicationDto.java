@@ -49,6 +49,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("course_id")
 	private String courseId;
 	
+	@JsonProperty("course_name")
+	private String courseName;
+	
 	@NotNull(message = "{user_application.description_preferences.is_required}")
 	@JsonProperty("description_preferences")
 	private String descriptionPreferences;
@@ -56,6 +59,9 @@ public class UserApplicationDto implements Serializable {
 	@NotNull(message = "{user_application.institute_id.is_required}")
 	@JsonProperty("institute_id")
 	private String instituteId;
+	
+	@JsonProperty("institute_name")
+	private String instituteName;
 	
 	@NotNull(message = "{user_application.delivery_mode.is_required}")
 	@JsonProperty("delivery_mode")
