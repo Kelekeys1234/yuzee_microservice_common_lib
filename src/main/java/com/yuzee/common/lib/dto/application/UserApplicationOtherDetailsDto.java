@@ -28,6 +28,10 @@ public class UserApplicationOtherDetailsDto implements Serializable {
 	@JsonProperty("date_of_expiry")
 	private Date dateOfExpiry;
 	
+	@NotNull(message = "{user_application.passport_number.is_required}")
+	@JsonProperty("passport_number")
+	private String passportNumber; 
+	
 	@NotNull(message = "{user_application.home_address.is_required}")
 	@JsonProperty("home_address")
 	private String homeAddress;
