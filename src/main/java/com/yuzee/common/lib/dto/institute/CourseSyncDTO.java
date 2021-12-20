@@ -146,7 +146,7 @@ public class CourseSyncDTO implements SyncDTO{
 	private List<CourseCareerOutcomeDto> courseCareerOutcomes;
 
 	@JsonProperty("course_subjects")
-	private List<CourseSubjectDto> courseSubjects;
+	private List<CourseSemesterDto> courseSubjects;
 
 	@JsonProperty("course_fundings")
 	private List<CourseFundingDto> courseFundings;

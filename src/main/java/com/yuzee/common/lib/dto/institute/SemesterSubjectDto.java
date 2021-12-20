@@ -11,13 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseSubjectDto {
+public class SemesterSubjectDto {
 
-	@JsonProperty("course_subject_id")
+	@JsonProperty("id")
 	private String id;
-
-	@JsonProperty(value = "semester")
-	private String semester;
 
 	@NotEmpty(message = "name must not be empty")
 	@JsonProperty("name")
