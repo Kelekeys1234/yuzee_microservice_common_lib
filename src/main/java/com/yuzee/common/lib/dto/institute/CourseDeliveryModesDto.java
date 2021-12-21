@@ -22,21 +22,26 @@ public class CourseDeliveryModesDto {
 	private String deliveryType;
 
 	@JsonProperty("duration")
+	@NotEmpty(message = "duration should not be empty")
 	private Double duration;
 
 	@JsonProperty("duration_time")
+	@NotEmpty(message = "duration_time should not be blank")
 	private String durationTime;
 
 	@JsonProperty("study_mode")
+	@NotEmpty(message = "study_mode should not be blank")
 	private String studyMode;
 
 	@JsonProperty("course_id")
 	private String courseId;
 	
 	@JsonProperty("accessibility")
+	@NotEmpty(message = "accessibility should not be blank")
 	private String accessibility;
 	
 	@JsonProperty("is_government_eligible")
+	@NotEmpty(message = "is_government_eligible should not be blank")
 	private Boolean isGovernmentEligible;
 	
 	@Valid
