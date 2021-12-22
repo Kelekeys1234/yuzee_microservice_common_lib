@@ -2,6 +2,7 @@ package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +17,7 @@ public class UserApplicationOtherDetailsDto implements Serializable {
 	private static final long serialVersionUID = -5102056077428218275L;
 	
 	@JsonProperty(value = "other_details")
-	private String id;
+	private UUID _id;
 	
 	@NotNull(message = "{user_application.date_of_issue.is_required}") 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

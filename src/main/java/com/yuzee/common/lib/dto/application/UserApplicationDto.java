@@ -3,16 +3,14 @@ package com.yuzee.common.lib.dto.application;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.yuzee.common.lib.dto.application.RPLApplicationDto;
-import com.yuzee.common.lib.dto.application.UpskillingApplicationDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
@@ -23,7 +21,7 @@ public class UserApplicationDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty(value = "id", access = Access.READ_ONLY)
-	private String id;
+	private UUID _id;
 	
 	@JsonProperty("applicant_id")
 	private String applicantId;
@@ -87,17 +85,17 @@ public class UserApplicationDto implements Serializable {
 	@Valid
 	@NotNull(message = "{user_application.location.is_required}") 
 	@JsonProperty("preffered_locations")
-	private List <LocationDto> locations;
+	private List <UserApplicationLocationDto> prefferedLocations = null;
 	
 	@Valid
 	@NotNull(message = "{user_application.preffered_courses.is_required}") 
 	@JsonProperty("preffered_courses")
-	private List <CourseIdDto> courseIds;
+	private List <CourseIdDto> prefferedCourseIds = null;
 	
 	@Valid
 	@NotNull(message = "{user_application.preffered_careers.is_required}") 
 	@JsonProperty("preffered_careers")
-	private List <UserApplicationPrefferedCareerIdsListDto> careersIds;
+	private List <UserApplicationPrefferedCareerIdsDto> prefferedCareersIds = null;
 
 	@JsonProperty("student_type")
 	private String studentType;
@@ -106,30 +104,30 @@ public class UserApplicationDto implements Serializable {
 	private String status;
 	
 	@JsonProperty("rejected_application")
-	private UserApplicationRejectedDto userApplicationRejected;
+	private UserApplicationRejectedDto userApplicationRejected = null;
 	
 	@JsonProperty("is_video_application")
 	private boolean isVideoApplication;
 	
 	@JsonProperty("finance_details")
-	private UserApplicationFinanceDetailsWapperDto financeDetails;
+	private UserApplicationFinanceDetailsWapperDto financeDetails = null;
 	
 	@JsonProperty("scholarship")
-	private UserApplicationScholarshipDto scholarship;
+	private UserApplicationScholarshipDto scholarship = null;
 	
 	@JsonProperty("other_requirements")
-	private List<UserApplicationOtherRequirementRestInterfaceDto> otherRequirements;
+	private List<UserApplicationOtherRequirementRestInterfaceDto> otherRequirements = null;
 	
 	@JsonProperty("video_pitch")
-	private List<StorageDto> videoPitch;
+	private List<StorageDto> videoPitch = null;
 	
 	@JsonProperty("recognition_for_prior_leaning")
-	private RPLApplicationDto rpl;
+	private RPLApplicationDto rpl = null;
 	
 	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto upskillingApplication;
+	private UpskillingApplicationDto upskillingApplication = null;
 	
 	@JsonProperty("other_details")
-	private UserApplicationOtherDetailsDto otherDetails;
+	private UserApplicationOtherDetailsDto otherDetails = null;
 	
 }

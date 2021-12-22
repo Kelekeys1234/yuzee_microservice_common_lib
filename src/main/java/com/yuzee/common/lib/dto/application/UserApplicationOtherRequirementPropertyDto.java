@@ -23,8 +23,4 @@ public class UserApplicationOtherRequirementPropertyDto implements Serializable 
 	
 	@JsonProperty("property_value")
 	private String propertyValue;
-	
-	@JsonProperty("attachment")
-	private StorageDto attachment;
-	
 }

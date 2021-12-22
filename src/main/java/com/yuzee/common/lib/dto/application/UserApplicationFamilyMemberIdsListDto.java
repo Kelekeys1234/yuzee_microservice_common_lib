@@ -12,7 +12,7 @@ import lombok.Data;
 public class UserApplicationFamilyMemberIdsListDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotBlank(message = "{user_application.family_member.member_id.is_required}") 
 	@JsonProperty("member_id")
 	private String memberId;
