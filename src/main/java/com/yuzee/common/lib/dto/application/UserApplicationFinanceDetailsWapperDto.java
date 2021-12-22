@@ -2,6 +2,7 @@ package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty(value = "finance_details_id", access = Access.READ_ONLY)
-	private String id;
+	private UUID _id;
 	
 	@NotNull(message = "{user_application.finance_details.who_is_paying_for_type.is_required}")
 	@JsonProperty("who_is_paying_for_type")
