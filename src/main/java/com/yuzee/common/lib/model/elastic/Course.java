@@ -168,9 +168,9 @@ public class Course implements Serializable {
 	@Field("course_english_eligibilities")
 	private List<CourseEnglishEligibility> courseEnglishEligibilities;
 
-	@JsonProperty("course_intakes")
-	@Field("course_intakes")
-	private List<CourseIntake> courseIntakes;
+	@JsonProperty("course_intake")
+	@Field("course_intake")
+	private CourseIntake courseIntake;
 
 	@JsonProperty("course_languages")
 	@Field("course_languages")
@@ -212,6 +212,18 @@ public class Course implements Serializable {
 	@Field(name = "readable_id")
 	private String readableId;
 	
+	@JsonProperty("international_student_procedure_id")
+	@Field("international_student_procedure_id")
+	private String internationalStudentProcedureId;
+	
+	@JsonProperty("domestic_student_procedure_id")
+	@Field("domestic_student_procedure_id")
+	private String domesticStudentProcedureId;
+	
 	@JsonProperty("course_contact_person")
 	private List<CourseContactPersonDto> CourseContactPersons;
+	
+	@JsonProperty("provider_codes")
+	@Field(name = "provider_codes", type = FieldType.Nested)
+	private List<ProviderCode> providerCodes = new ArrayList<>();
 }

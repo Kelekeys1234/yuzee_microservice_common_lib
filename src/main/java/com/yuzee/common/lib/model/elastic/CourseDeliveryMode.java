@@ -2,12 +2,16 @@ package com.yuzee.common.lib.model.elastic;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.elasticsearch.annotations.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.dto.ValidList;
+import com.yuzee.common.lib.dto.institute.CourseDeliveryModeFundingDto;
+import com.yuzee.common.lib.dto.institute.CourseFeesDto;
 
 import lombok.Data;
 import lombok.ToString;
@@ -35,25 +39,30 @@ public class CourseDeliveryMode implements Serializable {
 	@Field("duration_time")
 	private String durationTime;
 
-	@JsonProperty("domestic_fee")
-	@Field("domestic_fee")
-	@NotNull(message = "domestic_fee should not be blank")
-	private Double domesticFee;
-
-	@JsonProperty("international_fee")
-	@Field("international_fee")
-	@NotNull(message = "international_fee should not be blank")
-	private Double internationalFee;
-
 	@JsonProperty("study_mode")
 	@Field("study_mode")
 	private String studyMode;
 
-	@JsonProperty("usd_domestic_fee")
-	@Field("usd_domestic_fee")
-	private Double usdDomesticFee;
+	@JsonProperty("course_id")
+	@Field("course_id")
+	private String courseId;
+	
+	@JsonProperty("accessibility")
+	@Field("accessibility")
+	private String accessibility;
+	
+	@JsonProperty("is_government_eligible")
+	@Field("is_government_eligible")
+	private Boolean isGovernmentEligible;
+	
+	@Valid
+	@JsonProperty("fundings")
+	@NotNull
+	private ValidList<CourseDeliveryModeFundingDto> fundings;
+	
+	@Valid
+	@JsonProperty("fees")
+	@NotNull
+	private ValidList<CourseFeesDto> fees;
 
-	@JsonProperty("usd_international_fee")
-	@Field("usd_international_fee")
-	private Double usdInternationalFee;
 }

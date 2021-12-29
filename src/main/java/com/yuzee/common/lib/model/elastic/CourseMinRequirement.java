@@ -2,6 +2,7 @@ package com.yuzee.common.lib.model.elastic;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -51,4 +52,8 @@ public class CourseMinRequirement implements Serializable {
 	@Field("min_requirement_subjects")
 	@NotNull(message = "min_requirement_subjects must not be null")
 	private List<CourseMinRequirementSubject> minRequirementSubjects;
+	
+	@JsonProperty("study_languages")
+	@Field("study_languages")
+	Set<String> studyLanguages;
 }

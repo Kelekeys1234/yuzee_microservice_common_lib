@@ -2,6 +2,7 @@ package com.yuzee.common.lib.model.elastic;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -17,13 +18,14 @@ public class CourseIntake implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("course_intake_id")
-	@Field("course_intake_id")
-	private String id;
+	@JsonProperty(value = "type")
+	@Field(value = "type")
+	@NotEmpty(message = "type must not be empty")
+	private String type;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@JsonProperty(value = "intake_date")
-	@Field(value = "intake_date")
-	@NotEmpty(message = "intake_date must not be null")
-	private Date intakeDate;
+	@JsonProperty(value = "dates")
+	@Field(value = "dates")
+	private List<Date> dates;
+
 }

@@ -1,5 +1,6 @@
 package com.yuzee.common.lib.dto.institute;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
 import com.yuzee.common.lib.dto.review.ReviewStarDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
+import com.yuzee.common.lib.model.elastic.ProviderCode;
 
 import lombok.Data;
 
@@ -130,8 +132,8 @@ public class CourseSyncDTO implements SyncDTO{
 	@JsonProperty("course_english_eligibilities")
 	private List<CourseEnglishEligibilityDto> courseEnglishEligibilities;
 
-	@JsonProperty("course_intakes")
-	private List<CourseIntakeDto> courseIntakes;
+	@JsonProperty("course_intake")
+	private CourseIntakeDto courseIntake;
 
 	@JsonProperty("course_languages")
 	private List<String> languages;
@@ -159,7 +161,13 @@ public class CourseSyncDTO implements SyncDTO{
 	
 	@JsonProperty("is_active")
 	private Boolean isActive;
+
+	@JsonProperty("international_student_procedure_id")
+	private String internationalStudentProcedureId;
 	
+	@JsonProperty("domestic_student_procedure_id")
+	private String domesticStudentProcedureId;
+
 	@JsonProperty("course_contact_person")
 	private List<CourseContactPersonDto> CourseContactPersons;
 	
@@ -171,6 +179,9 @@ public class CourseSyncDTO implements SyncDTO{
 	
 	@JsonProperty("review_count")
 	private ReviewStarDto reviewCount;
+
+	@JsonProperty("provider_codes")
+	private List<ProviderCode> providerCodes = new ArrayList<>();
 	
 	@Override
 	public String getIdentifier() {
