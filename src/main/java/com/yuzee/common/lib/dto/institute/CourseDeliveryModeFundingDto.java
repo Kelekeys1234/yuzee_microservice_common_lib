@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.eligibility.FundingResponseDto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CourseDeliveryModeFundingDto {
 
 	@JsonProperty("id")
@@ -32,4 +34,13 @@ public class CourseDeliveryModeFundingDto {
 	
 	@JsonProperty(value = "funding")
 	private FundingResponseDto funding;
+
+	public CourseDeliveryModeFundingDto(String id, String fundingNameId, String name, String currency, Double amount) {
+		super();
+		this.id = id;
+		this.fundingNameId = fundingNameId;
+		this.name = name;
+		this.currency = currency;
+		this.amount = amount;
+	}
 }
