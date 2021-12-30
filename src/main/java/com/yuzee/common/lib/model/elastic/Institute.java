@@ -23,7 +23,7 @@ public class Institute implements Serializable {
 	private static final long serialVersionUID = -5791958611869275106L;
 
 	@Id
-	@Field(name = "id")
+	@Field(name = "institute_id")
 	@JsonProperty("institute_id")
 	private String id;
 	

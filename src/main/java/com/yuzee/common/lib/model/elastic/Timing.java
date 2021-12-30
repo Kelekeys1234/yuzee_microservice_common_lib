@@ -16,7 +16,7 @@ public class Timing implements Serializable {
 
 	@Id
 	@JsonProperty("timing_id")
-	@Field("id")
+	@Field("timing_id")
 	private String id;
 
 	@JsonProperty("timing_type")

@@ -23,7 +23,7 @@ public class Level implements Serializable {
 
 	@Id
 	@JsonProperty("level_id")
-	@Field(name = "id")
+	@Field(name = "level_id")
 	private String id;
 
 	@Field(name = "name")

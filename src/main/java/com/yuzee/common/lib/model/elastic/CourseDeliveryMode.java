@@ -22,8 +22,8 @@ public class CourseDeliveryMode implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("course_delivery_mode_id")
-	@Field("course_delivery_mode_id")
+	@JsonProperty("delivery_mode_id")
+	@Field("delivery_mode_id")
 	private String id;
 
 	@JsonProperty("delivery_type")
