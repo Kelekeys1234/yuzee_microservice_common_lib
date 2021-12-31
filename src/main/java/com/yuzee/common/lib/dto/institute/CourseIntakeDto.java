@@ -10,16 +10,24 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CourseIntakeDto {
+
+	public CourseIntakeDto(String type, List<Date> dates) {
+		super();
+		this.type = type;
+		this.dates = dates;
+	}
 
 	@JsonProperty(value = "type")
 	@NotEmpty(message = "type must not be empty")
 	private String type;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message = "linked_course_ids must not be null")
+	@NotNull(message = "dates must not be null")
 	@JsonProperty(value = "dates")
 	private List<Date> dates;
 	

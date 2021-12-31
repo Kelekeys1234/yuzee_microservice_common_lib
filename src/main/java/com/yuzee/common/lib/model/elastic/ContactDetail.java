@@ -21,7 +21,7 @@ public class ContactDetail implements Serializable {
 	private static final long serialVersionUID = -7351584066595388761L;
 
 	@JsonProperty("contact_detail_id")
-	@Field(name = "id")
+	@Field(name = "contact_detail_id")
 	private String id;
 
 	@JsonProperty("contact_type")

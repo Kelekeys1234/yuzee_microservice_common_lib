@@ -2,13 +2,11 @@ package com.yuzee.common.lib.dto.institute;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 public class CourseDto {
