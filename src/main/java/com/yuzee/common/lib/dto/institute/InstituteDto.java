@@ -1,7 +1,10 @@
 package com.yuzee.common.lib.dto.institute;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
@@ -73,4 +76,8 @@ public class InstituteDto {
 	
 	@JsonProperty("total_courses")
 	private Long totalCourses;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonProperty("created_on")
+	private Date createdOn;
 }
