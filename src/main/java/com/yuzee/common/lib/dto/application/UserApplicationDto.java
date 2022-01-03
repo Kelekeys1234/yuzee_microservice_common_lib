@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.yuzee.common.lib.dto.institute.InstituteBasicInfoDto;
+import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
@@ -129,5 +131,8 @@ public class UserApplicationDto implements Serializable {
 	
 	@JsonProperty("other_details")
 	private UserApplicationOtherDetailsDto otherDetails = null;
+	
+	@JsonProperty("institute_dto")
+	private InstituteDto instituteDto = null;
 	
 }
