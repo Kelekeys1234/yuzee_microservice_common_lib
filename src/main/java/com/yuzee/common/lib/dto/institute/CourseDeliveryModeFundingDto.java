@@ -3,6 +3,8 @@ package com.yuzee.common.lib.dto.institute;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.eligibility.FundingResponseDto;
 
@@ -18,6 +20,7 @@ public class CourseDeliveryModeFundingDto {
 
 	@JsonProperty(value = "funding_name_id")
 	@NotEmpty(message = "funding_name_id must not be null")
+	@Field("funding_name_id")
 	private String fundingNameId;
 
 	@JsonProperty(value = "name")
