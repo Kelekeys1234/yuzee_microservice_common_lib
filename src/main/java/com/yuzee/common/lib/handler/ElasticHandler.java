@@ -43,7 +43,7 @@ public class ElasticHandler {
 	KafkaTemplate<String, String> kafkaTemplate;
 
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, 
-			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds){
+			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds, String searchKeyword){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
 		try {
@@ -66,6 +66,7 @@ public class ElasticHandler {
 				courseIds.stream().forEach(e -> uriBuilder.queryParam("course_ids", e));
 			}
 			uriBuilder.queryParam("course_type", campusType);
+			uriBuilder.queryParam("search_keyword", searchKeyword);
 
 			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
 			if (courseDtoResponse.getStatusCode().value() != 200) {
