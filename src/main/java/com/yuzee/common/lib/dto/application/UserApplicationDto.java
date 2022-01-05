@@ -92,7 +92,7 @@ public class UserApplicationDto implements Serializable {
 	@Valid
 	@NotNull(message = "{user_application.preffered_courses.is_required}") 
 	@JsonProperty("preffered_courses")
-	private List <CourseIdDto> prefferedCourseIds = null;
+	private List <CourseIdDto> preferredCourseIds = null;
 	
 	@Valid
 	@NotNull(message = "{user_application.preffered_careers.is_required}") 
