@@ -15,11 +15,11 @@ public class ProviderCodeDto {
 	@JsonProperty("id")
 	private String id;
 
-	@NotEmpty
+	@NotEmpty(message = "name must not be empty")
 	@JsonProperty("name")
 	private String name;
 
-	@NotEmpty
+	@NotEmpty(message = "value must not be empty")
 	@JsonProperty("value")
 	private String value;
 }

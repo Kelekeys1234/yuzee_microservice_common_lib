@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
 import com.yuzee.common.lib.dto.connection.NetworkDto;
 import com.yuzee.common.lib.dto.institute.SyncDTO;
+import com.yuzee.common.lib.dto.review.ReviewStarDto;
+import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -179,6 +181,12 @@ public class UserSyncDto implements SyncDTO {
 	@JsonProperty("profile_picture_path")
 	private String profilePicturePath;
 
+	@JsonProperty("storages")
+	List<StorageDto> storages;
+	
+	@JsonProperty("review_count")
+	private ReviewStarDto reviewCount;
+	
 	@Override
 	public String getIdentifier() {
 		return this.getId();
