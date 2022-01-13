@@ -428,7 +428,7 @@ public class ConnectionHandler {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
 			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOWING_USERS);
+			path.append(IConstant.CONNECTION_BASE_PATH).append(FOLLOWING_USERS).append("/users");
 			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			userIds.stream().forEach(e -> uriBuilder.queryParam("userIds", e));
