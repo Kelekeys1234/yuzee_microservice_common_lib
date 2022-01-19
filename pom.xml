@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.yuzee.common</groupId>
 	<artifactId>yuzee-backend-common-lib</artifactId>
-	<version>0.0.20-SNAPSHOT</version>
+	<version>0.0.21-SNAPSHOT</version>
 	<name>yuzee-backend-common-lib</name>
 	<description>Library project for yuzee backend</description>
 	<properties>

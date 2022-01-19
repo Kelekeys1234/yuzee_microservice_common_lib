@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.yuzee.common.lib.dto.institute.InstituteBasicInfoDto;
 import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
@@ -63,13 +62,11 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("institute_name")
 	private String instituteName;
 	
-	@NotNull(message = "{user_application.delivery_mode.is_required}")
 	@JsonProperty("delivery_mode")
-	private String deliveryMode;
+	private List<String> deliveryModes;
 	
-	@NotNull(message = "{user_application.study_mode.is_required}")
 	@JsonProperty("study_mode")
-	private String studyMode;
+	private List<String> studyModes;
 	
 	@NotNull(message = "{user_application.level.is_required}")
 	@JsonProperty("level")
@@ -79,10 +76,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("why_interested")
 	private String whyInterested;
 	
-	@NotNull(message = "{user_application.intake_date.is_required}") 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonProperty("intake_date")
-	private Date intakeDate;
+	private List<Date> intakeDates;
 	
 	@Valid
 	@NotNull(message = "{user_application.location.is_required}") 
@@ -135,4 +131,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("institute_dto")
 	private InstituteDto instituteDto = null;
 	
+	@JsonProperty("created_on")
+	private Date createdOn;
+	
+	@JsonProperty("updated_on")
+	private Date updatedOn;
 }
