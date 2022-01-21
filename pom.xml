@@ -142,11 +142,11 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>nexusdeploymentrepo</id>
-			<url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
+			<url>http://13.228.182.12:31420/repository/maven-snapshots/</url>
 		</snapshotRepository>
 		<repository>
 			<id>nexusdeploymentrepo</id>
-			<url>http://3.0.199.179:8081/repository/maven-releases/</url>
+			<url>http://13.228.182.12:31420/repository/maven-releases/</url>
 		</repository>
 
 	</distributionManagement>
