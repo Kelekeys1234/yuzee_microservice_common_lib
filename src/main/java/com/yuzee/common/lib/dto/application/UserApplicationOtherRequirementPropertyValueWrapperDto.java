@@ -15,14 +15,14 @@ import lombok.Data;
 
 @JsonInclude(Include.NON_NULL)
 @Data
-public class UserApplicationOtherRequirementPropertyDto implements Serializable {
+public class UserApplicationOtherRequirementPropertyValueWrapperDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "{user_application.other_requirement.property.property_type.is_required}") 
-	@JsonProperty("property_type")
-	private String propertyType;
-	
 	@JsonProperty("property_value")
-	private UserApplicationOtherRequirementPropertyValueWrapperDto userApplicationOtherRequirementPropertyValueWrapperDto;
+	private String propertyValue;
+	
+	@Valid
+	@JsonProperty("vaccination_properties")
+	private List<UserApplicationOtherRequirementVaccinationPropertyDto> otherRequirementVaccinationProperties;
 }
