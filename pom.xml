@@ -142,11 +142,11 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>nexusdeploymentrepo</id>
-			<url>http://13.228.182.12:31420/repository/maven-snapshots/</url>
+			<url>http://nexus.freshfutures.com/repository/maven-snapshots/</url>
 		</snapshotRepository>
 		<repository>
 			<id>nexusdeploymentrepo</id>
-			<url>http://13.228.182.12:31420/repository/maven-releases/</url>
+			<url>http://nexus.freshfutures.com/repository/maven-releases/</url>
 		</repository>
 
 	</distributionManagement>
