@@ -119,7 +119,7 @@ under the License.
     <server>
       <id>nexusdeploymentrepo</id>      
       <username>Deployment</username>
-      <password>QyUJAJ6mrpxifaV</password>
+      <password>i9Bxn37LBQ8UZ2S</password>
     </server>
     
 
@@ -154,14 +154,14 @@ under the License.
 		<id>release-http-unblocker</id>
         <mirrorOf>nexus-release-repo</mirrorOf>
         <name></name>
-        <url>http://3.0.199.179:8081/repository/maven-release/</url>
+        <url>http://nexus.freshfutures.com/repository/maven-release/</url>
         <blocked>false</blocked>
     </mirror>
     <mirror>
         <id>snapshot-http-unblocker</id>
         <mirrorOf>nexus-snapshot-repo</mirrorOf>
         <name></name>
-        <url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
+        <url>http://nexus.freshfutures.com/repository/maven-snapshots/</url>
         <blocked>false</blocked>
     </mirror>
 </mirrors>
@@ -260,7 +260,7 @@ under the License.
        <repository>
          <id>nexus-snapshot-repo</id>
          <name>your custom repo</name>
-         <url>http://3.0.199.179:8081/repository/maven-snapshots/</url>
+         <url>http://nexus.freshfutures.com/repository/maven-snapshots/</url>
        </repository>
 	   
      </repositories>
@@ -271,7 +271,7 @@ under the License.
        <repository>
          <id>nexus-release-repo</id>
          <name>your custom repo</name>
-         <url>http://3.0.199.179:8081/repository/maven-release/</url>
+         <url>http://nexus.freshfutures.com/repository/maven-release/</url>
        </repository>
      </repositories>
    </profile>
