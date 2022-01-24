@@ -79,4 +79,8 @@ public class UserEducationElasticDto {
 	@Field(name = "cgpa")
 	@JsonProperty( "cgpa")
 	private double cgpa;
+	
+	@Field(name = "education_system_id")
+	@JsonProperty("education_system_id")
+	public String educationSystemId;
 }	

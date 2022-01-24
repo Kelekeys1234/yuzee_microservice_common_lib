@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserEducationElasticDto {
 	
 	@JsonProperty("id")
@@ -61,5 +63,8 @@ public class UserEducationElasticDto {
 	
 	@JsonProperty( "cgpa")
 	private String cgpa;
+	
+	@JsonProperty("education_system_id")
+	public String educationSystemId;
 
 }
