@@ -74,9 +74,6 @@ public class CompanySyncDto implements SyncDTO{
 	@JsonProperty("company_career_advice")
 	private List<CompanyCareerAdviceElasticDto> listOfCompanyCareerAdvice = new ArrayList<>();
 	
-	@JsonProperty("company_internship")
-	private List<CompanyInternshipDto> listOfCompanyInternship = new ArrayList<>();
-
 	@JsonProperty("company_working_hours")
 	private List<CompanyWorkingHoursDto> listOfCompanyWorkingHours = new ArrayList<>();
 
