@@ -11,10 +11,9 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.yuzee.common.lib.dto.elastic.UserEducationElasticDto;
-import com.yuzee.common.lib.dto.elastic.UserElasticSearchDto;
 import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
+import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 
 import lombok.Data;
 
@@ -140,8 +139,5 @@ public class UserApplicationDto implements Serializable {
 	private Date updatedOn;
 	
 	@JsonProperty(value = "applicant_details", access = Access.READ_ONLY)
-	private UserElasticSearchDto userElasticSearchDto;
-	
-	@JsonProperty(value = "latest_user_education", access = Access.READ_ONLY)
-	private UserEducationElasticDto latestUserEducation;
+	private UserInitialInfoDto userInitialInfoDto;
 }
