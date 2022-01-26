@@ -22,7 +22,7 @@ public class UserApplicationOtherRequirementVaccinationPropertyDto implements Se
 	@JsonProperty("vaccination_id")
 	private String vaccinationId;
 	
-	@JsonProperty(value = "vaccination_name", access = Access.READ_ONLY)
+	@JsonProperty("vaccination_name")
 	private String vaccinationName;
 	
 	@JsonProperty("is_vaccinated")
