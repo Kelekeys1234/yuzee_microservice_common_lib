@@ -208,7 +208,7 @@ public class CommonHandler {
 		}
 		return responseEntity.getBody().getData();
 	}
-	public PaginationResponseDto<List<VaccinationDto>> getVaccinationByFilters(int pageNumber ,int pageSize, List<String> vaccinationIds) {
+	public PaginationResponseDto<List<VaccinationDto>> getVaccinationByFilters(int pageNumber ,int pageSize, Set<String> vaccinationIds) {
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<VaccinationDto>>>> responseEntity = null;
 		try {
 			StringBuilder path = new StringBuilder();
