@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.Data;
@@ -20,6 +21,9 @@ public class UserApplicationOtherRequirementVaccinationPropertyDto implements Se
 	@NotBlank(message = "{user_application.other_requirement.property.vaccination_id.is_required}") 
 	@JsonProperty("vaccination_id")
 	private String vaccinationId;
+	
+	@JsonProperty(value = "vaccination_name", access = Access.READ_ONLY)
+	private String vaccinationName;
 	
 	@JsonProperty("is_vaccinated")
 	private String isVaccinated;

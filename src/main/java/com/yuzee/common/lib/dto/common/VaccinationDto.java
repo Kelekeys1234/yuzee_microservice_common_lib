@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,6 +28,6 @@ public class VaccinationDto implements Serializable {
 	@JsonProperty("id")
 	private UUID _id;
 
-	@JsonProperty("name")
+	@JsonProperty(value = "name", access = Access.READ_ONLY)
 	private String name;
 }
