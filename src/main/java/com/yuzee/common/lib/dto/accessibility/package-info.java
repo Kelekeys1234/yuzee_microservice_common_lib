@@ -1,1 +1,0 @@
-package com.yuzee.common.lib.dto.accessibility;

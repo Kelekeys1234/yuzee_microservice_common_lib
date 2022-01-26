@@ -109,10 +109,6 @@ public class Company implements Serializable {
 	@Field(name = "company_career_advice", type = FieldType.Nested)
 	private List<CompanyCareerAdvice> listOfCompanyCareerAdvice = new ArrayList<>();
 
-	@JsonProperty("company_internship")
-	@Field(name = "company_internship", type = FieldType.Nested)
-	private List<CompanyInternship> listOfCompanyInternship = new ArrayList<>();
-
 	@JsonProperty("company_working_hours")
 	@Field(name = "company_working_hours", type = FieldType.Nested)
 	private List<CompanyWorkingHours> listOfCompanyWorkingHours = new ArrayList<>();
