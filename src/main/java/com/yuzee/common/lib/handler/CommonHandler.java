@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,9 +18,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
+import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.common.CountryDto;
 import com.yuzee.common.lib.dto.common.CurrencyRateDto;
 import com.yuzee.common.lib.dto.common.SkillDto;
+import com.yuzee.common.lib.dto.common.VaccinationDto;
 import com.yuzee.common.lib.exception.InvokeException;
 import com.yuzee.common.lib.exception.NotFoundException;
 
@@ -47,6 +50,8 @@ public class CommonHandler {
 
 	private static final String MSG_ERROR_CODE = "Error response recieved from common service with error code ";
 	private static final String MSG_ERROR_INVOKE_SERVICE = "Error invoking common service";
+	
+	private static final String GET_VACCINATION_BY_FILTERS = "/vaccination/search";
 	
 	public CurrencyRateDto getCurrencyRateByCurrencyCode(final String currencyCode) {
 		ResponseEntity<GenericWrapperDto<CurrencyRateDto>> responseEntity = null;
@@ -187,6 +192,38 @@ public class CommonHandler {
 			builder.queryParam("skill_ids", skillIds);
 			responseEntity = restTemplate.exchange(builder.build(false).toUriString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<List<SkillDto>>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_SERVICE);
+		}
+		return responseEntity.getBody().getData();
+	}
+	public PaginationResponseDto<List<VaccinationDto>> getVaccinationByFilters(int pageNumber ,int pageSize, List<String> vaccinationIds) {
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<VaccinationDto>>>> responseEntity = null;
+		try {
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.COMMON_URL).append(GET_VACCINATION_BY_FILTERS)
+			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
+			
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			
+			if(!CollectionUtils.isEmpty(vaccinationIds)) {
+				vaccinationIds.stream().forEach(e -> uriBuilder.queryParam("vaccination_id", e));
+			}
+			
+			responseEntity = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<VaccinationDto>>>>() {
 			});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE

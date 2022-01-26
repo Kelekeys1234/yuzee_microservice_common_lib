@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.yuzee.common</groupId>
 	<artifactId>yuzee-backend-common-lib</artifactId>
-	<version>0.0.23-SNAPSHOT</version>
+	<version>0.0.24-SNAPSHOT</version>
 	<name>yuzee-backend-common-lib</name>
 	<description>Library project for yuzee backend</description>
 	<properties>
@@ -124,6 +124,11 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-elasticsearch</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
