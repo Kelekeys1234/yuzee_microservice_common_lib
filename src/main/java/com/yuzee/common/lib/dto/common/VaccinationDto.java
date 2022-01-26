@@ -28,6 +28,6 @@ public class VaccinationDto implements Serializable {
 	@JsonProperty("id")
 	private UUID _id;
 
-	@JsonProperty(value = "name", access = Access.READ_ONLY)
+	@JsonProperty("name")
 	private String name;
 }
