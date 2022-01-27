@@ -33,4 +33,7 @@ public class TaskDto <T> {
 	
 	@JsonProperty("userApplication")
 	private T userApplication;
+	
+	@JsonProperty("process_instance_id")
+	private String processInstanceId;
 }

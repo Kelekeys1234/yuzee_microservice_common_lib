@@ -9,6 +9,7 @@ public enum UserApplicationStatusEnum {
 	COMPLETED, //TaskNameEnum.COMPLETED_ENVIROMENT
 	EXPIRED, //TaskNameEnum.PAYMENT
 	REJECTED,// reject user application
+	CANCELLED,// CANCELLED user application
 	IN_REVIEW,
 	HIRED
 	

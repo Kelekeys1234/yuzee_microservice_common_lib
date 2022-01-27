@@ -52,6 +52,10 @@ public class WorkflowHandler {
 	
 	private static final String COMPLTED_TASK = IConstant.WORKFLOW_CONNECTION_URL +"/task/complete" ;
 	
+	private static final String DELETE_PROCESS_INSTANCE = IConstant.WORKFLOW_CONNECTION_URL +"/deployment/process_instance" ;
+	
+	private static final String USER_ID = "userId";
+	
 	public String createDeployment(List<ProcedureStepDto> procedureStepDtoList) throws InvokeException {
 		ResponseEntity<GenericWrapperDto<String>> createDeployment = null;
 
@@ -191,4 +195,32 @@ public class WorkflowHandler {
 		return responseEntity.getBody().getData();
 	}
 	
+	public void deleteProcessInstance(String userId, String userApplicationId, String processInstanceId, String deleteReason) throws InvokeException {
+		ResponseEntity<GenericWrapperDto<String>> responseEntity = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			headers.add(USER_ID, userId);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			StringBuilder path = new StringBuilder();
+			path.append(DELETE_PROCESS_INSTANCE).append("/").append(processInstanceId);
+			
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			
+			builder.queryParam("delete_reason", deleteReason);
+			builder.queryParam("user_application_id", userApplicationId);
+
+			responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<String>>() {
+			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				throw new InvokeException (ERROR_FROM_WORKFLOW_SERVICE_MEG + responseEntity.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			log.error(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
+			throw e;
+		} catch (Exception e) {
+			throw new InvokeException(WORKFLOW_INVOKE_EXCEPTION_MSG, e);
+		}
+	}
 }

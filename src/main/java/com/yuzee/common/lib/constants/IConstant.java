@@ -121,4 +121,6 @@ public class IConstant {
 	public static final String ACCESSIBILITY = "ACCESSIBILITY-SERVICE/accessibility-service/api/v1/";
 	
 	public static final String ACCESSIBILITY_CONNECTION_URL = "http://" + ACCESSIBILITY;
+	
+	public static final String CANCELLING_APPLICATION = "Cancelling application";
 }
