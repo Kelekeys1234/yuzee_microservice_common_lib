@@ -35,7 +35,7 @@ public class Company implements Serializable {
 
 	@JsonProperty("is_verified")
 	@Field(name = "is_verified")
-	public boolean isVerified = false;
+	public Boolean isVerified = false;
 
 	@JsonProperty("company_name")
 	@Field(name = "company_name")

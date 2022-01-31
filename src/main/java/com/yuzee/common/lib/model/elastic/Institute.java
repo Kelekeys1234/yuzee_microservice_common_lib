@@ -117,5 +117,13 @@ public class Institute implements Serializable {
 	
 	@JsonProperty("verified")
 	@Field(name = "verified")
-	private boolean verified;
+	private Boolean verified = false;
+	
+	@JsonProperty("is_domestic_application_enalbe")
+	@Field(name = "is_domestic_application_enalbe")
+	private Boolean isDomesticApplicationEnable = false;
+	
+	@JsonProperty("is_international_application_enalbe")
+	@Field(name = "is_international_application_enalbe")
+	private Boolean isInternationalApplicationEnable = false;
 }
