@@ -246,5 +246,5 @@ public class User implements Serializable {
 	
 	@Field(name = "verified")
 	@JsonProperty("verified")
-	private boolean verified;
+	private Boolean verified = false;
 }

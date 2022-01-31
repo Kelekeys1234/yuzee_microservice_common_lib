@@ -19,6 +19,7 @@ import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.elastic.CourseBasicInfoDto;
 import com.yuzee.common.lib.dto.elastic.UsersResponseDto;
 import com.yuzee.common.lib.dto.institute.FacultyDto;
+import com.yuzee.common.lib.dto.institute.InstituteSyncDTO;
 import com.yuzee.common.lib.enumeration.CourseTypeEnum;
 import com.yuzee.common.lib.exception.InvokeException;
 
@@ -41,6 +42,8 @@ public class ElasticHandler {
 	private static final String GET_FACULTY_BY_FILTERS = IConstant.ELASTIC_SEARCH_URL+ "api/v1/faculty";
 	
 	private static final String GET_USERS_URL = IConstant.ELASTIC_SEARCH_URL+ "user";
+	
+	private static final String GET_INSTITUTE_FILTER_URL = IConstant.ELASTIC_SEARCH_URL+ "api/v1/institute";
 
 	@Autowired
 	KafkaTemplate<String, String> kafkaTemplate;
@@ -137,6 +140,43 @@ public class ElasticHandler {
 			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
 		}
 		return usersResponseDto.getBody().getData();
+	}
+	
+	public PaginationResponseDto<List<InstituteSyncDTO>> getInstituteByFilters(int pageNumber ,int pageSize, String name,
+			List<String> countryNames, Boolean isDomesticApplicationEnable,  List<String> excludeCountryName, Boolean isInternationalApplicationEnable){
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<InstituteSyncDTO>>>> response = null;
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(GET_INSTITUTE_FILTER_URL)
+			.append("/pageNumber/").append(pageNumber).append("/pageSize/").append(pageSize);
+
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			
+			uriBuilder.queryParam("institute_name", name);
+			uriBuilder.queryParam("is_domestic_application_enalbe", isDomesticApplicationEnable);
+			uriBuilder.queryParam("is_international_application_enalbe", isInternationalApplicationEnable);
+			
+			if(!CollectionUtils.isEmpty(countryNames)) {
+				countryNames.stream().forEach(c -> uriBuilder.queryParam("country_name", c));
+			}
+			if(!CollectionUtils.isEmpty(excludeCountryName)) {
+				excludeCountryName.stream().forEach(c -> uriBuilder.queryParam("exclude_country_name", c));
+			}
+
+			response = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<InstituteSyncDTO>>>>() {});
+			if (response.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + response.getStatusCode().value() );
+				throw new InvokeException(MSG_ERROR_CODE + response.getStatusCode().value() );
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_ELASTIC,e);
+			throw new InvokeException(MSG_ERROR_INVOKING_ELASTIC);
+		}
+		return response.getBody().getData();
 	}
 
 }

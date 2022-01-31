@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.company.CompanyContactDetailDto;
 import com.yuzee.common.lib.dto.review.ReviewStarDto;
@@ -139,4 +141,10 @@ public class InstituteSyncDTO implements SyncDTO {
 	
 	@JsonProperty("verified")
 	private boolean verified;
+	
+	@JsonProperty("is_domestic_application_enalbe")
+	private Boolean isDomesticApplicationEnable;
+	
+	@JsonProperty("is_international_application_enalbe")
+	private Boolean isInternationalApplicationEnable;
 }
