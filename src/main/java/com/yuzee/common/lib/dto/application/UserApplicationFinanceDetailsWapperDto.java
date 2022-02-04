@@ -7,12 +7,14 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

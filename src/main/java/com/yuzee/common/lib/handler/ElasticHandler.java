@@ -49,7 +49,8 @@ public class ElasticHandler {
 	KafkaTemplate<String, String> kafkaTemplate;
 
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, 
-			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds, String searchKeyword){
+			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds, 
+			String searchKeyword, List<String> excludeCourseIds){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
 		try {
@@ -70,6 +71,9 @@ public class ElasticHandler {
 			}
 			if(!CollectionUtils.isEmpty(courseIds)) {
 				courseIds.stream().forEach(e -> uriBuilder.queryParam("course_ids", e));
+			}
+			if(!CollectionUtils.isEmpty(excludeCourseIds)) {
+				excludeCourseIds.stream().forEach(e -> uriBuilder.queryParam("exclude_course_ids", e));
 			}
 			uriBuilder.queryParam("course_type", campusType);
 			uriBuilder.queryParam("search_keyword", searchKeyword);

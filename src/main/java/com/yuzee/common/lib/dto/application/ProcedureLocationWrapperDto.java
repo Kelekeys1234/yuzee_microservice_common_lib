@@ -23,9 +23,9 @@ public class ProcedureLocationWrapperDto implements Serializable {
 	@JsonProperty("locations")
 	private List<ProcedureLocationDto> procedureLocations;
 	
-	@JsonProperty("off_campus_location")
+	@JsonProperty(value = "off_campus_location")
 	private List<ProcedureLocationDto> procedureOffCampusLocationsDto;
 	
-	@JsonProperty("on_campus_location")
+	@JsonProperty(value = "on_campus_location")
 	private List<ProcedureLocationDto> procedureOnCampusLocationsDto;
 }

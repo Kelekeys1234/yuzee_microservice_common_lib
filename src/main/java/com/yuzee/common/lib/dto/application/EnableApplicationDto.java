@@ -1,10 +1,12 @@
 package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 
@@ -14,7 +16,7 @@ public class EnableApplicationDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty(value = "id")
-	private String id;
+	private UUID id;
 	
 	@NotBlank(message = "{enable_applicaiton.entity_id.is_required}") 
 	@JsonProperty("entity_id")

@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcedureAccessibleByDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -22,6 +25,6 @@ public class ProcedureAccessibleByDto implements Serializable {
 	@JsonProperty("user_id")
 	private String userId;
 	
-	@JsonProperty("user_initial_info")
+	@JsonProperty(value = "user_initial_info", access = Access.READ_ONLY)
 	private UserInitialInfoDto userIntitalInfo;
 }

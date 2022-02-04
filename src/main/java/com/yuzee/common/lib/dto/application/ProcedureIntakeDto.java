@@ -2,6 +2,7 @@ package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +21,7 @@ public class ProcedureIntakeDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("intake_id")
-	private String id;
+	private UUID _id;
 	
 	@NotNull(message = "{procedure.intake.intake_date.is_required}") 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

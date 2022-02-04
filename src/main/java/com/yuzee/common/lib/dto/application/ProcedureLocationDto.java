@@ -17,9 +17,6 @@ public class ProcedureLocationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("location_id")
-	private String id;
-	
 	@NotNull(message = "{procedure.location.type.is_required}") 
 	@JsonProperty("type")
 	private String type;

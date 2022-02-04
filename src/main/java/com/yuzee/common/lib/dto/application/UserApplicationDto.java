@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.dto.institute.InstituteDto;
@@ -18,6 +19,7 @@ import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -136,7 +138,7 @@ public class UserApplicationDto implements Serializable {
 	private Date createdOn;
 	
 	@JsonProperty("updated_on")
-	private Date updatedOn;
+	private Date updatedOn = new Date();
 	
 	@JsonProperty(value = "applicant_details", access = Access.READ_ONLY)
 	private UserInitialInfoDto userInitialInfoDto;
