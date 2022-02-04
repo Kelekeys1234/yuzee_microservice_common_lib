@@ -63,6 +63,15 @@ public class GetStreamHandler {
 				.build();
 		return this.client.reactions().add(userId, like).join();
 	}
+	
+	public void updateLike(String reactionId, String reactionText) throws InterruptedException, ExecutionException, StreamException {
+		log.info("Updating like for reactionId {}",reactionId);
+		Reaction reaction = Reaction.builder() 
+		        .id(reactionId) 
+		        .extraField(REACTION_TEXT, reactionText)
+		        .build();
+		this.client.reactions().update(reaction).join();
+	}
 
 	public Reaction addLikeToCommentAndReply(String userId, String reactionId, String reactionText)
 			throws InterruptedException, ExecutionException, StreamException {
