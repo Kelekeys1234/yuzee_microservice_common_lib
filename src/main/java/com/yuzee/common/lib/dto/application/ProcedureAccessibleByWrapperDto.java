@@ -1,7 +1,7 @@
 package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +23,6 @@ public class ProcedureAccessibleByWrapperDto implements Serializable {
 	@Valid
 	@NotNull(message = "{procudure.accessible_by.is_required}") 
 	@JsonProperty("accessible_by")
-	private List<ProcedureAccessibleByDto> procedureAccessibleBy;	
+	private Set<ProcedureAccessibleByDto> procedureAccessibleBy;	
 	
 }

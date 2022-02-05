@@ -2,6 +2,7 @@ package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class ProcedureIntakeWrapperDto implements Serializable {
 	@Valid
 	@NotNull(message = "{procudure.intakes.is_required}") 
 	@JsonProperty("intakes")
-	private List<ProcedureIntakeDto> procedureIntakes;
+	private Set<ProcedureIntakeDto> procedureIntakes;
 	
 	@JsonProperty(value = "institute_intakes", access = Access.READ_ONLY)
 	private List<String> instituteIntakes;

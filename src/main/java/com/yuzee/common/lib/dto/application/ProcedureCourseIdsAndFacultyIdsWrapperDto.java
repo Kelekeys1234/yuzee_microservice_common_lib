@@ -1,6 +1,6 @@
 package com.yuzee.common.lib.dto.application;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,12 +15,12 @@ public class ProcedureCourseIdsAndFacultyIdsWrapperDto {
 	@Valid
 	@NotNull(message = "{procedure.courses.is_required}")  
 	@JsonProperty("courses")
-	private List <CourseIdDto> courseIds;
+	private Set <CourseIdDto> courseIds;
 	
 	@Valid
 	@NotNull(message = "{procedure.faculties.is_required}") 
 	@JsonProperty("faculties")
-	private List <FacultyIdDto> facultyIds;
+	private Set <FacultyIdDto> facultyIds;
 	
 	
 }
