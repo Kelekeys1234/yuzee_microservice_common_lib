@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -206,11 +207,11 @@ public class User implements Serializable {
 	
 	@Field(name = "connections", type = FieldType.Nested)
 	@JsonProperty("connections")
-	private List<NetworkDto> connections = null;
+	private Set<NetworkDto> connections = null;
 	
 	@Field(name = "followings", type = FieldType.Nested)
 	@JsonProperty("followings")
-	private List<NetworkDto> followings = null;
+	private Set<NetworkDto> followings = null;
 	
 	@Field(name = "user_achievements")
 	@JsonProperty("user_achievements")
