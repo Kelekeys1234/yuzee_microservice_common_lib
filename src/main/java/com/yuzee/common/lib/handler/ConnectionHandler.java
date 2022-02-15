@@ -16,16 +16,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.yuzee.common.lib.dto.connection.ConnectionExportDto;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericResponse;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.connection.ConnectionExistDto;
+import com.yuzee.common.lib.dto.connection.ConnectionExportDto;
 import com.yuzee.common.lib.dto.connection.ConnectionNumberDto;
 import com.yuzee.common.lib.dto.connection.FollowerCategoryDto;
 import com.yuzee.common.lib.dto.connection.FollowerCountDto;
 import com.yuzee.common.lib.dto.connection.NetworkDto;
+import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.exception.InvokeException;
@@ -448,8 +449,8 @@ public class ConnectionHandler {
 		return responseEntity.getBody().getData();
 	}
 
-	public List<NetworkDto> getFollowingsByUserId(String userId) {
-		ResponseEntity<GenericWrapperDto<List<NetworkDto>>> responseEntity = null;
+	public List<NetworkSyncDto> getFollowingsByUserId(String userId) {
+		ResponseEntity<GenericWrapperDto<List<NetworkSyncDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(USERID, userId);
@@ -460,7 +461,7 @@ public class ConnectionHandler {
 			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {
+					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkSyncDto>>>() {
 					});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
@@ -475,8 +476,8 @@ public class ConnectionHandler {
 		return responseEntity.getBody().getData();
 	}
 
-	public List<NetworkDto> getFollowingConnectionByUserId(String userId) {
-		ResponseEntity<GenericWrapperDto<List<NetworkDto>>> responseEntity = null;
+	public List<NetworkSyncDto> getFollowingConnectionByUserId(String userId) {
+		ResponseEntity<GenericWrapperDto<List<NetworkSyncDto>>> responseEntity = null;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(USERID, userId);
@@ -487,7 +488,7 @@ public class ConnectionHandler {
 			HttpEntity<String> entity = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkDto>>>() {
+					new ParameterizedTypeReference<GenericWrapperDto<List<NetworkSyncDto>>>() {
 					});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());

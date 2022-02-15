@@ -3,6 +3,7 @@ package com.yuzee.common.lib.dto.elastic;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yuzee.common.lib.enumeration.ElasticSyncType;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
 import com.yuzee.common.lib.enumeration.UserConnectionType;
 
@@ -31,13 +32,13 @@ public class NetworkSyncDto {
 	private UserConnectionType connectionType;
 	
 	@JsonProperty("sync_type")
-	private String syncType;
+	private ElasticSyncType syncType;
 	
-	@JsonProperty("createdOn")
+	@JsonProperty("created_on")
 	private Date createdOn;
 	
 	public NetworkSyncDto(String followerId, EntityTypeEnum followerEntityType, String followingId,
-			EntityTypeEnum followingEntityType, UserConnectionType connectionType, String syncType) {
+			EntityTypeEnum followingEntityType, UserConnectionType connectionType, ElasticSyncType syncType) {
 		super();
 		this.followerId = followerId;
 		this.followerEntityType = followerEntityType;
