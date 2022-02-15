@@ -151,11 +151,11 @@ public class UserSyncDto implements SyncDTO {
 	@JsonProperty("user_reachout_info")
 	private List<String> userReachOutInfo;
 	
-	@JsonProperty("connections")
-	private List<NetworkSyncDto> connections;
+	@JsonProperty("user_connections")
+	private List<NetworkSyncDto> userConnections;
 	
-	@JsonProperty("followings")
-	private List<NetworkSyncDto> followings;
+	@JsonProperty("user_followings")
+	private List<NetworkSyncDto> userFollowings;
 
 	@JsonProperty("user_achievements")
 	private List<UserAchivementsElasticDto> userAchivements;
