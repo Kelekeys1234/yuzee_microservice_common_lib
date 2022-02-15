@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NetworkSyncDto {
 
+	
 	@JsonProperty("follower_id")
 	private String followerId;
 	
@@ -36,16 +37,4 @@ public class NetworkSyncDto {
 	
 	@JsonProperty("created_on")
 	private Date createdOn;
-	
-	public NetworkSyncDto(String followerId, EntityTypeEnum followerEntityType, String followingId,
-			EntityTypeEnum followingEntityType, UserConnectionType connectionType, ElasticSyncType syncType) {
-		super();
-		this.followerId = followerId;
-		this.followerEntityType = followerEntityType;
-		this.followingId = followingId;
-		this.followingEntityType = followingEntityType;
-		this.connectionType = connectionType;
-		this.syncType = syncType;
-	}
-	
 }
