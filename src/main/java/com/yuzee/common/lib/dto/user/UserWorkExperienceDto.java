@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -56,6 +57,7 @@ public class UserWorkExperienceDto {
 	@JsonProperty("postal_code")
 	private String postalCode;
 	
+	@Size(min = 300, max = 3000, message = "{user_work_experience.job_description.size}")
 	@JsonProperty("job_description")
 	private String jobDescription;
 	
