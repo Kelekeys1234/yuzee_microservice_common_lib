@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.dto.transaction;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 
@@ -23,7 +24,7 @@ public class ViewTransactionDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("trasanction_id")
-	private String id;
+	private UUID _id;
 	
 	@JsonProperty("entity_id")
 	@NotBlank(message = "entity_id should not be blank")
