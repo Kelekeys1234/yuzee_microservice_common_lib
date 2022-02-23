@@ -38,16 +38,20 @@ public class CompanyCareerAdvice implements Serializable {
 	@JsonProperty("detail_description")
 	@Field(name = "detail_description")
 	private String detailDescription;
-
-	@JsonProperty("company_employees")
-	@Field(name = "company_employees", type = FieldType.Nested)
-	private List<String> companyEmployees = new ArrayList<>();
-
-	@JsonProperty("collaborations")
-	@Field(name = "collaborations", type = FieldType.Nested)
-	private List<String> collaborations = new ArrayList<>();
-
-	@JsonProperty("company_preffered_courses")
-	@Field(name = "company_preffered_courses", type = FieldType.Nested)
-	private List<CompanyPreferredCourse> listOfCompanyPreferredCourse = new ArrayList<>();
+	
+	@JsonProperty("privacy_level")
+	@Field(name = "privacy_level")
+	private String privacyLevel;
+	
+	@JsonProperty("employed_users")
+	@Field(name = "employed_users", type = FieldType.Nested)
+	private List<String> listOfEmployedUser = new ArrayList<>();
+	
+	@JsonProperty("relevent_courses")
+	@Field(name = "relevent_courses", type = FieldType.Nested)
+	private List<String> listOfReleventCourse = new ArrayList<>();
+	
+	@JsonProperty("skills")
+	@Field(name = "skills", type = FieldType.Nested)
+	private List<String> listOfSkill = new ArrayList<>();
 }

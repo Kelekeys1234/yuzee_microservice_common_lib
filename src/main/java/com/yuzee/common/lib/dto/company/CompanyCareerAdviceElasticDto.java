@@ -1,6 +1,5 @@
 package com.yuzee.common.lib.dto.company;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,13 +24,16 @@ public class CompanyCareerAdviceElasticDto {
 	
 	@JsonProperty("detail_description")
 	private String detailDescription;
+	
+	@JsonProperty("privacy_level")
+	private String privacyLevel;
 
-	@JsonProperty("company_employees")
-	private List<String> listOfCompanyEmployee = new ArrayList<>();
-
-	@JsonProperty("collaborations")
-	private List<String> listOfCompanyCareerAdviceCollaboration = new ArrayList<>();
-
-	@JsonProperty("company_preffered_courses")
-	private List<CompanyPreferredCourseElasticDto> listOfCompanyPreferredCourse = new ArrayList<>();
+	@JsonProperty("employed_users")
+	private List<String> listOfEmployedUser;
+	
+	@JsonProperty("relevent_courses")
+	private List<String> listOfReleventCourse;
+	
+	@JsonProperty("skills")
+	private List<String> listOfSkill;
 }
