@@ -27,6 +27,9 @@ public class CompanyCareerAdviceElasticDto {
 	
 	@JsonProperty("privacy_level")
 	private String privacyLevel;
+	
+	@JsonProperty("status")
+	private String status;
 
 	@JsonProperty("employed_users")
 	private List<String> listOfEmployedUser;

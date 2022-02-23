@@ -43,6 +43,10 @@ public class CompanyCareerAdvice implements Serializable {
 	@Field(name = "privacy_level")
 	private String privacyLevel;
 	
+	@JsonProperty("status")
+	@Field(name = "status")
+	private String status;
+	
 	@JsonProperty("employed_users")
 	@Field(name = "employed_users", type = FieldType.Nested)
 	private List<String> listOfEmployedUser = new ArrayList<>();
