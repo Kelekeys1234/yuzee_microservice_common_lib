@@ -28,7 +28,10 @@ public enum ContactTypeEnum {
 	TIK_TOK("Tik Tok","tikTok.svg",false),
 	VIBER("Viber","viber.svg",false),
 	WE_CHAT("WeChat","weChat.svg",false),
-	YABB_MESSENGER("Yabb Messenger","yab.svg",false);
+	YABB_MESSENGER("Yabb Messenger","yab.svg",false),
+	INSTAGRAM("Instagram","instagram.svg",false),
+	FACEBOOK("FACEBOOK","facebook.svg",false),
+	SNAPCHAT("snapchat","snapchat.svg",false);
 	
 	@Getter private String displayName;
 	@Getter @Setter private String imageName;
