@@ -31,7 +31,7 @@ public enum ContactTypeEnum {
 	YABB_MESSENGER("Yabb Messenger","yab.svg",false),
 	INSTAGRAM("Instagram","instagram.svg",false),
 	FACEBOOK("FACEBOOK","facebook.svg",false),
-	SNAPCHAT("snapchat","snapchat.svg",false);
+	SNAPCHAT("Snapchat","snapchat.svg",false);
 	
 	@Getter private String displayName;
 	@Getter @Setter private String imageName;
