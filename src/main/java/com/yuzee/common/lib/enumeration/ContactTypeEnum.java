@@ -30,7 +30,7 @@ public enum ContactTypeEnum {
 	WE_CHAT("WeChat","weChat.svg",false),
 	YABB_MESSENGER("Yabb Messenger","yab.svg",false),
 	INSTAGRAM("Instagram","instagram.svg",false),
-	FACEBOOK("FACEBOOK","facebook.svg",false),
+	FACEBOOK("Facebook","facebook.svg",false),
 	SNAPCHAT("Snapchat","snapchat.svg",false);
 	
 	@Getter private String displayName;
