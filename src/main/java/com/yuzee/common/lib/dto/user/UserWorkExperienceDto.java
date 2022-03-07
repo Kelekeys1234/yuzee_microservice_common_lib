@@ -57,7 +57,7 @@ public class UserWorkExperienceDto {
 	@JsonProperty("postal_code")
 	private String postalCode;
 	
-	@Size(min = 30, max = 220, message = "{user_work_experience.job_description.size}")
+	@Size(min = 30, max = 3000, message = "{user_work_experience.job_description.size}")
 	@JsonProperty("job_description")
 	private String jobDescription;
 	
