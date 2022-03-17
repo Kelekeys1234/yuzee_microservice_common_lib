@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.enumeration;
 
 public enum UserApplicationStatusEnum {
+	ALL,
 	DRAFT, //create user application
 	PENDING, // after submit application
 	OFFERED, //TaskNameEnum.MAKE_AN_OFFER
