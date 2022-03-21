@@ -24,8 +24,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@Document
+@EqualsAndHashCode
+@CompoundIndexes({
+    @CompoundIndex(name = "UK_N_EI_ET_ST", def = "{'name' : 1, 'entity_id': 1, 'entity_type': 1, 'student_type': 1}", unique = true)
+})
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document
 public class ProcedureDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

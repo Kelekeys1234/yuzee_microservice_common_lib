@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 
@@ -23,9 +24,10 @@ public class ProcedureLocationWrapperDto implements Serializable {
 	@JsonProperty("locations")
 	private List<ProcedureLocationDto> procedureLocations;
 	
-	@JsonProperty(value = "off_campus_location")
+
+	@JsonProperty("off_campus_location")
 	private List<ProcedureLocationDto> procedureOffCampusLocationsDto;
 	
-	@JsonProperty(value = "on_campus_location")
+	@JsonProperty("on_campus_location")
 	private List<ProcedureLocationDto> procedureOnCampusLocationsDto;
 }
