@@ -81,8 +81,7 @@ public class AuthorizationHandler {
 	private static final String PASSWORD = "password";
 	private static final String USERNAME = "username";
 	private static final String ROLE_IDS = "roleIds";
-	private static final String INCORRECT_PASSWORD = "Incorrect password";
-
+	
 	public void createOrUpdateScopes(GenericRequestWrapper<ScopeDto> scopes) {
 		log.info("Creating scopes");
 		try {
@@ -316,10 +315,7 @@ public class AuthorizationHandler {
 		} catch (InvokeException | NotFoundException e) {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
 			throw e;
-		} catch (Unauthorized e) {
-			log.error(INCORRECT_PASSWORD);
-			throw new InvokeException(INCORRECT_PASSWORD);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
 			throw new InvokeException(MSG_ERROR_INVOKING_AUTH_SERVICE);
 		}
