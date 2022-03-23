@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -80,6 +81,7 @@ public class AuthorizationHandler {
 	private static final String PASSWORD = "password";
 	private static final String USERNAME = "username";
 	private static final String ROLE_IDS = "roleIds";
+	private static final String INCORRECT_PASSWORD = "Incorrect password";
 
 	public void createOrUpdateScopes(GenericRequestWrapper<ScopeDto> scopes) {
 		log.info("Creating scopes");
@@ -314,7 +316,10 @@ public class AuthorizationHandler {
 		} catch (InvokeException | NotFoundException e) {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
 			throw e;
-		} catch (Exception e) {
+		} catch (Unauthorized e) {
+			log.error(INCORRECT_PASSWORD);
+			throw new InvokeException(INCORRECT_PASSWORD);
+		}catch (Exception e) {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
 			throw new InvokeException(MSG_ERROR_INVOKING_AUTH_SERVICE);
 		}
