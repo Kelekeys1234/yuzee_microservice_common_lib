@@ -81,7 +81,7 @@ public class AuthorizationHandler {
 	private static final String PASSWORD = "password";
 	private static final String USERNAME = "username";
 	private static final String ROLE_IDS = "roleIds";
-	private static final String INVALID_OLD_PASSWORD = "Invalid old password";
+	private static final String INVALID_CREADENTIAL = "Invalid user email id and password";
 	
 	public void createOrUpdateScopes(GenericRequestWrapper<ScopeDto> scopes) {
 		log.info("Creating scopes");
@@ -317,7 +317,7 @@ public class AuthorizationHandler {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
 			throw e;
 		} catch (Unauthorized e) {
-			log.error(INVALID_OLD_PASSWORD, e);
+			log.error(INVALID_CREADENTIAL, e);
 			throw e;
 		} catch (Exception e) {
 			log.error(MSG_ERROR_INVOKING_AUTH_SERVICE, e);
