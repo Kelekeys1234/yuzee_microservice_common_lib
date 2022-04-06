@@ -119,7 +119,7 @@ public class ElasticHandler {
 		return facultyDtoResponse.getBody().getData();
 	}
 	
-	public UsersResponseDto getUsersByFilter(int pageNumber ,int pageSize, List<String> userIds){
+	public UsersResponseDto getUsersByFilter(int pageNumber ,int pageSize, List<String> userIds, String name){
 		ResponseEntity<GenericWrapperDto<UsersResponseDto>> usersResponseDto = null;
 
 		try {
@@ -131,7 +131,7 @@ public class ElasticHandler {
 			if(!CollectionUtils.isEmpty(userIds)) {
 				userIds.stream().forEach(e -> uriBuilder.queryParam("user_id", e));
 			}
-
+			uriBuilder.queryParam("name", name);
 			usersResponseDto = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<UsersResponseDto>>() {});
 			if (usersResponseDto.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE + usersResponseDto.getStatusCode().value() );
