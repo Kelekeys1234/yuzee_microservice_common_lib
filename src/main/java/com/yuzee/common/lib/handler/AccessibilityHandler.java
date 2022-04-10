@@ -34,7 +34,7 @@ public class AccessibilityHandler {
 	private RestTemplate restTemplate;
 
 	public CheckUserAccessEntityDto checkAccessibility(String entityId, String grantUserId, String moduleName,
-			String subModuleName, String claim, String entityType) {
+			String subModuleName, String apiUniqueName, String entityType) {
 
 		ResponseEntity<GenericWrapperDto<CheckUserAccessEntityDto>> responseEntity = null;
 		try {
@@ -46,7 +46,7 @@ public class AccessibilityHandler {
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			uriBuilder.queryParam("module_name", moduleName);
 			uriBuilder.queryParam("sub_module_name", subModuleName);
-			uriBuilder.queryParam("claim", claim);
+			uriBuilder.queryParam("apiUniqueName", apiUniqueName);
 			log.info(uriBuilder.toUriString());
 			responseEntity = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<CheckUserAccessEntityDto>>() {

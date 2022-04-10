@@ -16,6 +16,7 @@ import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
 import com.yuzee.common.lib.enumeration.InstituteType;
 import com.yuzee.common.lib.enumeration.IntakeType;
 import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
+import com.yuzee.common.lib.enumeration.ModuleNameEnum;
 import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
 import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
 import com.yuzee.common.lib.enumeration.StudentCategoryEnum;
@@ -93,6 +94,7 @@ public class ValidationUtil {
 					+ Arrays.toString(Utils.getEnumNames(PrivacyLevelEnum.class)));
 		}
 	}
+	
 
 	public static void validateCourseType(String courseType) throws ValidationException {
 		if (!EnumUtils.isValidEnumIgnoreCase(CourseTypeEnum.class, courseType)) {
