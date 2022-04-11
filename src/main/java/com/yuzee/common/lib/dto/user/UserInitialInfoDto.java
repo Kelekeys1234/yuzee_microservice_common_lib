@@ -80,9 +80,6 @@ public class UserInitialInfoDto implements Serializable{
 	@JsonProperty("verified")
 	private boolean verified;
 	
-	@JsonProperty("username")
-	private String userName;
-	
 	@JsonProperty("latest_user_education")
 	private UserEducationElasticDto latestUserEducation;
 }
