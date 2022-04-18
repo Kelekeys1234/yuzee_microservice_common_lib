@@ -25,6 +25,7 @@ import com.yuzee.common.lib.dto.connection.ConnectionExportDto;
 import com.yuzee.common.lib.dto.connection.ConnectionNumberDto;
 import com.yuzee.common.lib.dto.connection.FollowerCategoryDto;
 import com.yuzee.common.lib.dto.connection.FollowerCountDto;
+import com.yuzee.common.lib.dto.connection.LinkExistDto;
 import com.yuzee.common.lib.dto.connection.NetworkDto;
 import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
@@ -46,6 +47,8 @@ public class ConnectionHandler {
 	private static final String FOLLOWING_USERS = "/api/v1/follow/following";
 
 	private static final String CONNECTION_EXIST = "/exist";
+	
+	private static final String CHECK_LINK_EXSISTS = "/exist/followerType/{followerType}/followerId/{followerId}/followingType/{followingType}/followingId/{followingId}";
 
 	private static final String FOLLOWERS_COUNT = "/count";
 
@@ -358,6 +361,38 @@ public class ConnectionHandler {
 			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
 		}
 		return responseEntity.getBody().getData().isConnectionExist();
+	}
+	
+	
+	public boolean checkLinkExists(String followerId , String followerType, String followingId , String followingType) {
+		ResponseEntity<GenericWrapperDto<LinkExistDto>> responseEntity = null;
+		Map<String, String> params = new HashMap<>();
+		params.put(FOLLOWER_ID, followerId);
+		params.put(FOLLOWER_TYPE, followerType);
+		params.put(FOLLOWINGID, followingId);
+		params.put(FOLLOWING_TYPE, followingType);
+
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_BASE_PATH).append(CHECK_LINK_EXSISTS);
+			HttpEntity<String> entity = new HttpEntity<>("", headers);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<LinkExistDto>>() {
+					}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return responseEntity.getBody().getData().isLinkExist();
 	}
 
 	public GenericResponse updateUserFollowerCategory(String followerType, String followerId, String followingType,

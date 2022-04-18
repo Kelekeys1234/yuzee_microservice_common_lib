@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.dto.authorization.RoleDto;
 import com.yuzee.common.lib.dto.elastic.UserEducationElasticDto;
 
