@@ -143,6 +143,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty(value = "applicant_details", access = Access.READ_ONLY)
 	private UserInitialInfoDto userInitialInfoDto;
 	
-	@JsonProperty(value = "offer_id", access = Access.READ_ONLY)
-	private String offerId;
+	@JsonProperty(value = "offer_ids", access = Access.READ_ONLY)
+	private List<String> offerIds;
+	
+	@JsonProperty(value = "offer_count", access = Access.READ_ONLY)
+	private int offerCount;
 }
