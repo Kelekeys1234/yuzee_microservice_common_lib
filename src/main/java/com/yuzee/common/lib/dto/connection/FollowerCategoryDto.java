@@ -1,10 +1,10 @@
 package com.yuzee.common.lib.dto.connection;
 
-import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 
 @Data
 public class FollowerCategoryDto {
-	private List<String> categories;
+	private Set<String> categories;
 }
