@@ -8,6 +8,10 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,9 +21,15 @@ import com.yuzee.common.lib.dto.storage.StorageDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode
+@CompoundIndexes({
+    @CompoundIndex(name = "UK_RI", def = "{'readableId' : 1}", unique = true)
+})
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document
 public class UserApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
