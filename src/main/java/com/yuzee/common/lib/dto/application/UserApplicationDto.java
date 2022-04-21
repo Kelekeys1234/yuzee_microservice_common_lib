@@ -25,9 +25,6 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-@CompoundIndexes({
-    @CompoundIndex(name = "UK_RI", def = "{'readableId' : 1}", unique = true)
-})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document
 public class UserApplicationDto implements Serializable {
