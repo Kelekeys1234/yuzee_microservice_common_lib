@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum ProcedureStepEnum {
-	YUZEE_REVIEW("Yuzee Review",false), //TaskNameEnum.YUZEE_REVIEW_STUDENT_APPLICATION
+//	YUZEE_REVIEW("Yuzee Review",true), //TaskNameEnum.YUZEE_REVIEW_STUDENT_APPLICATION
 	APPLICANT_REVIEWED_BY_INSTITUTION("Applicant reviewed by institution",false), //TaskNameEnum.INSTITUTE_REVIEW_STUDENT_APPLICATION
 	OFFERS_RECEIVED_BY_APPLICANT("Offers received by applicant",false), //TaskNameEnum.MAKE_AN_OFFER
 	LETTER_OF_OFFER_APPROVED_BY_APPLICANT("Letter of offer approved by applicant",false), //TaskNameEnum.WAIT_FOR_STUDENT_ACCEPT_OFFER_LETTER
