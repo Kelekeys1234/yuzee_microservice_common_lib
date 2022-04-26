@@ -77,7 +77,9 @@ public enum EntitySubTypeEnum {
 	OFFER_ATTACHMENT(false),
 	PERSONAL_IDENTITY(true),
 	AUSTRALIAN_BUSINESS_NUMBER(true),
-	VACCINE_CERTIFICATE(true);
+	VACCINE_CERTIFICATE(true),
+	RTO_CERTIFICATE (true),
+	CRICOS_CERTIFICATE(true);
 	
 	@Getter private boolean singleEntity;
 	

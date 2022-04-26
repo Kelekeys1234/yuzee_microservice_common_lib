@@ -22,6 +22,10 @@ public class CompanyDto {
 	@JsonProperty("company_type")
 	private String companyType;
 	
+
+	@JsonProperty("company_sub_type")
+	private String companySubType;
+	
 	@NotEmpty(message = "company_name can not be null / empty")
 	@JsonProperty("company_name")
 	private String companyName;
@@ -67,6 +71,12 @@ public class CompanyDto {
 	@Valid
 	@NotNull(message = "contact_details can not be null / empty")
 	private List<CompanyContactDetailDto> contactDetails = new ArrayList<>();
+	
+	
+	@JsonProperty("provider_code")
+	@Valid
+	@NotNull(message = "provider_code can not be null / empty")
+	private List<CompanyProviderCodeDto> companyProviderCodeDtos = new ArrayList<>();
 	
 	@JsonProperty("profile_pic_url")
 	private String profilePicUrl;
