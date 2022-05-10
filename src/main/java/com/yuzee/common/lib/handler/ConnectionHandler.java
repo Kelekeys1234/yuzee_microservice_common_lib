@@ -176,14 +176,18 @@ public class ConnectionHandler {
 	}
 
 	public Integer getTotalMutualConnectionCount(String userId, String visitedUserId) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(USERID, userId);
+		
 		ResponseEntity<GenericWrapperDto<ConnectionNumberDto>> result;
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromHttpUrl(IConstant.CONNECTION_URL + "/follow/mutual/count");
-		builder.queryParam(USERID, userId);
 		builder.queryParam("visitedUserId", visitedUserId);
+		
+		HttpEntity<String> body = new HttpEntity<>(headers);
 
 		try {
-			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, null,
+			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, body,
 					new ParameterizedTypeReference<GenericWrapperDto<ConnectionNumberDto>>() {
 					});
 			if (result.getStatusCode().value() != 200) {
@@ -200,29 +204,30 @@ public class ConnectionHandler {
 	}
 
 	public Boolean userConnectionExist(String userId, String visitedUserId) {
-		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> result;
-		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl(IConstant.CONNECTION_URL + "/follow/exist/" + visitedUserId);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.set(USERID, userId);
-		HttpEntity<String> entity = new HttpEntity<>(headers);
-
-		try {
-			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
-					});
-			if (result.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + result.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
-			}
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-		}
-		return result.getBody().getData().isConnectionExist();
+		return checkFollowerExists(userId, visitedUserId);
+//		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> result;
+//		UriComponentsBuilder builder = UriComponentsBuilder
+//				.fromHttpUrl(IConstant.CONNECTION_URL + "/follow/exist/" + visitedUserId);
+//
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.set(USERID, userId);
+//		HttpEntity<String> entity = new HttpEntity<>(headers);
+//
+//		try {
+//			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity,
+//					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
+//					});
+//			if (result.getStatusCode().value() != 200) {
+//				log.error(MSG_ERROR_CODE + result.getStatusCode().value());
+//				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
+//			}
+//		} catch (InvokeException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+//		}
+//		return result.getBody().getData().isConnectionExist();
 	}
 
 	public FollowerCountDto getFollowersCount(String entityId) {
@@ -253,32 +258,33 @@ public class ConnectionHandler {
 	}
 
 	public boolean checkFollowerExist(String userId, String instituteId) {
-		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> getFollowersCountResponse = null;
-		try {
-			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_URL).append(FOLLOW).append(CONNECTION_EXIST);
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			uriBuilder.pathSegment(instituteId);
-
-			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set(USERID, userId);
-			HttpEntity<?> entity = new HttpEntity<>(responseHeaders);
-
-			getFollowersCountResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
-					});
-			if (getFollowersCountResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE, getFollowersCountResponse.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
-			}
-
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-		}
-		return getFollowersCountResponse.getBody().getData().isConnectionExist();
+		return checkFollowerExists(userId, instituteId);
+//		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> getFollowersCountResponse = null;
+//		try {
+//			StringBuilder path = new StringBuilder();
+//			path.append(IConstant.CONNECTION_URL).append(FOLLOW).append(CONNECTION_EXIST);
+//			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+//			uriBuilder.pathSegment(instituteId);
+//
+//			HttpHeaders responseHeaders = new HttpHeaders();
+//			responseHeaders.set(USERID, userId);
+//			HttpEntity<?> entity = new HttpEntity<>(responseHeaders);
+//
+//			getFollowersCountResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
+//					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
+//					});
+//			if (getFollowersCountResponse.getStatusCode().value() != 200) {
+//				log.error(MSG_ERROR_CODE, getFollowersCountResponse.getStatusCode().value());
+//				throw new InvokeException(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
+//			}
+//
+//		} catch (InvokeException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+//		}
+//		return getFollowersCountResponse.getBody().getData().isConnectionExist();
 	}
 
 	public boolean checkConnectionExistForSpecificType(String followerGuid, EntityTypeEnum entityType) {

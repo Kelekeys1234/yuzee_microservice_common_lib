@@ -41,10 +41,10 @@ public class VisibilityService {
 		
 		if (!org.apache.commons.lang.StringUtils.isEmpty(requestedEntityId) && !ObjectUtils.isEmpty(requestedEntityType) ) {
 			log.info("Checking if user link exsist between requester user id {} and requested user id {}",entityId,requestedEntityId);
-			boolean linkExsists = connectionHandler.checkLinkExists(entityId, entityType.name(), requestedEntityId, requestedEntityType.name());
-			if (linkExsists) {
-				privacyLevelEnums.add(PrivacyLevelEnum.FOLLOWERS_ONLY);
-			}
+//			boolean linkExsists = connectionHandler.checkLinkExists(entityId, entityType.name(), requestedEntityId, requestedEntityType.name());
+//			if (linkExsists) {
+//				privacyLevelEnums.add(PrivacyLevelEnum.FOLLOWERS_ONLY);
+//			}
 		}
 		
 		if (requestedEntityId.equals(entityId)) {
