@@ -19,6 +19,10 @@ public class UserEducationDto {
 	@JsonProperty("user_education_id")
 	private String userEducationId;
 	
+	@NotBlank(message = "source_user_education_id is required")
+	@JsonProperty("source_user_education_id")
+	private String sourceUserEducationId;
+	
 	@NotBlank(message = "application_id is required")
 	@JsonProperty("application_id")
 	private String applicationId;
