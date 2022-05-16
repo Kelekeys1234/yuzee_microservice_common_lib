@@ -2,13 +2,22 @@ package com.yuzee.common.lib.util;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.beans.BeanUtils;
 
 public class BeanUtills {
+	
+		public static void setEnumConventer (Map<Class, Converter> mapOfConverters) {
+			NullAwareBeanUtilsBean nullAwareBeanUtilsBean =	NullAwareBeanUtilsBean.getInstance();
+			mapOfConverters.forEach((k,v) -> {
+				nullAwareBeanUtilsBean.getConvertUtils().register(v, k);
+			});
+		}
 	
 	    public static void copyPropertiesNotNull(Object dest, Object orig) throws InvocationTargetException, IllegalAccessException {
 	        NullAwareBeanUtilsBean.getInstance().copyProperties(dest, orig);
@@ -44,5 +53,6 @@ public class BeanUtills {
 	            if (value == null) return;
 	            super.copyProperty(bean, name, value);
 	        }
+	        
 	    }
 }
