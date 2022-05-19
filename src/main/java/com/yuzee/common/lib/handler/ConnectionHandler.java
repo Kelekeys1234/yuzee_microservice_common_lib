@@ -26,7 +26,6 @@ import com.yuzee.common.lib.dto.connection.ConnectionNumberDto;
 import com.yuzee.common.lib.dto.connection.FollowerCategoryDto;
 import com.yuzee.common.lib.dto.connection.FollowerCountDto;
 import com.yuzee.common.lib.dto.connection.LinkExistDto;
-import com.yuzee.common.lib.dto.connection.NetworkDto;
 import com.yuzee.common.lib.dto.elastic.NetworkSyncDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 import com.yuzee.common.lib.enumeration.EntityTypeEnum;
@@ -45,17 +44,16 @@ public class ConnectionHandler {
 	private static final String FOLLOW = "/follow";
 
 	private static final String FOLLOWING_USERS = "/api/v1/follow/following";
-
-	private static final String CONNECTION_EXIST = "/exist";
 	
 	private static final String CHECK_LINK_EXSISTS = "/exist/followerType/{followerType}/followerId/{followerId}/followingType/{followingType}/followingId/{followingId}";
 
 	private static final String FOLLOWERS_COUNT = "/count";
 
-	private static final String GET_EXISTING_USER_BY_USER_ID = "/connection/exists/";
+//	private static final String GET_EXISTING_USER_BY_USER_ID = "/connection/exists/";
+	
 	private static final String GET_MUTUAL_CONNECTION_COUNT_BY_USER_ID = "/connection/multiple/count/mutual";
 
-	private static final String GET_USER_CONNECTED_USER_ID = "/internal/connection/user/{userId}";
+//	private static final String GET_USER_CONNECTED_USER_ID = "/internal/connection/user/{userId}";
 
 	private static final String CONNECTION_FOR_ENTITY_TYPE_EXISTS = "/api/v1/follow//entityType/{entityType}/exist";
 
@@ -78,70 +76,70 @@ public class ConnectionHandler {
 	private static final String FOLLOWER_ID = "followerId";
 	private static final String FOLLOWING_TYPE = "followingType";
 	private static final String ENTITY_TYPE = "entityType";
-	private static final String FOLLOWING_ID = "following_id";
+//	private static final String FOLLOWING_ID = "following_id";
 
 	private static final String GET_CONNECTION = "/api/v1/connection";
 	private static final String GET_CONNECTION_FOLLOWING = "/api/v1/connection/following";
 
-	public List<String> getUserConnectionUserId(String userId) {
-		log.info("Get user interested tag for user id {}", userId);
-		ResponseEntity<GenericWrapperDto<List<String>>> userConnectionUserIdDtoResponse = null;
-		Map<String, String> params = new HashMap<>();
-		params.put(USERID, userId);
+//	public List<String> getUserConnectionUserId(String userId) {
+//		log.info("Get user interested tag for user id {}", userId);
+//		ResponseEntity<GenericWrapperDto<List<String>>> userConnectionUserIdDtoResponse = null;
+//		Map<String, String> params = new HashMap<>();
+//		params.put(USERID, userId);
+//
+//		try {
+//			StringBuilder path = new StringBuilder();
+//			path.append(IConstant.CONNECTION_URL).append(GET_USER_CONNECTED_USER_ID);
+//			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
+//					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
+//					}, params);
+//			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
+//				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+//				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+//			}
+//		} catch (InvokeException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+//		}
+//		return userConnectionUserIdDtoResponse.getBody().getData();
+//
+//	}
 
-		try {
-			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_URL).append(GET_USER_CONNECTED_USER_ID);
-			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
-					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
-					}, params);
-			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-			}
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-		}
-		return userConnectionUserIdDtoResponse.getBody().getData();
-
-	}
-
-	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
-			int limit) {
-		log.info("Get user details for user id {}", userIds);
-		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>> userConnectionUserIdDtoResponse = null;
-
-		try {
-			StringBuilder path = new StringBuilder();
-			path.append(IConstant.CONNECTION_URL).append(GET_EXISTING_USER_BY_USER_ID).append("pageNumber/").append("1")
-					.append("/pageSize/").append(limit);
-
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-			userIds.stream().forEach(e -> uriBuilder.queryParam(FOLLOWING_ID, e));
-			uriBuilder.queryParam(STATUS, "ACTIVE");
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(USERID, userId);
-			HttpEntity<String> body = new HttpEntity<>(headers);
-
-			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
-					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {
-					});
-			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-			}
-		} catch (InvokeException e) {
-			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-		}
-		return userConnectionUserIdDtoResponse.getBody().getData().getResponse();
-	}
+//	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
+//			int limit) {
+//		log.info("Get user details for user id {}", userIds);
+//		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>> userConnectionUserIdDtoResponse = null;
+//
+//		try {
+//			StringBuilder path = new StringBuilder();
+//			path.append(IConstant.CONNECTION_URL).append(GET_EXISTING_USER_BY_USER_ID).append("pageNumber/").append("1")
+//					.append("/pageSize/").append(limit);
+//
+//			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+//			userIds.stream().forEach(e -> uriBuilder.queryParam(FOLLOWING_ID, e));
+//			uriBuilder.queryParam(STATUS, "ACTIVE");
+//
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.add(USERID, userId);
+//			HttpEntity<String> body = new HttpEntity<>(headers);
+//
+//			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
+//					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {
+//					});
+//			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
+//				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+//				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+//			}
+//		} catch (InvokeException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+//		}
+//		return userConnectionUserIdDtoResponse.getBody().getData().getResponse();
+//	}
 
 	public List<UserInitialInfoDto> getMutualConnectionCountByIdList(String userId, List<String> userIds) {
 		log.info("Get user details for user id {}", userIds);
@@ -205,29 +203,6 @@ public class ConnectionHandler {
 
 	public Boolean userConnectionExist(String userId, String visitedUserId) {
 		return checkFollowerExists(userId, visitedUserId);
-//		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> result;
-//		UriComponentsBuilder builder = UriComponentsBuilder
-//				.fromHttpUrl(IConstant.CONNECTION_URL + "/follow/exist/" + visitedUserId);
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.set(USERID, userId);
-//		HttpEntity<String> entity = new HttpEntity<>(headers);
-//
-//		try {
-//			result = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity,
-//					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
-//					});
-//			if (result.getStatusCode().value() != 200) {
-//				log.error(MSG_ERROR_CODE + result.getStatusCode().value());
-//				throw new InvokeException(MSG_ERROR_CODE + result.getStatusCode().value());
-//			}
-//		} catch (InvokeException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-//		}
-//		return result.getBody().getData().isConnectionExist();
 	}
 
 	public FollowerCountDto getFollowersCount(String entityId) {
@@ -259,32 +234,6 @@ public class ConnectionHandler {
 
 	public boolean checkFollowerExist(String userId, String instituteId) {
 		return checkFollowerExists(userId, instituteId);
-//		ResponseEntity<GenericWrapperDto<ConnectionExistDto>> getFollowersCountResponse = null;
-//		try {
-//			StringBuilder path = new StringBuilder();
-//			path.append(IConstant.CONNECTION_URL).append(FOLLOW).append(CONNECTION_EXIST);
-//			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-//			uriBuilder.pathSegment(instituteId);
-//
-//			HttpHeaders responseHeaders = new HttpHeaders();
-//			responseHeaders.set(USERID, userId);
-//			HttpEntity<?> entity = new HttpEntity<>(responseHeaders);
-//
-//			getFollowersCountResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity,
-//					new ParameterizedTypeReference<GenericWrapperDto<ConnectionExistDto>>() {
-//					});
-//			if (getFollowersCountResponse.getStatusCode().value() != 200) {
-//				log.error(MSG_ERROR_CODE, getFollowersCountResponse.getStatusCode().value());
-//				throw new InvokeException(MSG_ERROR_CODE + getFollowersCountResponse.getStatusCode().value());
-//			}
-//
-//		} catch (InvokeException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-//		}
-//		return getFollowersCountResponse.getBody().getData().isConnectionExist();
 	}
 
 	public boolean checkConnectionExistForSpecificType(String followerGuid, EntityTypeEnum entityType) {
