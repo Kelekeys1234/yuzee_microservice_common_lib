@@ -53,7 +53,7 @@ public class ConnectionHandler {
 	
 	private static final String GET_MUTUAL_CONNECTION_COUNT_BY_USER_ID = "/connection/multiple/count/mutual";
 
-//	private static final String GET_USER_CONNECTED_USER_ID = "/internal/connection/user/{userId}";
+	private static final String GET_USER_CONNECTED_USER_ID = "/internal/connection/user/{userId}";
 
 	private static final String CONNECTION_FOR_ENTITY_TYPE_EXISTS = "/api/v1/follow//entityType/{entityType}/exist";
 
@@ -81,31 +81,31 @@ public class ConnectionHandler {
 	private static final String GET_CONNECTION = "/api/v1/connection";
 	private static final String GET_CONNECTION_FOLLOWING = "/api/v1/connection/following";
 
-//	public List<String> getUserConnectionUserId(String userId) {
-//		log.info("Get user interested tag for user id {}", userId);
-//		ResponseEntity<GenericWrapperDto<List<String>>> userConnectionUserIdDtoResponse = null;
-//		Map<String, String> params = new HashMap<>();
-//		params.put(USERID, userId);
-//
-//		try {
-//			StringBuilder path = new StringBuilder();
-//			path.append(IConstant.CONNECTION_URL).append(GET_USER_CONNECTED_USER_ID);
-//			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
-//					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
-//					}, params);
-//			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-//				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-//				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-//			}
-//		} catch (InvokeException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-//		}
-//		return userConnectionUserIdDtoResponse.getBody().getData();
-//
-//	}
+	public List<String> getUserConnectionUserId(String userId) {
+		log.info("Get user interested tag for user id {}", userId);
+		ResponseEntity<GenericWrapperDto<List<String>>> userConnectionUserIdDtoResponse = null;
+		Map<String, String> params = new HashMap<>();
+		params.put(USERID, userId);
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_URL).append(GET_USER_CONNECTED_USER_ID);
+			userConnectionUserIdDtoResponse = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<GenericWrapperDto<List<String>>>() {
+					}, params);
+			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return userConnectionUserIdDtoResponse.getBody().getData();
+
+	}
 
 //	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
 //			int limit) {
