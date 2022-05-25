@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.institute.LevelDto;
-import com.yuzee.common.lib.dto.institute.SubjectDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 
 import lombok.AllArgsConstructor;
@@ -103,7 +102,7 @@ public class UserEducationDto {
 	@JsonProperty("level")
 	private LevelDto level;
 
-	List<SubjectDto> subjects = new ArrayList<>();
+	List<SemesterDto> semesters = new ArrayList<>();
 
 	List<StorageDto> certificates = new ArrayList<>();	
 }
