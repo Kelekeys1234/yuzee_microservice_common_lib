@@ -39,6 +39,6 @@ public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	@Valid
 	@NotNull(message = "{user_application.family_member.is_required}") 
 	@JsonProperty("family_member")
-	private List<UserApplicationFamilyMemberIdsListDto> familyMembers;
+	private List<UserApplicationFinanceFamilyMemberIdsListDto> familyMembers;
 
 }

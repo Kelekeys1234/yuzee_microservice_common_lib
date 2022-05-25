@@ -8,8 +8,6 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,8 +41,8 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("application_type")
 	private String applicationType;
 	
-	@JsonProperty("family_member_id")
-	private String familyMemberId;
+	@JsonProperty("family_member_details")
+	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
 	
 	@NotNull(message = "{user_application.type.is_required}")
 	@JsonProperty("type")
