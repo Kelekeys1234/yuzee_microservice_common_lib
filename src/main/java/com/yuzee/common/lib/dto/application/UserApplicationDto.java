@@ -44,6 +44,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("family_member_details")
 	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
 	
+	@JsonProperty("member_parent_details")
+	private UserApplicationMemberParentDetailsDto userApplicationMemberParentDetailsDto;
+	
 	@NotNull(message = "{user_application.type.is_required}")
 	@JsonProperty("type")
 	private String type;
