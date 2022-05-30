@@ -123,4 +123,6 @@ public class IConstant {
 	public static final String ACCESSIBILITY_CONNECTION_URL = "http://" + ACCESSIBILITY;
 	
 	public static final String CANCELLING_APPLICATION = "Cancelling application";
+	
+	public static final String USER_WITH_USER_ID_NOT_FOUND ="user_id.not_found";
 }
