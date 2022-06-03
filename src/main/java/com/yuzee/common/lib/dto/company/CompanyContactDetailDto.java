@@ -1,6 +1,7 @@
 package com.yuzee.common.lib.dto.company;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,4 +27,8 @@ public class CompanyContactDetailDto {
 	
 	@JsonProperty("icon")
 	private String icon;
+	
+	@NotEmpty(message = "{privacy_level.is_required}")
+	@JsonProperty("privacy_level")
+	private String privacyLevel;
 }
