@@ -23,6 +23,7 @@ import com.yuzee.common.lib.enumeration.StudentCategoryEnum;
 import com.yuzee.common.lib.enumeration.TaskNameEnum;
 import com.yuzee.common.lib.enumeration.TransactionTypeEnum;
 import com.yuzee.common.lib.enumeration.VerifiedEnum;
+import com.yuzee.common.lib.enumeration.UserReviewAppealStatus;
 import com.yuzee.common.lib.exception.ValidationException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ public class ValidationUtil {
 	private static final String TASK_NAME_VALIDATION_MESSAGE = "task_name must be in one of the following: ";
 	private static final String ELASTIC_TYPE_VALIDATION_MESSAGE = "elastic_type must be in one of the following: ";
 	private static final String INSTITUTE_TYPE_VALIDATION_MESSAGE = "institute_type must be in one of the following: ";
+	private static final String REVIEW_APPEAL_TYPE_VALIDATION_MESSAGE = "review_appeal status must be in one of the following: ";
 	private static final String INTAKE_TYPE_VALIDATION_MESSAGE = "intake_type must be in one of the following: ";
 
 	private ValidationUtil() {
@@ -212,6 +214,15 @@ public class ValidationUtil {
 					Arrays.toString(Utils.getEnumNames(InstituteType.class)));
 			throw new ValidationException(INSTITUTE_TYPE_VALIDATION_MESSAGE +
 					Arrays.toString(Utils.getEnumNames(InstituteType.class)));
+		}
+	}
+
+	public static void validateUserReviewAppealStatus(String userReviewAppealStatus) {
+		if (!EnumUtils.isValidEnum(UserReviewAppealStatus.class, userReviewAppealStatus)) {
+			log.error(REVIEW_APPEAL_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(UserReviewAppealStatus.class)));
+			throw new ValidationException(REVIEW_APPEAL_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(UserReviewAppealStatus.class)));
 		}
 	}
 }
