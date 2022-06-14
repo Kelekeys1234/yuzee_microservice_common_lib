@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentExportDto {
+	
+	@JsonProperty("comment_id")
+	private String commentId;
 
 	@NotBlank(message = "{comment_text.empty}")
 	@JsonProperty("comment_text")
