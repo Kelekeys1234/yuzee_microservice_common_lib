@@ -26,6 +26,10 @@ public class LevelDto implements SyncDTO {
 	@JsonProperty("code")
 	@NotBlank(message = "code should not be blank")
 	private String code;
+	
+	@JsonProperty("category")
+	@NotBlank(message = "category should not be blank")
+	private String category;
 
 	@JsonProperty("description")
 	private String description;
@@ -37,12 +41,29 @@ public class LevelDto implements SyncDTO {
 	public String getIdentifier() {
 		return this.getId();
 	}
-
+	
 	public LevelDto(String id, String name, String code, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.code = code;
 		this.description = description;
+	}
+
+	public LevelDto( String code,
+		 String category) {
+		super();
+		this.code = code;
+		this.category = category;
+	}
+
+	public LevelDto(String id, String name,
+		 String code, String description, Integer sequenceNo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.code = code;
+		this.description = description;
+		this.sequenceNo = sequenceNo;
 	}
 }

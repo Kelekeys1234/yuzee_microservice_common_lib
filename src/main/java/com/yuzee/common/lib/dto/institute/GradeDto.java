@@ -31,10 +31,18 @@ public class GradeDto {
     private List<String> subjectGrades;
 	
 	@JsonProperty("grade")
-	@NotBlank(message = "grade should not be blank")
+//	@NotBlank(message = "grade should not be blank")
     private String grade;
 	
 	@JsonProperty("gpa_grade")
-	@NotBlank(message = "gpa_grade should not be blank")
+//	@NotBlank(message = "gpa_grade should not be blank")
 	private String gpaGrade;
+
+	public GradeDto(String countryName,
+			String educationSystemId, List<String> subjectGrades) {
+		super();
+		this.countryName = countryName;
+		this.educationSystemId = educationSystemId;
+		this.subjectGrades = subjectGrades;
+	}
 }

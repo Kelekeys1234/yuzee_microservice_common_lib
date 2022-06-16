@@ -22,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.yuzee.common.lib.constants.IConstant;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.institute.CourseDto;
+import com.yuzee.common.lib.dto.institute.EducationSystemDto;
+import com.yuzee.common.lib.dto.institute.GradeDto;
 import com.yuzee.common.lib.dto.institute.InstituteBasicInfoDto;
 import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.institute.InstituteRequestDto;
@@ -42,11 +44,13 @@ public class InstituteHandler {
 	private static final String GET_INSTITUTE_BY_ID = "/public/basic/info";
 	private static final String GET_LEVEL_BY_ID = "/level/{levelId}";
 	private static final String GET_INSTITUTE_DETAIL_INFO_BY_ID = "/{instituteId}" ;
+	private static final String GET_EDUCATION_SYSTEM_BY_ID = "/educationSystem/system/{systemId}" ;
 	private static final String GET_SCHOLARSHIP_BY_ID = "/scholarship/multiple/id";
 	private static final String GET_INSTITUTE_BY_MULTIPLE_ID = "/institute/multiple/id";
 	private static final String UPDATE_PROCEDURE_ID = "/course/procedure_id";
 	private static final String UPDATE_PROCEDURE_ID_BY_INSITUTE_ID = "/institute_id";
 	private static final String GET_IS_CAREER_TEST_COMPLETED= "/career-test-result/is-completed";
+	private static final String CALCULATE_GRADE= "/grade/calculate";
 	private static final String USER_ID = "userId";
 	@Autowired
 	private RestTemplate restTemplate;
@@ -291,6 +295,63 @@ public class InstituteHandler {
 			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_LEVEL_BY_ID);
 			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<LevelDto>>() {}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return responseEntity.getBody().getData();
+	}
+	
+	public EducationSystemDto getEducationSystemById(String systemId) {
+		ResponseEntity<GenericWrapperDto<EducationSystemDto>> responseEntity = null;
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
+			Map<String, String> params = new HashMap<>();
+			params.put("systemId", systemId);
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_EDUCATION_SYSTEM_BY_ID);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<EducationSystemDto>>() {}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING, e);
+			throw new InvokeException(MSG_ERROR_INVOKING);
+		}
+		return responseEntity.getBody().getData();
+	}
+	
+	public Double calculateGrade(GradeDto gradeDto) {
+		ResponseEntity<GenericWrapperDto<Double>> responseEntity = null;
+		try {
+		
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<GradeDto> entity = new HttpEntity<>(gradeDto, headers);
+			
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(CALCULATE_GRADE);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.POST, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<Double>>() {});
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE
 						+ responseEntity.getStatusCode().value());

@@ -59,7 +59,11 @@ public class UserEducationDto {
 
 	@JsonProperty("education_system_id")
 	public String educationSystemId;
+	
+	@JsonProperty("education_system_name")
+	public String educationSystemName;
 
+	@NotBlank(message = "course_name is required")
 	@JsonProperty("course_name")
 	public String courseName;
 
@@ -75,24 +79,29 @@ public class UserEducationDto {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 
+	@NotBlank(message = "study_mode is required")
 	@JsonProperty("study_mode")
 	private String studyMode;
 
 	@JsonProperty("description")
 	private String description;
 
+	@NotBlank(message = "course_language is required")
 	@JsonProperty("course_language")
 	private String courseLanguage;
 
 	@JsonProperty("institute_logo_url")
 	private String instituteLogoUrl;
 	
+	@NotBlank(message = "level_id is required")
 	@JsonProperty("level_id")
 	private String levelId;
 	
+	@NotNull(message = "latitude is required")
 	@JsonProperty("latitude")
 	private BigDecimal latitude;
 	
+	@NotNull(message = "longitude is required")
 	@JsonProperty("longitude")
 	private BigDecimal longitude;
 	
