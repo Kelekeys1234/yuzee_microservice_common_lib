@@ -19,7 +19,7 @@ public class CommentExportDto {
 	@JsonProperty("comment_id")
 	private String commentId;
 
-	@NotBlank(message = "{comment_text.empty}")
+	@NotBlank(message = "{comment.comment_text.required}")
 	@JsonProperty("comment_text")
 	private String commentText;
 	

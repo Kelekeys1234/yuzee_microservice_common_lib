@@ -33,15 +33,15 @@ public class InteractionHandler {
 	private RestTemplate restTemplate;
 
 	private static final String GET_NUMBER_OF_INTERACTION = IConstant.INTERACTION_CONNECTION_URL
-			+ "/count/interaction/{entityId}";
+			+ "/count/interaction/entityId/{entityId}";
 	private static final String GET_NUMBER_OF_INTERACTION_FOR_EACH_ENTITY = IConstant.INTERACTION_CONNECTION_URL
 			+ "/count/interaction";
 	private static final String CHECK_IF_USER_LIKED_ENTITY = IConstant.INTERACTION_CONNECTION_URL
-			+ "/user/{userId}/like/entity/{entityId}";
+			+ "/user/{userId}/like/entityId/{entityId}";
 	private static final String CHECK_IF_USER_LIKED_ENTITY_FOR_EACH_ENTITY = IConstant.INTERACTION_CONNECTION_URL
-			+ "/user/{userId}/like/entity";
+			+ "/user/{userId}/like/entityId";
 	private static final String GET_NUMBER_OF_VOTES_AND_COMMENT = IConstant.INTERACTION_CONNECTION_URL
-			+ "/count/vote/comment/{entityId}";
+			+ "/count/vote/comment/entityId/{entityId}";
 	private static final String INTERACTION_BASE_URL = IConstant.INTERACTION_CONNECTION_URL + "/comment";
 	private static final String MSG_ERROR_CODE = "Error response recieved from interaction service with error code ";
 	private static final String MSG_ERROR_INVOKING = "Error invoking interaction service";
