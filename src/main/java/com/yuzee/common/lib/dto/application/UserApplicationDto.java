@@ -3,6 +3,7 @@ package com.yuzee.common.lib.dto.application;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -79,9 +80,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("study_mode")
 	private List<String> studyModes;
 	
-	@NotNull(message = "{user_application.level.is_required}")
-	@JsonProperty("level")
-	private String level;
+	@NotNull(message = "{user_application.levels.is_required}")
+	@JsonProperty("levels")
+	private Set<String> levels;
 	
 	@NotNull(message = "{user_application.why_interested.is_required}")
 	@JsonProperty("why_interested")
