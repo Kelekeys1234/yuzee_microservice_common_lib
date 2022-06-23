@@ -31,4 +31,15 @@ public class CompanyContactDetailDto {
 	@NotEmpty(message = "{privacy_level.is_required}")
 	@JsonProperty("privacy_level")
 	private String privacyLevel;
+
+	public CompanyContactDetailDto(String id,
+			@NotBlank(message = "contact_type should not be null / blank") String contactType,
+			@NotBlank(message = "value should not be null / blank") String value, String icon) {
+		super();
+		this.id = id;
+		this.contactType = contactType;
+		this.value = value;
+		this.icon = icon;
+	}
+
 }

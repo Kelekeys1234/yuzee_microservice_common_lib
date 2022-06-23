@@ -81,7 +81,9 @@ public enum EntitySubTypeEnum {
 	RTO_CERTIFICATE (true),
 	CRICOS_CERTIFICATE(true),
 	IDENTITY_CERTIFICATE(true),
-	PROOF_OF_GUARDIANSHIP(true);
+	PROOF_OF_GUARDIANSHIP(true),
+    ABN(true),
+    ABN_UPLOADER_IDENTITY(true);
 	
 	@Getter private boolean singleEntity;
 	
