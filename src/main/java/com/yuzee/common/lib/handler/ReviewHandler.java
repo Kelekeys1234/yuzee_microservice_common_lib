@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.ws.rs.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,9 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
+import com.yuzee.common.lib.dto.CountDto;
 import com.yuzee.common.lib.dto.GenericResponse;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.review.AvgEndorsmentDto;
@@ -54,6 +58,8 @@ public class ReviewHandler {
 	private static final String UPDATE_NETWORK_CATEGORY_USER_REVIEW = "/api/v1/user/review/entityType/{entityType}/entityId/{entityId}";
 
 	private static final String DELETE_USER_REVIEW = "/api/v1/user/review";
+	
+	private static final String GET_REVIEW_COUNT_BY_ENTITY_ID_AND_ENTITY_TYPE = "/api/v1/user/review/count/entityType/{entityType}/entityId/{entityId}"; 
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -281,5 +287,33 @@ public class ReviewHandler {
 			throw new InvokeException(INVOKE_EXCEPTION);
 		}
 		return responseEntity.getBody();
+	}
+	
+	public CountDto getReviewCountByEntityIdAndEntityType(String entityId, String entityType){
+		ResponseEntity<GenericWrapperDto<CountDto>> responseEntity = null;
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
+			Map<String, String> params = new HashMap<>();
+			params.put("entityId", entityId);
+			params.put("entityType", entityType);
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.REVIEW_BASE_PATH).append(GET_REVIEW_COUNT_BY_ENTITY_ID_AND_ENTITY_TYPE);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<CountDto>>() {}, params);
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(INVALID_STATUS_CODE_EXCEPTION + responseEntity.getStatusCode().value());
+				throw new InvokeException(INVALID_STATUS_CODE_EXCEPTION + responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(INVOKE_EXCEPTION, e);
+			throw new InvokeException(INVOKE_EXCEPTION);
+		}
+		return responseEntity.getBody().getData();
 	}
 }

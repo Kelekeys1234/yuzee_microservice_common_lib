@@ -22,7 +22,7 @@ public class CompanyDto {
 	@JsonProperty("company_type")
 	private String companyType;
 	
-
+	@NotEmpty(message = "company_sub_type can not be null / empty")
 	@JsonProperty("company_sub_type")
 	private String companySubType;
 	
