@@ -97,15 +97,9 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("preffered_locations")
 	private List <UserApplicationLocationDto> prefferedLocations = null;
 	
-	@Valid
-	@NotNull(message = "{user_application.preffered_courses.is_required}") 
-	@JsonProperty("preffered_courses")
-	private List <CourseIdDto> preferredCourseIds = null;
 	
-	@Valid
-	@NotNull(message = "{user_application.preffered_careers.is_required}") 
-	@JsonProperty("preffered_careers")
-	private List <UserApplicationPrefferedCareerIdsDto> prefferedCareersIds = null;
+	@JsonProperty("keywords")
+	private Set <String> keywords;
 
 	@JsonProperty("student_type")
 	private String studentType;
