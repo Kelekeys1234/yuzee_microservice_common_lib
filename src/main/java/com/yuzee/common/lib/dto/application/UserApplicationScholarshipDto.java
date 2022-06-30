@@ -19,7 +19,7 @@ public class UserApplicationScholarshipDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty(value = "scholarship_id", access = Access.READ_ONLY)
+	@JsonProperty("scholarship_id")
 	private UUID _id;
 	
 	@NotNull(message = "{user_application.scholarship.recieve_scholarship_offer.is_required}") 

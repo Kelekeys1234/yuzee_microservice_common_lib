@@ -16,7 +16,7 @@ public class UserApplicationMemberParentDetailsDto implements Serializable{
 	
 	private static final long serialVersionUID = 5188759180221115100L;
 	
-	@JsonProperty(value = "id", access = Access.READ_ONLY)
+	@JsonProperty("id")
 	private UUID _id;
 	
 	@NotBlank(message = "{user_application.member_parent.type.is_required}") 
