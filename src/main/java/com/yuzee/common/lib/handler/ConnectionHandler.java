@@ -49,7 +49,7 @@ public class ConnectionHandler {
 
 	private static final String FOLLOWERS_COUNT = "/count";
 
-//	private static final String GET_EXISTING_USER_BY_USER_ID = "/connection/exists/";
+	private static final String GET_EXISTING_USER_BY_USER_ID = "/connection/exists/";
 	
 	private static final String GET_MUTUAL_CONNECTION_COUNT_BY_USER_ID = "/connection/multiple/count/mutual";
 
@@ -76,7 +76,7 @@ public class ConnectionHandler {
 	private static final String FOLLOWER_ID = "followerId";
 	private static final String FOLLOWING_TYPE = "followingType";
 	private static final String ENTITY_TYPE = "entityType";
-//	private static final String FOLLOWING_ID = "following_id";
+	private static final String FOLLOWING_ID = "following_id";
 
 	private static final String GET_CONNECTION = "/api/v1/connection";
 	private static final String GET_CONNECTION_FOLLOWING = "/api/v1/connection/following";
@@ -107,39 +107,39 @@ public class ConnectionHandler {
 
 	}
 
-//	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
-//			int limit) {
-//		log.info("Get user details for user id {}", userIds);
-//		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>> userConnectionUserIdDtoResponse = null;
-//
-//		try {
-//			StringBuilder path = new StringBuilder();
-//			path.append(IConstant.CONNECTION_URL).append(GET_EXISTING_USER_BY_USER_ID).append("pageNumber/").append("1")
-//					.append("/pageSize/").append(limit);
-//
-//			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
-//			userIds.stream().forEach(e -> uriBuilder.queryParam(FOLLOWING_ID, e));
-//			uriBuilder.queryParam(STATUS, "ACTIVE");
-//
-//			HttpHeaders headers = new HttpHeaders();
-//			headers.add(USERID, userId);
-//			HttpEntity<String> body = new HttpEntity<>(headers);
-//
-//			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
-//					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {
-//					});
-//			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
-//				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-//				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
-//			}
-//		} catch (InvokeException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
-//			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
-//		}
-//		return userConnectionUserIdDtoResponse.getBody().getData().getResponse();
-//	}
+	public List<UserInitialInfoDto> getExistingConnnectionFilterByUserIds(String userId, List<String> userIds,
+			int limit) {
+		log.info("Get user details for user id {}", userIds);
+		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>> userConnectionUserIdDtoResponse = null;
+
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.CONNECTION_URL).append(GET_EXISTING_USER_BY_USER_ID).append("pageNumber/").append("1")
+					.append("/pageSize/").append(limit);
+
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			userIds.stream().forEach(e -> uriBuilder.queryParam(FOLLOWING_ID, e));
+			uriBuilder.queryParam(STATUS, "ACTIVE");
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(USERID, userId);
+			HttpEntity<String> body = new HttpEntity<>(headers);
+
+			userConnectionUserIdDtoResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, body,
+					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<UserInitialInfoDto>>>>() {
+					});
+			if (userConnectionUserIdDtoResponse.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE + userConnectionUserIdDtoResponse.getStatusCode().value());
+			}
+		} catch (InvokeException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_CONNECTION, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_CONNECTION);
+		}
+		return userConnectionUserIdDtoResponse.getBody().getData().getResponse();
+	}
 
 	public List<UserInitialInfoDto> getMutualConnectionCountByIdList(String userId, List<String> userIds) {
 		log.info("Get user details for user id {}", userIds);
