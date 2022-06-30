@@ -39,7 +39,7 @@ public class InteractionHandler {
 	private static final String CHECK_IF_USER_LIKED_ENTITY = IConstant.INTERACTION_CONNECTION_URL
 			+ "/user/{userId}/like/entityId/{entityId}";
 	private static final String CHECK_IF_USER_LIKED_ENTITY_FOR_EACH_ENTITY = IConstant.INTERACTION_CONNECTION_URL
-			+ "/user/{userId}/like/entityId";
+			+ "/user/{userId}/like/entityIds";
 	private static final String GET_NUMBER_OF_VOTES_AND_COMMENT = IConstant.INTERACTION_CONNECTION_URL
 			+ "/count/vote/comment/entityId/{entityId}";
 	private static final String INTERACTION_BASE_URL = IConstant.INTERACTION_CONNECTION_URL + "/comment";
