@@ -46,7 +46,6 @@ public class InstituteHandler {
 	private static final String GET_LEVEL_BY_ID = "/level/{levelId}";
 	private static final String GET_INSTITUTE_DETAIL_INFO_BY_ID = "/{instituteId}" ;
 	private static final String GET_EDUCATION_SYSTEM_BY_ID = "/educationSystem/system/{systemId}" ;
-	private static final String GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE = "/faq/count/entityType/{entityType}/entityId/{entityId}" ;
 	private static final String GET_SCHOLARSHIP_BY_ID = "/scholarship/multiple/id";
 	private static final String GET_INSTITUTE_BY_MULTIPLE_ID = "/institute/multiple/id";
 	private static final String UPDATE_PROCEDURE_ID = "/course/procedure_id";
@@ -362,39 +361,6 @@ public class InstituteHandler {
 			}
 		} catch (InvokeException e) {
 			throw e;
-		} catch (Exception e) {
-			log.error(MSG_ERROR_INVOKING, e);
-			throw new InvokeException(MSG_ERROR_INVOKING);
-		}
-		return responseEntity.getBody().getData();
-	}
-	
-	public CountDto getFaqByEntityIdAndEntityType(String entityId, String entityType){
-		ResponseEntity<GenericWrapperDto<CountDto>> responseEntity = null;
-		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			HttpEntity<String> entity = new HttpEntity<>("",headers);
-			
-			Map<String, String> params = new HashMap<>();
-			params.put("entityId", entityId);
-			params.put("entityType", entityType);
-			StringBuilder path = new StringBuilder();
-			
-			path.append(IConstant.INSTITUTE_CONNECTION_URL).append(GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE);
-			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
-					new ParameterizedTypeReference<GenericWrapperDto<CountDto>>() {}, params);
-			if (responseEntity.getStatusCode().value() != 200) {
-				log.error(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-				throw new InvokeException(MSG_ERROR_CODE
-						+ responseEntity.getStatusCode().value());
-			}
-		} catch (InvokeException e) {
-			throw e;
-		}catch (NotFound e) {
-			log.error(MSG_ERROR_NOT_FOUND, e);
-			throw new NotFoundException(MSG_ERROR_NOT_FOUND);
 		} catch (Exception e) {
 			log.error(MSG_ERROR_INVOKING, e);
 			throw new InvokeException(MSG_ERROR_INVOKING);

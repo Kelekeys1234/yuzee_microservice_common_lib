@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yuzee.common.lib.constants.IConstant;
+import com.yuzee.common.lib.dto.CountDto;
 import com.yuzee.common.lib.dto.GenericWrapperDto;
 import com.yuzee.common.lib.dto.PaginationResponseDto;
 import com.yuzee.common.lib.dto.common.CountryDto;
@@ -52,6 +55,8 @@ public class CommonHandler {
 	private static final String MSG_ERROR_INVOKE_SERVICE = "Error invoking common service";
 	
 	private static final String GET_VACCINATION_BY_FILTERS = "/vaccination/search";
+	
+	private static final String GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE = "/faq/count/entityType/{entityType}/entityId/{entityId}" ;
 	
 	public CurrencyRateDto getCurrencyRateByCurrencyCode(final String currencyCode) {
 		ResponseEntity<GenericWrapperDto<CurrencyRateDto>> responseEntity = null;
@@ -226,6 +231,37 @@ public class CommonHandler {
 			responseEntity = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null,
 					new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<VaccinationDto>>>>() {
 			});
+			if (responseEntity.getStatusCode().value() != 200) {
+				log.error(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+				throw new InvokeException(MSG_ERROR_CODE
+						+ responseEntity.getStatusCode().value());
+			}
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw e;
+		} catch (Exception e) {
+			log.error(MSG_ERROR_INVOKE_SERVICE, e);
+			throw new InvokeException(MSG_ERROR_INVOKE_SERVICE);
+		}
+		return responseEntity.getBody().getData();
+	}
+	
+	public CountDto getFaqByEntityIdAndEntityType(String entityId, String entityType){
+		ResponseEntity<GenericWrapperDto<CountDto>> responseEntity = null;
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<>("",headers);
+			
+			Map<String, String> params = new HashMap<>();
+			params.put("entityId", entityId);
+			params.put("entityType", entityType);
+			StringBuilder path = new StringBuilder();
+			
+			path.append(IConstant.COMMON_URL).append(GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE);
+			responseEntity = restTemplate.exchange(path.toString(), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<GenericWrapperDto<CountDto>>() {}, params);
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(MSG_ERROR_CODE
 						+ responseEntity.getStatusCode().value());
