@@ -40,7 +40,6 @@ public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	private Double budgetMaxAmount;
 	
 	@Valid
-	@NotNull(message = "{user_application.family_member.is_required}") 
 	@JsonProperty("family_member")
 	private Set<UserApplicationFinanceFamilyMemberIdsListDto> familyMembers;
 

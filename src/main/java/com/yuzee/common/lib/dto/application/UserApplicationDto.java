@@ -95,7 +95,6 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("study_mode")
 	private Set<String> studyModes;
 	
-	@NotNull(message = "{user_application.levels.is_required}")
 	@JsonProperty("levels")
 	private Set<String> levels;
 	
@@ -107,7 +106,6 @@ public class UserApplicationDto implements Serializable {
 	private Set<Date> intakeDates;
 	
 	@Valid
-	@NotNull(message = "{user_application.preffered_locations.is_required}") 
 	@JsonProperty("preffered_locations")
 	private Set <UserApplicationLocationDto> preferredLocations = null;
 	
