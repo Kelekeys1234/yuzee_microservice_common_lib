@@ -21,13 +21,17 @@ import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
