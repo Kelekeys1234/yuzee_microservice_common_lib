@@ -101,6 +101,7 @@ public class UserEducationDto {
 	@JsonProperty("longitude")
 	private BigDecimal longitude;
 	
+	@NotBlank(message = "result_type is required")
 	@JsonProperty("result_type")
 	private String resultType;
 	
