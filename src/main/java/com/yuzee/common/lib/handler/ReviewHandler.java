@@ -243,8 +243,9 @@ public class ReviewHandler {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.REVIEW_BASE_PATH).append(UPDATE_NETWORK_CATEGORY_USER_REVIEW);
 
-			HttpEntity<String> body = new HttpEntity<>(category, headers);
+			HttpEntity<String> body = new HttpEntity<>("", headers);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+			uriBuilder.queryParam("networkCategory", category);
 			
 			responseEntity = restTemplate.exchange(uriBuilder.buildAndExpand(params).toUriString(), HttpMethod.POST, body, GenericResponse.class,
 					params);
