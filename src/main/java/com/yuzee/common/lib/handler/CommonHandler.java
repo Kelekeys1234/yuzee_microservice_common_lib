@@ -56,7 +56,7 @@ public class CommonHandler {
 	
 	private static final String GET_VACCINATION_BY_FILTERS = "/vaccination/search";
 	
-	private static final String GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE = "/faq/count/entityType/{entityType}/entityId/{entityId}" ;
+	private static final String GET_FAQ_BY_ENTITY_ID_AND_ENTITY_TYPE = "/faq/count/entityId/{entityId}/entityType/{entityType}" ;
 	
 	public CurrencyRateDto getCurrencyRateByCurrencyCode(final String currencyCode) {
 		ResponseEntity<GenericWrapperDto<CurrencyRateDto>> responseEntity = null;
