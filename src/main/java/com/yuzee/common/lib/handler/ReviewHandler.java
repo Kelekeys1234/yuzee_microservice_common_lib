@@ -247,7 +247,7 @@ public class ReviewHandler {
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			uriBuilder.queryParam("networkCategory", category);
 			
-			responseEntity = restTemplate.exchange(uriBuilder.buildAndExpand(params).toUriString(), HttpMethod.POST, body, GenericResponse.class,
+			responseEntity = restTemplate.exchange(uriBuilder.buildAndExpand(params).toUriString(), HttpMethod.PUT, body, GenericResponse.class,
 					params);
 			if (responseEntity.getStatusCode().value() != 200) {
 				log.error(INVALID_STATUS_CODE_EXCEPTION + responseEntity.getStatusCode().value());
