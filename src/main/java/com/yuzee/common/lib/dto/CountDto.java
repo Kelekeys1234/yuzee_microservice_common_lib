@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CountDto {
 	private String id;
 
-	private Long count;
+	private long count;
 }
