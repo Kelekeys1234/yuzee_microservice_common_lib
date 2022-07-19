@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,22 +21,45 @@ import com.yuzee.common.lib.dto.institute.InstituteDto;
 import com.yuzee.common.lib.dto.storage.StorageDto;
 import com.yuzee.common.lib.dto.user.UserInitialInfoDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty(value = "id", access = Access.READ_ONLY)
+	@JsonProperty("id")
 	private UUID _id;
+	
+	@JsonProperty("readable_id")
+	private String readableId;
+
+	@NotBlank(message = "{user_application.type.is_required}")
+	@JsonProperty("type")
+	private String type;
+	
+	@JsonProperty("status")
+	private String status;
+	
+	@Column(name = "parent_user_application_id")
+	private String parentUserApplicationId;
+	
+	@JsonProperty("student_type")
+	private String studentType;
 	
 	@JsonProperty("applicant_id")
 	private String applicantId;
+	
+	@JsonProperty("applicant_details")
+	private UserInitialInfoDto userInitialInfoDto;
 	
 	@JsonProperty("application_id")
 	private String applicationId;
@@ -42,76 +67,54 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("application_type")
 	private String applicationType;
 	
-	@JsonProperty("family_member_details")
-	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
+	@JsonProperty("recognition_for_prior_leaning")
+	private RPLApplicationDto rpl = null;
+
+	@JsonProperty("upskilling_applicaiton")
+	private UpskillingApplicationDto upskillingApplication = null;
 	
-	@JsonProperty("member_parent_details")
-	private UserApplicationMemberParentDetailsDto userApplicationMemberParentDetailsDto;
-	
-	@NotNull(message = "{user_application.type.is_required}")
-	@JsonProperty("type")
-	private String type;
-	
-	@NotNull(message = "{user_application.applying_for_type.is_required}")
-	@JsonProperty("applying_for_type")
-	private String applyingForType;
-	
-	@NotNull(message = "{user_application.course_id.is_required}")
 	@JsonProperty("course_id")
 	private String courseId;
 	
 	@JsonProperty("course_name")
 	private String courseName;
-	
-	@NotNull(message = "{user_application.description_preferences.is_required}")
-	@JsonProperty("description_preferences")
-	private String descriptionPreferences;
-	
-	@NotNull(message = "{user_application.institute_id.is_required}")
+
 	@JsonProperty("institute_id")
 	private String instituteId;
 	
-	@JsonProperty("institute_name")
-	private String instituteName;
+	@JsonProperty("institute_dto")
+	private InstituteDto instituteDto = null;
+	
+	@NotBlank(message = "{user_application.applying_for_type.is_required}")
+	@JsonProperty("applying_for_type")
+	private String applyingForType;
+	
+	@NotBlank(message = "{user_application.description_preferences.is_required}")
+	@JsonProperty("description_preferences")
+	private String descriptionPreferences;
 	
 	@JsonProperty("delivery_mode")
-	private List<String> deliveryModes;
+	private Set<String> deliveryModes;
 	
 	@JsonProperty("study_mode")
-	private List<String> studyModes;
+	private Set<String> studyModes;
 	
-	@NotNull(message = "{user_application.levels.is_required}")
 	@JsonProperty("levels")
 	private Set<String> levels;
 	
-	@NotNull(message = "{user_application.why_interested.is_required}")
 	@JsonProperty("why_interested")
 	private String whyInterested;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonProperty("intake_date")
-	private List<Date> intakeDates;
+	private Set<Date> intakeDates;
 	
 	@Valid
-	@NotNull(message = "{user_application.location.is_required}") 
 	@JsonProperty("preffered_locations")
-	private List <UserApplicationLocationDto> prefferedLocations = null;
-	
+	private Set <UserApplicationLocationDto> preferredLocations = null;
 	
 	@JsonProperty("keywords")
 	private Set <String> keywords;
-
-	@JsonProperty("student_type")
-	private String studentType;
-	
-	@JsonProperty("status")
-	private String status;
-	
-	@JsonProperty("rejected_application")
-	private UserApplicationRejectedDto userApplicationRejected = null;
-	
-	@JsonProperty("is_video_application")
-	private boolean isVideoApplication;
 	
 	@JsonProperty("finance_details")
 	private UserApplicationFinanceDetailsWapperDto financeDetails = null;
@@ -122,29 +125,38 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("other_requirements")
 	private List<UserApplicationOtherRequirementRestInterfaceDto> otherRequirements = null;
 	
-	@JsonProperty("video_pitch")
-	private List<StorageDto> videoPitch = null;
-	
-	@JsonProperty("recognition_for_prior_leaning")
-	private RPLApplicationDto rpl = null;
-	
-	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto upskillingApplication = null;
-	
 	@JsonProperty("other_details")
 	private UserApplicationOtherDetailsDto otherDetails = null;
 	
-	@JsonProperty("institute_dto")
-	private InstituteDto instituteDto = null;
+	@JsonProperty("family_member_details")
+	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
+	
+	@JsonProperty("member_parent_details")
+	private UserApplicationMemberParentDetailsDto userApplicationMemberParentDetailsDto;
+	
+	@JsonProperty("video_pitch")
+	private List<StorageDto> videoPitch = null;
+	
+	@Column(name = "procedure_id")
+	private String procedureId;
+	
+	@JsonProperty("is_video_application")
+	private boolean isVideoApplication;
+	
+	@JsonProperty("rejected_application")
+	private UserApplicationRejectedDto userApplicationRejected = null;
+	
+	@JsonProperty("created_by")
+	private String createdBy;
 	
 	@JsonProperty("created_on")
 	private Date createdOn;
 	
-	@JsonProperty("updated_on")
-	private Date updatedOn = new Date();
+	@JsonProperty("updated_by")
+	private String updatedBy;
 	
-	@JsonProperty(value = "applicant_details", access = Access.READ_ONLY)
-	private UserInitialInfoDto userInitialInfoDto;
+	@JsonProperty("updated_on")
+	private Date updatedOn ;
 	
 	@JsonProperty(value = "offer_ids", access = Access.READ_ONLY)
 	private List<String> offerIds;
@@ -155,6 +167,4 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty(value = "offer_count", access = Access.READ_ONLY)
 	private int offerCount;
 	
-	@JsonProperty("readable_id")
-	private String readableId;
 }

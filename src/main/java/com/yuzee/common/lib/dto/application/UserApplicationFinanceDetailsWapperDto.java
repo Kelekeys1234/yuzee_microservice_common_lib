@@ -1,7 +1,7 @@
 package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -9,17 +9,20 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty(value = "finance_details_id", access = Access.READ_ONLY)
+	@JsonProperty("finance_details_id")
 	private UUID _id;
 	
 	@NotNull(message = "{user_application.finance_details.who_is_paying_for_type.is_required}")
@@ -37,8 +40,7 @@ public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	private Double budgetMaxAmount;
 	
 	@Valid
-	@NotNull(message = "{user_application.family_member.is_required}") 
 	@JsonProperty("family_member")
-	private List<UserApplicationFinanceFamilyMemberIdsListDto> familyMembers;
+	private Set<UserApplicationFinanceFamilyMemberIdsListDto> familyMembers;
 
 }

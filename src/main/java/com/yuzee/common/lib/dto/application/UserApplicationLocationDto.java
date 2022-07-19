@@ -1,7 +1,6 @@
 package com.yuzee.common.lib.dto.application;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
@@ -9,8 +8,13 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserApplicationLocationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

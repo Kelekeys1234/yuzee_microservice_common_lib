@@ -89,15 +89,12 @@ public class UserEducationDto {
 	@JsonProperty("institute_logo_url")
 	private String instituteLogoUrl;
 	
-	@NotBlank(message = "level_id is required")
 	@JsonProperty("level_id")
 	private String levelId;
 	
-	@NotNull(message = "latitude is required")
 	@JsonProperty("latitude")
 	private BigDecimal latitude;
 	
-	@NotNull(message = "longitude is required")
 	@JsonProperty("longitude")
 	private BigDecimal longitude;
 	
