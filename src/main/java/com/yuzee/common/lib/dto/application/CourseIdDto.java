@@ -24,7 +24,7 @@ public class CourseIdDto implements Serializable {
 	@JsonProperty("course_id")
 	private String courseId;
 	
-	@JsonProperty(value = "name", access = Access.READ_ONLY)
+	@JsonProperty("name")
 	private String name;
 
 	@JsonProperty(value = "procedure_id", access = Access.READ_ONLY)
