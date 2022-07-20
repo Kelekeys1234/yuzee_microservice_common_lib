@@ -89,7 +89,6 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("applying_for_type")
 	private String applyingForType;
 	
-	@NotBlank(message = "{user_application.description_preferences.is_required}")
 	@JsonProperty("description_preferences")
 	private String descriptionPreferences;
 	
