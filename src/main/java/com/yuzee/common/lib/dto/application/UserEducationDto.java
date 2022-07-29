@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -20,10 +22,13 @@ import lombok.Data;
 public class UserEducationDto {
 	
 	@JsonProperty("user_education_id")
-	private String userEducationId;
+	private UUID _id;
 
 	@JsonProperty("institute_id")
 	private String instituteId;
+	
+	@Column(name = "user_id")
+	private String userId;
 	
 	@NotBlank(message = "privacy_level is required")
 	@JsonProperty("privacy_level")
@@ -115,6 +120,18 @@ public class UserEducationDto {
 	@NotBlank(message = "application_type is required")
 	@JsonProperty("application_type")
 	private String applicationType;
+	
+	@JsonProperty("created_by")
+	private String createdBy;
+	
+	@JsonProperty("created_on")
+	private Date createdOn;
+	
+	@JsonProperty("updated_by")
+	private String updatedBy;
+	
+	@JsonProperty("updated_on")
+	private Date updatedOn ;
 	
 	@JsonProperty("semesters")
 	List<SemesterDto> semesters = new ArrayList<>();
