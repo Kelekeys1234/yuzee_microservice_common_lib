@@ -11,6 +11,9 @@ public class RPLApplicationDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonProperty("application_id")
+	private String id;
+	
 	@JsonProperty("education_details")
 	private UserEducationDto userEducation;
 	
