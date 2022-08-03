@@ -1,32 +1,12 @@
 package com.yuzee.common.lib.util;
 
-import java.util.Arrays;
-
+import com.yuzee.common.lib.enumeration.*;
+import com.yuzee.common.lib.exception.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.util.ObjectUtils;
 
-import com.yuzee.common.lib.enumeration.ContactTypeEnum;
-import com.yuzee.common.lib.enumeration.CourseTypeEnum;
-import com.yuzee.common.lib.enumeration.ElasticType;
-import com.yuzee.common.lib.enumeration.EntitySubTypeEnum;
-import com.yuzee.common.lib.enumeration.EntityTypeEnum;
-import com.yuzee.common.lib.enumeration.ExampleVideoCategoryTypeEnum;
-import com.yuzee.common.lib.enumeration.ExperienceEntityTypeEnum;
-import com.yuzee.common.lib.enumeration.FavoriteEntityTypeEnum;
-import com.yuzee.common.lib.enumeration.InstituteType;
-import com.yuzee.common.lib.enumeration.IntakeType;
-import com.yuzee.common.lib.enumeration.LanguageProficiencyTypeEnum;
-import com.yuzee.common.lib.enumeration.ModuleNameEnum;
-import com.yuzee.common.lib.enumeration.NetworkCategoryEnum;
-import com.yuzee.common.lib.enumeration.PrivacyLevelEnum;
-import com.yuzee.common.lib.enumeration.StudentCategoryEnum;
-import com.yuzee.common.lib.enumeration.TaskNameEnum;
-import com.yuzee.common.lib.enumeration.TransactionTypeEnum;
-import com.yuzee.common.lib.enumeration.VerifiedEnum;
-import com.yuzee.common.lib.enumeration.UserReviewAppealStatus;
-import com.yuzee.common.lib.exception.ValidationException;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
 @Slf4j
 public class ValidationUtil {
@@ -42,6 +22,8 @@ public class ValidationUtil {
 	private static final String INSTITUTE_TYPE_VALIDATION_MESSAGE = "institute_type must be in one of the following: ";
 	private static final String REVIEW_APPEAL_TYPE_VALIDATION_MESSAGE = "review_appeal status must be in one of the following: ";
 	private static final String INTAKE_TYPE_VALIDATION_MESSAGE = "intake_type must be in one of the following: ";
+	private static final String GENDER_TYPE_VALIDATION_MESSAGE = "gender must be in one of the following: ";
+
 
 	private ValidationUtil() {
 
@@ -225,4 +207,15 @@ public class ValidationUtil {
 					Arrays.toString(Utils.getEnumNames(UserReviewAppealStatus.class)));
 		}
 	}
+
+	public static void validateGenderType(String gender) {
+		if(!EnumUtils.isValidEnum(Gender.class, gender)) {
+			log.error(GENDER_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(Gender.class)));
+			throw new ValidationException(GENDER_TYPE_VALIDATION_MESSAGE +
+					Arrays.toString(Utils.getEnumNames(Gender.class)));
+		}
+	}
+
+
 }
