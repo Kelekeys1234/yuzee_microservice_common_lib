@@ -11,11 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-//@EqualsAndHashCode
-//@CompoundIndexes({
-//  @CompoundIndex(name = "UK_N_EI_ET_ST", def = "{'name' : 1, 'entityId': 1, 'entityType': 1, 'studentType': 1}", unique = true)
-//})
-//@JsonIgnoreProperties(ignoreUnknown = true)
 @Document
 public class RPLApplicationDto implements Serializable {
 	
