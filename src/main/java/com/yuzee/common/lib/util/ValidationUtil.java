@@ -216,6 +216,4 @@ public class ValidationUtil {
 					Arrays.toString(Utils.getEnumNames(Gender.class)));
 		}
 	}
-
-
 }
