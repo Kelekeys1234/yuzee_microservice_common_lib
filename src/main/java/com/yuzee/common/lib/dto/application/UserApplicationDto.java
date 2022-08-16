@@ -61,17 +61,29 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("applicant_details")
 	private UserInitialInfoDto userInitialInfoDto;
 	
-	@JsonProperty("application_id")
-	private String applicationId;
-	
+//	@JsonProperty("application_id")
+//	private String applicationId;
+//	
 	@JsonProperty("application_type")
 	private String applicationType;
 	
-	@JsonProperty("recognition_for_prior_leaning")
-	private RPLApplicationDto rpl = null;
-
-	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto upskillingApplication = null;
+//	@JsonProperty("recognition_for_prior_leaning")
+//	private RPLApplicationDto rpl = null;
+//
+//	@JsonProperty("upskilling_applicaiton")
+//	private UpskillingApplicationDto upskillingApplication = null;
+	
+	@JsonProperty("education_details")
+	private UserEducationDto userEducation;
+	
+	@JsonProperty("why_would_you_like_to_upskill")
+	private String whyWouldYouLikeToUpsklll;
+	
+	@JsonProperty("currenly_working")
+	private String currentlyWorking;
+	
+	@JsonProperty("study_time")
+	private UserStudyTimeDto studyTime;
 	
 	@JsonProperty("course_id")
 	private String courseId;
