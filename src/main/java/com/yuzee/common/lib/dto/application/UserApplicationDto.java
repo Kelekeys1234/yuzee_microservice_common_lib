@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -61,17 +60,8 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("applicant_details")
 	private UserInitialInfoDto userInitialInfoDto;
 	
-//	@JsonProperty("application_id")
-//	private String applicationId;
-//	
 	@JsonProperty("application_type")
 	private String applicationType;
-	
-//	@JsonProperty("recognition_for_prior_leaning")
-//	private RPLApplicationDto rpl = null;
-//
-//	@JsonProperty("upskilling_applicaiton")
-//	private UpskillingApplicationDto upskillingApplication = null;
 	
 	@JsonProperty("education_details")
 	private UserEducationDto userEducation;
