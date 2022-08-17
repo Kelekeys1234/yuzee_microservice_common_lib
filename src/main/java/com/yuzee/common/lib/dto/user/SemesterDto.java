@@ -31,7 +31,6 @@ public class SemesterDto {
 	@JsonProperty("description")
 	private String description;
 	
-	@Valid
 	@JsonProperty("subjects")
 	ValidList<SemesterSubjectDto> subjects;
 	

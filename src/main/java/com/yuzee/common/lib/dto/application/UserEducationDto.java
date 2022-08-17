@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -116,6 +117,7 @@ public class UserEducationDto {
 	@JsonProperty("source_user_education_id")
 	private String sourceUserEducationId;
 
+	@Valid
 	@JsonProperty("semesters")
 	List<SemesterDto> semesters = new ArrayList<>();
 
