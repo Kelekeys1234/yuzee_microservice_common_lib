@@ -1,8 +1,10 @@
 package com.yuzee.common.lib.dto.user;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.authorization.RoleDto;
 import com.yuzee.common.lib.dto.elastic.UserEducationElasticDto;
@@ -71,8 +73,9 @@ public class UserInitialInfoDto implements Serializable{
 	@JsonProperty( "longitude")
 	private Double longitude;
 	
-	@JsonProperty("dobStr")
-	private String dobStr;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonProperty("dob")
+	private Date dob;
 	
 	@JsonProperty("gender")
 	private String gender;
