@@ -344,7 +344,10 @@ public class StorageHandler {
 			StringBuilder path = new StringBuilder();
 			path.append(IConstant.STORAGE_CONNECTION_URL).append(STORAGE).append(STORE_THUMBNAILS);
 
-			HttpEntity<ThumbnailsStoreDTO> requestEntity = new HttpEntity<>(thumbnailsStoreDTO);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<ThumbnailsStoreDTO> requestEntity = new HttpEntity<>(thumbnailsStoreDTO, headers);
 
 			log.info("Calling storage service to store thumbnails for storage Id : {} ", thumbnailsStoreDTO.getStorageId());
 			getStoragesResponse = restTemplate.exchange(path.toString(), HttpMethod.POST, requestEntity, new ParameterizedTypeReference<GenericWrapperDto<Object>>() {});
