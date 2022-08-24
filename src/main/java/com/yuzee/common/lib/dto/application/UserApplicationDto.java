@@ -133,7 +133,7 @@ public class UserApplicationDto implements Serializable {
 	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
 	
 	@JsonProperty("member_parent_details")
-	private UserApplicationMemberParentDetailsDto userApplicationMemberParentDetailsDto;
+	private Set<UserApplicationMemberParentDetailsDto> userApplicationMemberParentDetailsDto;
 	
 	@JsonProperty("video_pitch")
 	private List<StorageDto> videoPitch = null;
@@ -168,4 +168,7 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty(value = "offer_count", access = Access.READ_ONLY)
 	private int offerCount;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonProperty(value = "date_of_entry")
+	private Date dateOfEntry;
 }
