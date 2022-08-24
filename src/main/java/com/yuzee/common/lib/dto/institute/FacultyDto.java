@@ -4,12 +4,14 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FacultyDto implements SyncDTO{
+@AllArgsConstructor
+public class FacultyDto implements SyncDTO {
 
 	@JsonProperty("faculty_id")
 	private String id;
@@ -23,7 +25,7 @@ public class FacultyDto implements SyncDTO{
 
 	@JsonProperty("icon")
 	private String icon;
-	
+
 	@Override
 	public String getIdentifier() {
 		return this.getId();

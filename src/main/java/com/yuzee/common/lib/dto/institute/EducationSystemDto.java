@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.enumeration.GradeType;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -17,6 +18,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class EducationSystemDto {
 
 	@JsonProperty("education_system_id")
@@ -46,20 +48,20 @@ public class EducationSystemDto {
 
 	@JsonProperty("grades")
 	private List<GradeDto> gradeDtos;
-	
-	@JsonProperty(value = "level_id",access = Access.WRITE_ONLY)
+
+	@JsonProperty(value = "level_id", access = Access.WRITE_ONLY)
 	@NotBlank(message = "level_id should not be blank")
 	private String levelId;
-	
-	@JsonProperty(value = "level_code",access = Access.WRITE_ONLY)
+
+	@JsonProperty(value = "level_code", access = Access.WRITE_ONLY)
 	private String levelCode;
-	
-	@JsonProperty(value = "grade_type_code",access = Access.WRITE_ONLY)
+
+	@JsonProperty(value = "grade_type_code", access = Access.WRITE_ONLY)
 	private String gradeTypeCode;
 
-	@JsonProperty(value = "grade_type",access = Access.READ_ONLY)
+	@JsonProperty(value = "grade_type", access = Access.READ_ONLY)
 	private GradeType gradeType;
-	
+
 	@JsonProperty("level")
-	private LevelDto level;		
+	private LevelDto level;
 }
