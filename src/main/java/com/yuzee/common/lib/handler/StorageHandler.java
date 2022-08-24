@@ -338,7 +338,7 @@ public class StorageHandler {
 	}
 
 
-	public Object storeThumbnails(ThumbnailsStoreDTO thumbnailsStoreDTO) {
+	public GenericWrapperDto<Object> storeThumbnails(ThumbnailsStoreDTO thumbnailsStoreDTO) {
 		ResponseEntity<GenericWrapperDto<Object>> getStoragesResponse;
 		try {
 			StringBuilder path = new StringBuilder();
@@ -349,8 +349,11 @@ public class StorageHandler {
 
 			HttpEntity<ThumbnailsStoreDTO> requestEntity = new HttpEntity<>(thumbnailsStoreDTO, headers);
 
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+
+
 			log.info("Calling storage service to store thumbnails for storage Id : {} ", thumbnailsStoreDTO.getStorageId());
-			getStoragesResponse = restTemplate.exchange(path.toString(), HttpMethod.POST, requestEntity, new ParameterizedTypeReference<GenericWrapperDto<Object>>() {});
+			getStoragesResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.POST, requestEntity, new ParameterizedTypeReference<GenericWrapperDto<Object>>() {});
 			if (getStoragesResponse.getStatusCode().value() != 200) {
 				throw new InvokeException(MSG_ERROR_RECEIVED_FROM_STORAGE + getStoragesResponse.getStatusCode().value());
 			}
@@ -363,6 +366,6 @@ public class StorageHandler {
 			log.error(MSG_ERROR_INVOKING_STORAGE, e);
 			throw new InvokeException(MSG_ERROR_INVOKING_STORAGE);
 		}
-		return getStoragesResponse.getBody().getData();
+		return getStoragesResponse.getBody();
 	}
 }
