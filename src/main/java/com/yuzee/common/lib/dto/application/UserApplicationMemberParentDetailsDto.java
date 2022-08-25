@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.yuzee.common.lib.dto.storage.StorageDto;
@@ -18,6 +19,9 @@ public class UserApplicationMemberParentDetailsDto implements Serializable{
 	
 	@JsonProperty("id")
 	private UUID _id;
+	
+	@JsonIgnore
+	private UUID sourceId;
 	
 	@NotBlank(message = "{user_application.member_parent.type.is_required}") 
 	@JsonProperty("type")
