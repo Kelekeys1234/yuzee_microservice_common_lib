@@ -29,7 +29,6 @@ public class UserApplicationFinanceDetailsWapperDto implements Serializable {
 	@JsonProperty("who_is_paying_for_type")
 	private String whoIsPayingForType;
 	
-	@NotNull(message = "{user_application.finance_details.budget_currency.is_required}")
 	@JsonProperty("budget_currency")
 	private String budgetCurrency;
 	
