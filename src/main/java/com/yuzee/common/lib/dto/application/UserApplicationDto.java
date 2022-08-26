@@ -171,4 +171,16 @@ public class UserApplicationDto implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonProperty(value = "date_of_entry")
 	private Date dateOfEntry;
+	
+	@JsonProperty(value = "gender")
+	private String gender;
+	
+	@JsonProperty(value = "boarding")
+	private String boarding;
+	
+	@JsonProperty(value = "curriculum")
+	private String curriculum;
+	
+	@JsonProperty(value = "religion")
+	private String religion;
 }
