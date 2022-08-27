@@ -183,4 +183,7 @@ public class UserApplicationDto implements Serializable {
 	
 	@JsonProperty(value = "religion")
 	private String religion;
+	
+	@JsonProperty("documents")
+	private List<StorageDto> documents = null;
 }
