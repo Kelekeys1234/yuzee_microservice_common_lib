@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.yuzee.common.lib.dto.thumbnail.ThumbnailsStoreDTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -51,6 +52,9 @@ public class StorageHandler {
 	private RestTemplate restTemplate;
 
 	private static final String STORAGE = "/api/v1/storage";
+
+
+	private static final String STORE_THUMBNAILS = "/storeThumbnails";
 
 	private static final String DELETE_BY_ID = "/api/v1/storage/entityId/";
 
@@ -331,5 +335,37 @@ public class StorageHandler {
 			log.error(MSG_ERROR_INVOKING_STORAGE, e);
 			throw new InvokeException(MSG_ERROR_INVOKING_STORAGE);
 		}
+	}
+
+
+	public GenericWrapperDto<Object> storeThumbnails(ThumbnailsStoreDTO thumbnailsStoreDTO) {
+		ResponseEntity<GenericWrapperDto<Object>> getStoragesResponse;
+		try {
+			StringBuilder path = new StringBuilder();
+			path.append(IConstant.STORAGE_CONNECTION_URL).append(STORAGE).append(STORE_THUMBNAILS);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<ThumbnailsStoreDTO> requestEntity = new HttpEntity<>(thumbnailsStoreDTO, headers);
+
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
+
+
+			log.info("Calling storage service to store thumbnails for storage Id : {} ", thumbnailsStoreDTO.getStorageId());
+			getStoragesResponse = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.POST, requestEntity, new ParameterizedTypeReference<GenericWrapperDto<Object>>() {});
+			if (getStoragesResponse.getStatusCode().value() != 200) {
+				throw new InvokeException(MSG_ERROR_RECEIVED_FROM_STORAGE + getStoragesResponse.getStatusCode().value());
+			}
+
+		} catch (InvokeException | NotFoundException e) {
+			log.error(MSG_ERROR_INVOKING_STORAGE, e);
+			throw e;
+		}
+		catch (Exception e) {
+			log.error(MSG_ERROR_INVOKING_STORAGE, e);
+			throw new InvokeException(MSG_ERROR_INVOKING_STORAGE);
+		}
+		return getStoragesResponse.getBody();
 	}
 }

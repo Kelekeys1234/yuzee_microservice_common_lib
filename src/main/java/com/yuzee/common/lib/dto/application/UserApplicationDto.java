@@ -150,14 +150,20 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("created_by")
 	private String createdBy;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonProperty("created_on")
 	private Date createdOn;
 	
 	@JsonProperty("updated_by")
 	private String updatedBy;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonProperty("updated_on")
 	private Date updatedOn ;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonProperty("submitted_on")
+	private Date submittedOn ;
 	
 	@JsonProperty(value = "offer_ids", access = Access.READ_ONLY)
 	private List<String> offerIds;
@@ -186,4 +192,7 @@ public class UserApplicationDto implements Serializable {
 	
 	@JsonProperty("documents")
 	private List<StorageDto> documents = null;
+
+	@JsonProperty(value = "is_institute_reviewed")
+	private boolean isInstituteReviewed;
 }
