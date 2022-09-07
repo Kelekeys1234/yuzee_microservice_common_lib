@@ -195,4 +195,7 @@ public class UserApplicationDto implements Serializable {
 
 	@JsonProperty(value = "is_institute_reviewed")
 	private boolean isInstituteReviewed;
+	
+	@JsonProperty(value = "is_my_child_requires_special_needs")
+	private boolean isMyChildRequiresSpecialNeeds;
 }

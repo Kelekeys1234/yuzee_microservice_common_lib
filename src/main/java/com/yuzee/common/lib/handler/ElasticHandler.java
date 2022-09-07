@@ -50,7 +50,7 @@ public class ElasticHandler {
 
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, 
 			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds, 
-			String searchKeyword, List<String> excludeCourseIds){
+			String searchKeyword, List<String> excludeCourseIds, String studentCountry){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
 		try {
@@ -77,6 +77,7 @@ public class ElasticHandler {
 			}
 			uriBuilder.queryParam("course_type", campusType);
 			uriBuilder.queryParam("search_keyword", searchKeyword);
+			uriBuilder.queryParam("student_country", studentCountry);
 
 			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
 			if (courseDtoResponse.getStatusCode().value() != 200) {
@@ -158,8 +159,8 @@ public class ElasticHandler {
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(path.toString());
 			
 			uriBuilder.queryParam("institute_name", name);
-			uriBuilder.queryParam("is_domestic_application_enalbe", isDomesticApplicationEnable);
-			uriBuilder.queryParam("is_international_application_enalbe", isInternationalApplicationEnable);
+			uriBuilder.queryParam("is_domestic_application_enable", isDomesticApplicationEnable);
+			uriBuilder.queryParam("is_international_application_enable", isInternationalApplicationEnable);
 			
 			if(!CollectionUtils.isEmpty(countryNames)) {
 				countryNames.stream().forEach(c -> uriBuilder.queryParam("country_name", c));
