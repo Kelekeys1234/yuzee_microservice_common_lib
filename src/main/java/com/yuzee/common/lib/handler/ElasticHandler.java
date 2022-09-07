@@ -50,7 +50,7 @@ public class ElasticHandler {
 
 	public PaginationResponseDto<List<CourseBasicInfoDto>> getFilterCoursesBasicInfo(int pageNumber ,int pageSize, String instituteId, 
 			List<String> facultyName,List<String> levelName,List<String> cityNames, CourseTypeEnum campusType, List<String> courseIds, 
-			String searchKeyword, List<String> excludeCourseIds, String studentCountry){
+			String searchKeyword, List<String> excludeCourseIds, String userCountry){
 		ResponseEntity<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>> courseDtoResponse = null;
 
 		try {
@@ -77,7 +77,7 @@ public class ElasticHandler {
 			}
 			uriBuilder.queryParam("course_type", campusType);
 			uriBuilder.queryParam("search_keyword", searchKeyword);
-			uriBuilder.queryParam("student_country", studentCountry);
+			uriBuilder.queryParam("user_country", userCountry);
 
 			courseDtoResponse = restTemplate.exchange(uriBuilder.build(false).toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<GenericWrapperDto<PaginationResponseDto<List<CourseBasicInfoDto>>>>() {});
 			if (courseDtoResponse.getStatusCode().value() != 200) {
