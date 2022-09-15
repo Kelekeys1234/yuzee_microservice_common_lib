@@ -142,9 +142,9 @@ public class InstituteSyncDTO implements SyncDTO {
 	@JsonProperty("verified")
 	private boolean verified;
 	
-	@JsonProperty("is_domestic_application_enalbe")
+	@JsonProperty("is_domestic_application_enable")
 	private Boolean isDomesticApplicationEnable;
 	
-	@JsonProperty("is_international_application_enalbe")
+	@JsonProperty("is_international_application_enable")
 	private Boolean isInternationalApplicationEnable;
 }

@@ -1,12 +1,17 @@
 package com.yuzee.common.lib.constants;
 
 public class IConstant {
-	
+
 	private IConstant() {}
 
 	public static final String USER_SERVICE = "USER-SERVICE/users";
 
 	public static final String USER_CONNECTION_URL = "http://" + USER_SERVICE;
+
+	public static final String SCHOLARSHIP = "SCHOLARSHIP-SERVICE/scholarship-service/api/v1";
+
+	public static final String SCHOLARSHIP_URL = "http://" + SCHOLARSHIP;
+
 
 	public static final String INTERACTION_SERVICE = "INTERACTION-SERVICE/interaction-service/api/v1";
 

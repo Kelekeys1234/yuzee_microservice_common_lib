@@ -20,5 +20,5 @@ public class CompanyProviderCodeDto {
 	
 	@NotNull(message = "code can not be null / empty")
 	@JsonProperty("code")
-	private long code;
+	private String code;
 }

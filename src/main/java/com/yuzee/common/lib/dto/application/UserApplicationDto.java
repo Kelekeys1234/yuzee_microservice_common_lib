@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -61,17 +60,20 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty("applicant_details")
 	private UserInitialInfoDto userInitialInfoDto;
 	
-	@JsonProperty("application_id")
-	private String applicationId;
-	
 	@JsonProperty("application_type")
 	private String applicationType;
 	
-	@JsonProperty("recognition_for_prior_leaning")
-	private RPLApplicationDto rpl = null;
-
-	@JsonProperty("upskilling_applicaiton")
-	private UpskillingApplicationDto upskillingApplication = null;
+	@JsonProperty("education_details")
+	private UserEducationDto userEducation;
+	
+	@JsonProperty("why_would_you_like_to_upskill")
+	private String whyWouldYouLikeToUpsklll;
+	
+	@JsonProperty("currenly_working")
+	private String currentlyWorking;
+	
+	@JsonProperty("study_time")
+	private UserStudyTimeDto studyTime;
 	
 	@JsonProperty("course_id")
 	private String courseId;
@@ -131,7 +133,7 @@ public class UserApplicationDto implements Serializable {
 	private UserApplicationFamilyMemberDto userApplicationFamilyMemberDto;
 	
 	@JsonProperty("member_parent_details")
-	private UserApplicationMemberParentDetailsDto userApplicationMemberParentDetailsDto;
+	private Set<UserApplicationMemberParentDetailsDto> userApplicationMemberParentDetailsDto;
 	
 	@JsonProperty("video_pitch")
 	private List<StorageDto> videoPitch = null;
@@ -172,6 +174,28 @@ public class UserApplicationDto implements Serializable {
 	@JsonProperty(value = "offer_count", access = Access.READ_ONLY)
 	private int offerCount;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonProperty(value = "date_of_entry")
+	private Date dateOfEntry;
+	
+	@JsonProperty(value = "gender")
+	private String gender;
+	
+	@JsonProperty(value = "boarding")
+	private String boarding;
+	
+	@JsonProperty(value = "curriculum")
+	private String curriculum;
+	
+	@JsonProperty(value = "religion")
+	private String religion;
+	
+	@JsonProperty("documents")
+	private List<StorageDto> documents = null;
+
 	@JsonProperty(value = "is_institute_reviewed")
 	private boolean isInstituteReviewed;
+	
+	@JsonProperty(value = "is_my_child_requires_special_needs")
+	private boolean isMyChildRequiresSpecialNeeds;
 }

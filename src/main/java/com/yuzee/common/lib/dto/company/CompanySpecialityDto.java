@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanySpecialityDto {
-
-	@JsonProperty("company_speciality_id")
-	private String id;
 	
 	@JsonProperty("speciality_id")
 	@NotEmpty(message = "speciality_id can not be null/empty")
