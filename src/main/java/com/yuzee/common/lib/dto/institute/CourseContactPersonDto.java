@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseContactPersonDto {
 
-	@JsonProperty("course_contact_person_id")
-	private String id;
 
 	@JsonProperty(value = "user_id")
 	@NotEmpty(message = "user_id must not be empty")
