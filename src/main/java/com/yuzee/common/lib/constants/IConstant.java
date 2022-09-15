@@ -8,7 +8,7 @@ public class IConstant {
 
 	public static final String USER_CONNECTION_URL = "http://" + USER_SERVICE;
 
-	public static final String SCHOLARSHIP = "SCHOLARSHIP-SERVICE/scholarship-service";
+	public static final String SCHOLARSHIP = "SCHOLARSHIP-SERVICE/scholarship-service/api/v1";
 
 	public static final String SCHOLARSHIP_URL = "http://" + SCHOLARSHIP;
 
