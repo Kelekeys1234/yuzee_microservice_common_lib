@@ -12,6 +12,8 @@ public enum EntitySubTypeEnum {
 	ACADEMIC_QUALIFICATION(false), 
 	ACCREDIATED(true), 
 	ACHIEVEMENT(false), 
+	AUSTRALIAN_KEYPASS(true),
+	AUSTRALIAN_CITIZENSHIP_CERTIFICATE(true),
 	AVTAR_FEMALE(false), 
 	AVTAR_MALE(false), 
 	BANK_STATEMENT(false),
@@ -20,6 +22,7 @@ public enum EntitySubTypeEnum {
 	DOCUMENTS(false),
 	DOCUMENT_SINGLE_ENTITY(true),
 	DOWNLOADS(false), 
+	DRIVING_LICENSE(true),
 	ENGLISH_QUALIFICATION(false), 
 	EDUCATION(false), 
 	LANGUAGE_QUALIFICATION(false), 
@@ -31,6 +34,7 @@ public enum EntitySubTypeEnum {
 	LICENSE(false), 
 	LOGO(true),
 	MEDIA(false),
+	MEDICARE_CARD(true),
 	PASSPORT(false), 
 	PERSONAL_STATEMENT(false), 
 	PORTFOLIO(false), 
@@ -83,7 +87,8 @@ public enum EntitySubTypeEnum {
 	IDENTITY_CERTIFICATE(true),
 	PROOF_OF_GUARDIANSHIP(true),
     ABN(true),
-    ABN_UPLOADER_IDENTITY(true);
+    ABN_UPLOADER_IDENTITY(true),
+    ;
 	
 	@Getter private boolean singleEntity;
 	

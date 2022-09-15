@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -116,30 +117,10 @@ public class UserEducationDto {
 	@JsonProperty("source_user_education_id")
 	private String sourceUserEducationId;
 
-	@NotBlank(message = "application_id is required")
-	@JsonProperty("application_id")
-	private String applicationId;
-
-	@NotBlank(message = "application_type is required")
-	@JsonProperty("application_type")
-	private String applicationType;
-
-	@JsonProperty("created_by")
-	private String createdBy;
-
-	@JsonProperty("created_on")
-	private Date createdOn;
-
-	@JsonProperty("updated_by")
-	private String updatedBy;
-
-	@JsonProperty("updated_on")
-	private Date updatedOn ;
-
+	@Valid
 	@JsonProperty("semesters")
 	List<SemesterDto> semesters = new ArrayList<>();
 
 	@JsonProperty("certificates")
 	List<StorageDto> certificates = new ArrayList<>();	
-
 }

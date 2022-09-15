@@ -1,5 +1,6 @@
 package com.yuzee.common.lib.dto.user;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import org.apache.commons.collections.CollectionUtils;
