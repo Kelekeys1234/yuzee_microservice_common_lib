@@ -25,6 +25,12 @@ public class InstituteSyncDTO implements SyncDTO {
 	@JsonProperty("institute_id")
 	@NotBlank(message = "institute_id should not be blank")
 	private String id;
+	
+	@JsonProperty("business_account_type")
+	private String businessAccountType;
+	
+	@JsonProperty("institute_affiliaction_type")
+	private String instituteAffiliactionType;
 
 	@JsonProperty("country_name")
 	@NotBlank(message = "country_name should not be blank")
@@ -38,7 +44,7 @@ public class InstituteSyncDTO implements SyncDTO {
 	private String cityName;
 
 	@JsonProperty("institute_type")
-	private String instituteType;
+	private List<String> instituteType;
 
 	@JsonProperty("name")
 	@NotBlank(message = "name should not be blank")
@@ -132,7 +138,7 @@ public class InstituteSyncDTO implements SyncDTO {
 	private List<ProviderCodeDto> instituteProviderCodes;
 	
 	@JsonProperty("institute_type_obj")
-	private InstituteType instituteTypeObj;
+	private List<InstituteType> instituteTypeObj;
 	
 	@Override
 	public String getIdentifier() {
