@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseSemesterDto {
-
-	@JsonProperty("id")
-	private String id;
-
+	@NotEmpty(message = "courseSemesterDtoId must not be empty")
+	@JsonProperty("courseSemesterDtoId")
+    private String courseSemesterDtoId;
 	@NotEmpty(message = "type must not be empty")
 	@JsonProperty("type")
 	private String type;
