@@ -9,6 +9,13 @@ import lombok.Data;
 @Data
 public class CourseCareerOutcomeDto {
 
+	@JsonProperty("course_career_outcome_id")
+	private String id;
+
+	@JsonProperty(value = "career_id")
+	@NotEmpty(message = "career_id must not be null")
+	private String careerId;
+
 	@JsonProperty(value = "career")
 	private CareerDto career;
 }

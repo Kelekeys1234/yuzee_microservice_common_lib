@@ -6,30 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
-
+@Data
 public class CoursePreRequisiteDto {
-	@NotEmpty(message = "description must not be empty")
-	@JsonProperty(" PreRequisiteId")
-	private String PreRequisiteId;
-	
+
+	@JsonProperty("course_pre_requisite_id")
+	private String id;
+
 	@NotEmpty(message = "description must not be empty")
 	@JsonProperty("description")
 	private String description;
-
-	public String getPreRequisiteId() {
-		return PreRequisiteId;
-	}
-
-	public void setPreRequisiteId(String preRequisiteId) {
-		PreRequisiteId = preRequisiteId;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 }
