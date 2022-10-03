@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseFeesDto {
-	@JsonProperty("id")
-	private String id;
 
 	@JsonProperty("name")
 	@NotEmpty(message = "name should not be blank")

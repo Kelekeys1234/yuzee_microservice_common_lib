@@ -10,10 +10,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProviderCode {
-	@JsonProperty("id")
-	private String id;
+
 
 	@NotEmpty
 	@JsonProperty("name")
@@ -22,4 +20,11 @@ public class ProviderCode {
 	@NotEmpty
 	@JsonProperty("value")
 	private String value;
+
+	public ProviderCode(@NotEmpty String name, @NotEmpty String value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+	
 }

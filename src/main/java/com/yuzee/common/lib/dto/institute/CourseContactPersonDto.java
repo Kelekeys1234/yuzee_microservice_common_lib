@@ -21,4 +21,11 @@ public class CourseContactPersonDto {
 
 	@JsonProperty(value = "user")
 	private UserInitialInfoDto user;
+
+	public CourseContactPersonDto(
+			@NotEmpty(message = "user_id must not be empty") String userId) {
+		super();
+		this.userId = userId;
+	}
+	
 }

@@ -21,6 +21,18 @@ public class CourseIntakeDto {
 		this.type = type;
 		this.dates = dates;
 	}
+	
+
+	public CourseIntakeDto(
+			@NotEmpty(message = "type must not be empty") String type,
+			@NotNull(message = "dates must not be null") List<Date> dates,
+			@NotNull(message = "linked_course_ids must not be null") List<String> linkedCourseIds) {
+		super();
+		this.type = type;
+		this.dates = dates;
+		this.linkedCourseIds = linkedCourseIds;
+	}
+
 
 	@JsonProperty(value = "type")
 	@NotEmpty(message = "type must not be empty")

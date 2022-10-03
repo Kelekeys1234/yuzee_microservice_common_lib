@@ -19,4 +19,11 @@ public class CourseFundingDto {
 	
 	@JsonProperty(value = "funding")
 	private FundingResponseDto funding;
+
+	public CourseFundingDto(
+			@NotEmpty(message = "funding_name_id must not be null") List<String> fundingNameId) {
+		super();
+		this.fundingNameId = fundingNameId;
+	}
+	
 }
