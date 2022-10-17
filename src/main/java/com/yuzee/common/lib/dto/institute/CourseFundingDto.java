@@ -8,8 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuzee.common.lib.dto.eligibility.FundingResponseDto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CourseFundingDto {
 
 

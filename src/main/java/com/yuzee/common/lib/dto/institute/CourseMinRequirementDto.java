@@ -22,7 +22,7 @@ public class CourseMinRequirementDto {
 
 	@JsonProperty("courseMinRequirementId")
 	@NotEmpty(message = "courseMinRequirement_id must not be empty")
-	private String courseMinRequirementsId; 
+	private String id; 
 	@JsonProperty("country_name")
 	@NotEmpty(message = "country_name must not be empty")
 	private String countryName;
@@ -58,7 +58,7 @@ public class CourseMinRequirementDto {
 			@Valid List<CourseMinRequirementSubjectDto> minRequirementSubjects,
 			@NotNull(message = "study_languages must not be null") Set<String> studyLanguages) {
 		super();
-		this.courseMinRequirementsId = courseMinRequirementId;
+		this.id = courseMinRequirementId;
 		this.countryName = countryName;
 		this.stateName = stateName;
 		this.educationSystemId = educationSystemId;

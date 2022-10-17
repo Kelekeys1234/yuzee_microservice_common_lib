@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class CourseSemesterDto {
 	@NotEmpty(message = "courseSemesterDtoId must not be empty")
 	@JsonProperty("courseSemesterDtoId")
-    private String courseSemesterDtoId;
+    private String id;
 	@NotEmpty(message = "type must not be empty")
 	@JsonProperty("type")
 	private String type;
