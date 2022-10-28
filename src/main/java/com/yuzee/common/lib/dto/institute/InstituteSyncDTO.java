@@ -44,7 +44,7 @@ public class InstituteSyncDTO implements SyncDTO {
 	private String cityName;
 
 	@JsonProperty("institute_type")
-	private List<String> instituteType;
+	private String instituteType;
 
 	@JsonProperty("name")
 	@NotBlank(message = "name should not be blank")
