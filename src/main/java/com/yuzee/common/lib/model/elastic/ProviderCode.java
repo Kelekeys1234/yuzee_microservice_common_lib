@@ -10,21 +10,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProviderCode {
+	@JsonProperty("id")
+	private String id;
 
-
-	@NotEmpty
+	@NotEmpty(message = "name must not be empty")
 	@JsonProperty("name")
 	private String name;
 
-	@NotEmpty
+	@NotEmpty(message = "value must not be empty")
 	@JsonProperty("value")
 	private String value;
-
-	public ProviderCode(@NotEmpty String name, @NotEmpty String value) {
-		super();
-		this.name = name;
-		this.value = value;
-	}
-	
 }

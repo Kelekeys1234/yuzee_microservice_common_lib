@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CourseDeliveryModeFundingDto {
 
-//	@JsonProperty("id")
-//	private String id;
+	@JsonProperty("id")
+	private String id;
 
 	@JsonProperty(value = "funding_name_id")
 	@NotEmpty(message = "funding_name_id must not be null")
@@ -38,9 +38,9 @@ public class CourseDeliveryModeFundingDto {
 	@JsonProperty(value = "funding")
 	private FundingResponseDto funding;
 
-	public CourseDeliveryModeFundingDto( String fundingNameId, String name, String currency, Double amount) {
+	public CourseDeliveryModeFundingDto(String id, String fundingNameId, String name, String currency, Double amount) {
 		super();
-	
+		this.id = id;
 		this.fundingNameId = fundingNameId;
 		this.name = name;
 		this.currency = currency;
