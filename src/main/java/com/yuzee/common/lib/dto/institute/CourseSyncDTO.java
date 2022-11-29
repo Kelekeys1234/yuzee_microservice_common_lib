@@ -117,8 +117,8 @@ public class CourseSyncDTO implements SyncDTO{
 	@JsonProperty("code")
 	private String code;
 
-	@JsonProperty("course_type")
-	private String courseType;
+//	@JsonProperty("course_type")
+//	private String courseType;
 
 	@JsonProperty("off_campus_course")
 	private OffCampusCourseDto offCampusCourse;

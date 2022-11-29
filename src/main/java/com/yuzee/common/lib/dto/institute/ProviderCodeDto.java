@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProviderCodeDto {
-	@JsonProperty("id")
-	private String id;
-
 	@NotEmpty(message = "name must not be empty")
 	@JsonProperty("name")
 	private String name;
@@ -22,4 +19,5 @@ public class ProviderCodeDto {
 	@NotEmpty(message = "value must not be empty")
 	@JsonProperty("value")
 	private String value;
+	
 }
