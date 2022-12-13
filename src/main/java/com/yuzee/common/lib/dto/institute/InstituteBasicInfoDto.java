@@ -1,9 +1,6 @@
 package com.yuzee.common.lib.dto.institute;
 
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,16 +18,6 @@ public class InstituteBasicInfoDto {
 	@NotBlank(message = "name_of_university should not be blank")
 	@JsonProperty("name_of_university")
 	private String nameOfUniversity;
-	
-	@JsonProperty("business_account_type")
-	private String businessAccountType;
-	
-	@JsonProperty("institute_affiliaction_type")
-	private String instituteAffiliactionType;
-	
-	@JsonProperty("institute_type")
-	@NotNull(message = "{institute_type.is_required}")
-	private List<String> instituteType;
 
 	@NotBlank(message = "institute_category_type_id should not be blank")
 	@JsonProperty("institute_category_type_id")
@@ -76,9 +63,6 @@ public class InstituteBasicInfoDto {
 
 	@JsonProperty("verified")
 	private boolean verified;
-	
-	@JsonProperty("postal_code")
-	private Integer postalCode;
 
 	public InstituteBasicInfoDto(String instituteLogoPath,
 			@NotBlank(message = "name_of_university should not be blank") String nameOfUniversity,
